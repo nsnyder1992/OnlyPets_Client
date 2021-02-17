@@ -26,7 +26,6 @@ const Posts = () => {
       .then((res) => res.json())
       .then((json) => {
         getPosts();
-        console.log(json);
       })
       .catch((err) => console.error(err));
   };
@@ -67,7 +66,6 @@ const Posts = () => {
 
   useEffect(() => {
     getPosts();
-    console.log(posts);
   }, []);
 
   return (

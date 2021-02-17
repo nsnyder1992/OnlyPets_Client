@@ -12,7 +12,6 @@ const EditPost = (props) => {
   //get params from url
   let { id, postId, desc, file } = useParams();
 
-  console.log(postId);
   //react router history used to redirect to route
   const history = useHistory();
 
@@ -70,7 +69,6 @@ const EditPost = (props) => {
         }),
       });
       const postJson = await postRes.json();
-      console.log("sent", postJson);
       history.push("/");
       return;
     }
@@ -88,8 +86,6 @@ const EditPost = (props) => {
     });
 
     const postJson = await postRes.json();
-    console.log("not sent");
-    console.log(postJson);
     history.push("/");
   };
 

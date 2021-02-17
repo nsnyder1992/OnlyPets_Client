@@ -17,14 +17,9 @@ const HomeHeader = ({ type, setType }) => {
           <Grid item xs={2}>
             <Typography variant="h5">Home</Typography>
           </Grid>
-          <Grid item xs={1}>
+          <Grid item xs={2}>
             <IconButton className="button">
               <ExploreOutlinedIcon />
-            </IconButton>
-          </Grid>
-          <Grid item xs={1}>
-            <IconButton className="button">
-              <PetsOutlinedIcon />
             </IconButton>
           </Grid>
           <Grid item xs={2}>

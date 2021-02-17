@@ -14,7 +14,6 @@ const TimeAgo = ({ createdAt }) => {
     let date = new Date(createdAt);
     let today = new Date();
     let secondsAgo = (today - date) / 1000;
-    console.log(secondsAgo);
 
     let tempTimeAgo = "< 1min";
 

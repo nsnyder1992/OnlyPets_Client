@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 //components
-import PostHeader from "./PostHeader";
-import PostBody from "./PostBody";
+import PostHeader from "./EditPosts/PostHeader";
+import PostBody from "./EditPosts/PostBody";
 
 const CreatePost = () => {
   //file states

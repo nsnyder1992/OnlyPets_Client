@@ -9,9 +9,9 @@ import PetsOutlinedIcon from "@material-ui/icons/PetsOutlined";
 
 //components
 import Home from "../components/Home";
-import NewPost from "../components/NewPost/NewPost";
-import YourPets from "../components/YourPets/YourPets";
-import Profile from "../components/Profile/Profile";
+import NewPost from "../components/NewPost";
+import YourPets from "../components/YourPets";
+import Profile from "../components/Profile";
 
 //css
 import "./Navbar.css";

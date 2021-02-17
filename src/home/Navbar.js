@@ -8,7 +8,10 @@ import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import PetsOutlinedIcon from "@material-ui/icons/PetsOutlined";
 
 //components
+import Home from "../components/Home/Home";
 import NewPost from "../components/NewPost/NewPost";
+import YourPets from "../components/YourPets/YourPets";
+import Profile from "../components/Profile/Profile";
 
 //css
 import "./Navbar.css";
@@ -20,7 +23,7 @@ const Navbar = () => {
     <header>
       <div className="navbar">
         <nav>
-          <Grid container spacing={1}>
+          <Grid container spacing={0}>
             <Grid item xs={4} />
 
             <Grid item xs={1}>
@@ -60,18 +63,25 @@ const Navbar = () => {
         </nav>
       </div>
 
-      <hr />
+      <hr
+        style={{
+          width: "99%",
+        }}
+      />
 
       <div className="apps">
         <Switch>
           <Route exact path="/">
-            <div />
+            <Home />
           </Route>
           <Route exact path="/post">
             <NewPost />
           </Route>
+          <Route exact path="/pet">
+            <YourPets />
+          </Route>
           <Route exact path="/profile">
-            <div />
+            <Profile />
           </Route>
         </Switch>
       </div>

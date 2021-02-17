@@ -1,5 +1,21 @@
+.apps {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+}
+
 nav {
-    height: 50px;
-    width: 100%;
-    background-color: grey;
+  height: 50px;
+  width: 100%;
+  min-width: 500px;
+  max-width: 2500px;
+  background-color: white;
+}
+
+a {
+  color: black;
 }

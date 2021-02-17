@@ -1,5 +1,5 @@
-import { Button } from "@material-ui/core";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import { IconButton } from "@material-ui/core";
+import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 
 const UploadImage = ({ setFileUrl }) => {
   const handleFileUpload = (e) => {
@@ -9,16 +9,24 @@ const UploadImage = ({ setFileUrl }) => {
     setFileUrl(url);
   };
 
+  const styles = {
+    icon: {
+      fontSize: 30,
+    },
+  };
+
   return (
-    <Button
-      variant="contained"
-      color="default"
-      startIcon={<CloudUploadIcon />}
-      component="label"
-    >
-      Upload
-      <input type="file" hidden onChange={handleFileUpload} id="file-upload" />
-    </Button>
+    <div>
+      <IconButton variant="contained" color="default" component="label">
+        <ImageOutlinedIcon style={styles.icon} />
+        <input
+          type="file"
+          hidden
+          onChange={handleFileUpload}
+          id="file-upload"
+        />
+      </IconButton>
+    </div>
   );
 };
 

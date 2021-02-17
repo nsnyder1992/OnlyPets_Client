@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 //import components
 import PostCard from "./PostCard";
 
+//css
+import "./styles/Posts.css";
+
 const Posts = () => {
   const [posts, setPosts] = useState();
 
@@ -68,7 +71,7 @@ const Posts = () => {
   }, []);
 
   return (
-    <div>
+    <div class="posts">
       {posts?.map((post, index) => {
         return (
           <PostCard

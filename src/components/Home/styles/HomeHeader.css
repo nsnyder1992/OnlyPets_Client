@@ -1,0 +1,12 @@
+.header {
+  height: 50px;
+}
+
+hr {
+  width: 90%;
+}
+
+.button {
+  position: relative;
+  top: -5px;
+}

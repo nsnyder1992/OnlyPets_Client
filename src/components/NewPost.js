@@ -4,7 +4,10 @@ import { useState } from "react";
 import PostHeader from "./EditPosts/PostHeader";
 import PostBody from "./EditPosts/PostBody";
 
-const CreatePost = () => {
+//css
+import "./styles/Layouts.css";
+
+const NewPost = () => {
   //file states
   const [fileUrl, setFileUrl] = useState();
 
@@ -79,4 +82,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default NewPost;

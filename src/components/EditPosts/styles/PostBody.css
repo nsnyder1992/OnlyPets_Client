@@ -12,11 +12,6 @@ input:focus {
   outline: none;
 }
 
-.create-post {
-  width: 85%;
-  max-width: 1450px;
-}
-
 form {
   display: flex;
   flex-direction: column;

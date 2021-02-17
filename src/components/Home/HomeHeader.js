@@ -1,17 +1,40 @@
-import { Grid, Button, Typography } from "@material-ui/core";
+import { Grid, Typography, IconButton, Button } from "@material-ui/core";
+import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
+import PetsOutlinedIcon from "@material-ui/icons/PetsOutlined";
 
-const HomeHeader = () => {
+//components
+import Categories from "./Categories";
+
+//css
+import "./styles/HomeHeader.css";
+
+const HomeHeader = ({ type, setType }) => {
   return (
-    <header>
-      <Grid container spacing={3}>
-        <Grid item xs={1} />
-        <Grid item xs={4}>
-          <Typography variant="h5">Home</Typography>
+    <div>
+      <header className="header">
+        <Grid container spacing={2}>
+          <Grid item xs={3} />
+          <Grid item xs={2}>
+            <Typography variant="h5">Home</Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <IconButton className="button">
+              <ExploreOutlinedIcon />
+            </IconButton>
+          </Grid>
+          <Grid item xs={1}>
+            <IconButton className="button">
+              <PetsOutlinedIcon />
+            </IconButton>
+          </Grid>
+          <Grid item xs={2}>
+            <Categories type={type} setType={setType} />
+          </Grid>
+          <Grid item xs={3} />
         </Grid>
-        <Grid item xs={2} />
-        <Grid item xs={4}></Grid>
-      </Grid>
-    </header>
+      </header>
+      <hr />
+    </div>
   );
 };
 

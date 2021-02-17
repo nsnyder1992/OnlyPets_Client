@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, StylesProvider } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -17,13 +17,14 @@ import { Button } from "@material-ui/core";
 //components
 import Likes from "./Likes";
 import Tips from "./Tips";
+import Subscribe from "./Subscribe";
 import TimeAgo from "./TimeAgo";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 450,
-    width: "60%",
-    minWidth: 300,
+    maxWidth: 650,
+    width: "90%",
+    minWidth: 200,
     margin: 10,
   },
   media: {
@@ -33,12 +34,16 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     backgroundColor: indigo[500],
   },
-  options: {
-    zIndex: 10,
-    position: "relative",
-    top: 110,
-    left: 210,
-    width: 100,
+  actions: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  actionsRight: {
+    justifyItems: "right",
+  },
+  actionsLeft: {
+    display: "flex",
+    alignItems: "center",
   },
 }));
 
@@ -46,60 +51,54 @@ const PostCard = ({ post, editPost, deletePost, likePost, unlikePost }) => {
   const classes = useStyles();
 
   return (
-    <div>
-      <Card className={classes.root}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="Pet" className={classes.avatar}>
-              {post.petId}
-            </Avatar>
-          }
-          action={
-            <PopupState variant="popover" popupId="demo-popup-popover">
-              {(popupState) => (
-                <div>
-                  <IconButton
-                    aria-label="settings"
-                    {...bindTrigger(popupState)}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
-                  <Popover
-                    {...bindPopover(popupState)}
-                    anchorOrigin={{
-                      vertical: "bottom",
-                      horizontal: "center",
-                    }}
-                    transformOrigin={{
-                      vertical: "top",
-                      horizontal: "center",
-                    }}
-                  >
-                    <Box p={2}>
-                      <Button onClick={() => editPost(post.id)}>Edit</Button>
-                      <Button onClick={() => deletePost(post.id)}>
-                        Delete
-                      </Button>
-                    </Box>
-                  </Popover>
-                </div>
-              )}
-            </PopupState>
-          }
-        />
+    <Card className={classes.root}>
+      <CardHeader
+        avatar={
+          <Avatar aria-label="Pet" className={classes.avatar}>
+            {post.petId}
+          </Avatar>
+        }
+        action={
+          <PopupState variant="popover" popupId="demo-popup-popover">
+            {(popupState) => (
+              <div>
+                <IconButton aria-label="settings" {...bindTrigger(popupState)}>
+                  <MoreVertIcon />
+                </IconButton>
+                <Popover
+                  {...bindPopover(popupState)}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "center",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "center",
+                  }}
+                >
+                  <Box p={2}>
+                    <Button onClick={() => editPost(post.id)}>Edit</Button>
+                    <Button onClick={() => deletePost(post.id)}>Delete</Button>
+                  </Box>
+                </Popover>
+              </div>
+            )}
+          </PopupState>
+        }
+      />
 
-        <CardMedia
-          className={classes.media}
-          image={post.photoUrl}
-          title="Paella dish"
-        />
-        <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {post.description}
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <Tips />
+      <CardMedia
+        className={classes.media}
+        image={post.photoUrl}
+        title="Paella dish"
+      />
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {post.description}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing className={classes.actions}>
+        <div className={classes.actionsLeft}>
           <Likes
             id={post.id}
             likes={post.likes}
@@ -107,9 +106,13 @@ const PostCard = ({ post, editPost, deletePost, likePost, unlikePost }) => {
             unlikePost={unlikePost}
           />
           <TimeAgo createdAt={post.createdAt} />
-        </CardActions>
-      </Card>
-    </div>
+        </div>
+        <div className={classes.actionsRight}>
+          <Tips />
+          <Subscribe />
+        </div>
+      </CardActions>
+    </Card>
   );
 };
 

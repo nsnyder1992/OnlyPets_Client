@@ -9,10 +9,12 @@
 }
 
 nav {
+  display: flex;
+  justify-content: space-between;
   height: 50px;
   width: 100%;
-  min-width: 500px;
-  max-width: 2500px;
+  min-width: 100px;
+  max-width: 1250px;
   background-color: white;
 }
 

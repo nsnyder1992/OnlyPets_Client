@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Route, Link, Switch } from "react-router-dom";
 
 //material components
-import { Grid, IconButton } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
@@ -26,43 +26,29 @@ const Navbar = () => {
     <header>
       <div className="navbar">
         <nav>
-          <Grid container spacing={0}>
-            <Grid item xs={4} />
+          <Link to="/">
+            <IconButton>
+              <HomeOutlinedIcon />
+            </IconButton>{" "}
+          </Link>
 
-            <Grid item xs={1}>
-              <Link to="/">
-                <IconButton>
-                  <HomeOutlinedIcon />
-                </IconButton>{" "}
-              </Link>
-            </Grid>
+          <Link to="/post">
+            <IconButton>
+              <AddBoxOutlinedIcon />
+            </IconButton>
+          </Link>
 
-            <Grid item xs={1}>
-              <Link to="/post">
-                <IconButton>
-                  <AddBoxOutlinedIcon />
-                </IconButton>
-              </Link>
-            </Grid>
+          <Link to="/pet">
+            <IconButton>
+              <PetsOutlinedIcon />
+            </IconButton>
+          </Link>
 
-            <Grid item xs={1}>
-              <Link to="/pet">
-                <IconButton>
-                  <PetsOutlinedIcon />
-                </IconButton>
-              </Link>
-            </Grid>
-
-            <Grid item xs={1}>
-              <Link to="/profile">
-                <IconButton>
-                  <PersonOutlineIcon />
-                </IconButton>
-              </Link>
-            </Grid>
-
-            <Grid item xs={4} />
-          </Grid>
+          <Link to="/profile">
+            <IconButton>
+              <PersonOutlineIcon />
+            </IconButton>
+          </Link>
         </nav>
       </div>
 

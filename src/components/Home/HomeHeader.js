@@ -13,19 +13,19 @@ const HomeHeader = ({ type, setType }) => {
     <div>
       <header className="header">
         <Grid container spacing={2}>
-          <Grid item xs={3} />
-          <Grid item xs={2}>
+          <Grid item xs={1}>
             <Typography variant="h5">Home</Typography>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={3} />
+          <Grid item xs={4}>
             <IconButton className="button">
               <ExploreOutlinedIcon />
             </IconButton>
           </Grid>
+          <Grid item xs={2} />
           <Grid item xs={2}>
             <Categories type={type} setType={setType} />
           </Grid>
-          <Grid item xs={3} />
         </Grid>
       </header>
       <hr />

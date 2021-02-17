@@ -15,8 +15,9 @@ import Box from "@material-ui/core/Box";
 import { Button } from "@material-ui/core";
 
 //components
-import TimeAgo from "./TimeAgo";
 import Likes from "./Likes";
+import Tips from "./Tips";
+import TimeAgo from "./TimeAgo";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -98,6 +99,7 @@ const PostCard = ({ post, editPost, deletePost, likePost, unlikePost }) => {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
+          <Tips />
           <Likes
             id={post.id}
             likes={post.likes}

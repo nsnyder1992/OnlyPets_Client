@@ -11,7 +11,7 @@ const SelectPet = ({ pets, petId, setPetId }) => {
           labelId="pet-label"
           id="pet-select"
           disableUnderline
-          value={petId}
+          value={petId ? petId : null}
           onChange={(e) => setPetId(e.target.value)}
         >
           {/*hardcoded the below but will need to map over user pets in the

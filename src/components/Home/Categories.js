@@ -1,4 +1,4 @@
-import { Select, FormControl, InputLabel, MenuItem } from "@material-ui/core";
+import { Select, FormControl, MenuItem } from "@material-ui/core";
 
 //css
 import "./styles/Categories.css";

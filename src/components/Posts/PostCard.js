@@ -1,4 +1,6 @@
-import { makeStyles, StylesProvider } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -19,6 +21,7 @@ import Likes from "./Likes";
 import Tips from "./Tips";
 import Subscribe from "./Subscribe";
 import TimeAgo from "./TimeAgo";
+import { useEffect, useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,6 +52,16 @@ const useStyles = makeStyles((theme) => ({
 
 const PostCard = ({ post, editPost, deletePost, likePost, unlikePost }) => {
   const classes = useStyles();
+  const [urlArray, setUrlArray] = useState();
+
+  const getEditUrl = () => {
+    let url = post.photoUrl.split("upload")[1];
+    setUrlArray(url.split("/"));
+  };
+
+  useEffect(() => {
+    getEditUrl();
+  }, []);
 
   return (
     <Card className={classes.root}>
@@ -77,7 +90,11 @@ const PostCard = ({ post, editPost, deletePost, likePost, unlikePost }) => {
                   }}
                 >
                   <Box p={2}>
-                    <Button onClick={() => editPost(post.id)}>Edit</Button>
+                    <Link
+                      to={`/editPost/${post.petId}/${post.description}/${urlArray}`}
+                    >
+                      <Button>Edit</Button>
+                    </Link>
                     <Button onClick={() => deletePost(post.id)}>Delete</Button>
                   </Box>
                 </Popover>

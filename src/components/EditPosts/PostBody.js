@@ -10,6 +10,7 @@ import "./styles/PostBody.css";
 
 const PostBody = ({
   fileUrl,
+  description,
   setDescription,
   setFileUrl,
   pets,
@@ -23,7 +24,7 @@ const PostBody = ({
       <input
         id="description-textarea"
         placeholder="Add a Description..."
-        // className="row"
+        value={description ? description : null}
         onChange={(e) => setDescription(e.target.value)}
       />
 

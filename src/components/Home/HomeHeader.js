@@ -1,4 +1,4 @@
-import { Grid, Typography, IconButton, Button } from "@material-ui/core";
+import { Grid, Typography, IconButton } from "@material-ui/core";
 import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
 import PetsOutlinedIcon from "@material-ui/icons/PetsOutlined";
 

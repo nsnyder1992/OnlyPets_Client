@@ -1,13 +1,17 @@
 //components
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HomeHeader from "./Home/HomeHeader";
 import Posts from "./Posts/Posts";
 
 //css
 import "./styles/Layouts.css";
 
-const Home = () => {
+const Home = ({ setRoute }) => {
   const [type, setType] = useState("all");
+
+  useEffect(() => {
+    setRoute("/");
+  }, []);
 
   return (
     <div className="home">

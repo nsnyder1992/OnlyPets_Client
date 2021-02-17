@@ -1,12 +1,13 @@
 import { Typography } from "@material-ui/core";
 
 //components
+import HomeHeader from "./Home/HomeHeader";
 import Posts from "./Posts/Posts";
 
 const Home = () => {
   return (
     <div>
-      <Typography variant="h5">Home</Typography>
+      <HomeHeader />
       <Posts />
     </div>
   );

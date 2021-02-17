@@ -27,35 +27,35 @@ const Navbar = () => {
             <Grid item xs={4} />
 
             <Grid item xs={1}>
-              <IconButton>
-                <Link to="/">
-                  <HomeOutlinedIcon style={{ fontSize: 27 }} />
-                </Link>
-              </IconButton>
+              <Link to="/">
+                <IconButton>
+                  <HomeOutlinedIcon />
+                </IconButton>{" "}
+              </Link>
             </Grid>
 
             <Grid item xs={1}>
-              <IconButton>
-                <Link to="/post">
-                  <AddBoxOutlinedIcon style={{ fontSize: 27 }} />
-                </Link>
-              </IconButton>
+              <Link to="/post">
+                <IconButton>
+                  <AddBoxOutlinedIcon />
+                </IconButton>
+              </Link>
             </Grid>
 
             <Grid item xs={1}>
-              <IconButton>
-                <Link to="/pet">
-                  <PetsOutlinedIcon style={{ fontSize: 27 }} />
-                </Link>
-              </IconButton>
+              <Link to="/pet">
+                <IconButton>
+                  <PetsOutlinedIcon />
+                </IconButton>
+              </Link>
             </Grid>
 
             <Grid item xs={1}>
-              <IconButton>
-                <Link to="/profile">
-                  <PersonOutlineIcon style={{ fontSize: 27 }} />
-                </Link>
-              </IconButton>
+              <Link to="/profile">
+                <IconButton>
+                  <PersonOutlineIcon />
+                </IconButton>
+              </Link>
             </Grid>
 
             <Grid item xs={4} />

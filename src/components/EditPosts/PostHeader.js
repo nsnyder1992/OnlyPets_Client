@@ -18,8 +18,8 @@ const PostHeader = ({ petId, fileUrl, handleSubmit }) => {
           >
             Post
           </Button>
-          <Grid item xs={1} />
         </Grid>
+        <Grid item xs={1} />
       </Grid>
     </header>
   );

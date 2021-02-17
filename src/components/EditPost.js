@@ -58,8 +58,8 @@ const EditPost = (props) => {
       });
       const cloudinaryJson = await cloudinaryRes.json();
 
-      const postRes = await fetch(`http://localhost:3001/post/`, {
-        method: "Post",
+      const postRes = await fetch(`http://localhost:3001/post/${postId}`, {
+        method: "PUT",
         body: JSON.stringify({
           photoUrl: cloudinaryJson.url,
           description: description,

@@ -91,7 +91,7 @@ const PostCard = ({ post, editPost, deletePost, likePost, unlikePost }) => {
                 >
                   <Box p={2}>
                     <Link
-                      to={`/editPost/${post.petId}/${post.description}/${urlArray}`}
+                      to={`/editPost/${post.id}/${post.petId}/${post.description}/${urlArray}`}
                     >
                       <Button>Edit</Button>
                     </Link>

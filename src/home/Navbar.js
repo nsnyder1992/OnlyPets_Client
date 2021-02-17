@@ -80,7 +80,7 @@ const Navbar = () => {
           <Route exact path="/post">
             <NewPost route={route} setRoute={setRoute} />
           </Route>
-          <Route path="/editPost/:id/:desc/:file">
+          <Route path="/editPost/:postId/:id/:desc/:file">
             <EditPost route={route} setRoute={setRoute} />
           </Route>
           <Route exact path="/pet">

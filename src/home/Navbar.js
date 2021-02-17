@@ -8,7 +8,7 @@ import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import PetsOutlinedIcon from "@material-ui/icons/PetsOutlined";
 
 //components
-import Home from "../components/Home/Home";
+import Home from "../components/Home";
 import NewPost from "../components/NewPost/NewPost";
 import YourPets from "../components/YourPets/YourPets";
 import Profile from "../components/Profile/Profile";

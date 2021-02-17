@@ -8,11 +8,15 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { indigo } from "@material-ui/core/colors";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import Popover from "@material-ui/core/Popover";
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Box from "@material-ui/core/Box";
+import { Button } from "@material-ui/core";
+
+//components
+import TimeAgo from "./TimeAgo";
+import Likes from "./Likes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PostCard = ({ post, setPosts, index }) => {
+const PostCard = ({ post, editPost, deletePost, likePost, unlikePost }) => {
   const classes = useStyles();
 
   return (
@@ -71,8 +75,10 @@ const PostCard = ({ post, setPosts, index }) => {
                     }}
                   >
                     <Box p={2}>
-                      <Typography>Edit</Typography>
-                      <Typography>Delete</Typography>
+                      <Button onClick={() => editPost(post.id)}>Edit</Button>
+                      <Button onClick={() => deletePost(post.id)}>
+                        Delete
+                      </Button>
                     </Box>
                   </Popover>
                 </div>
@@ -92,13 +98,13 @@ const PostCard = ({ post, setPosts, index }) => {
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-            <Typography>{post.likes}</Typography>
-          </IconButton>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {post.createdAt}
-          </Typography>
+          <Likes
+            id={post.id}
+            likes={post.likes}
+            likePost={likePost}
+            unlikePost={unlikePost}
+          />
+          <TimeAgo createdAt={post.createdAt} />
         </CardActions>
       </Card>
     </div>

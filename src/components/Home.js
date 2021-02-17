@@ -1,7 +1,7 @@
 import { Typography } from "@material-ui/core";
 
 //components
-import Posts from "./Posts";
+import Posts from "./Posts/Posts";
 
 const Home = () => {
   return (

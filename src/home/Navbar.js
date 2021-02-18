@@ -28,25 +28,25 @@ const Navbar = () => {
         <nav>
           <Link to="/">
             <IconButton>
-              <HomeOutlinedIcon />
+              <HomeOutlinedIcon style={{ fontSize: 30 }} />
             </IconButton>{" "}
           </Link>
 
           <Link to="/post">
             <IconButton>
-              <AddBoxOutlinedIcon />
+              <AddBoxOutlinedIcon style={{ fontSize: 30 }} />
             </IconButton>
           </Link>
 
           <Link to="/pet">
             <IconButton>
-              <PetsOutlinedIcon />
+              <PetsOutlinedIcon style={{ fontSize: 30 }} />
             </IconButton>
           </Link>
 
           <Link to="/profile">
             <IconButton>
-              <PersonOutlineIcon />
+              <PersonOutlineIcon style={{ fontSize: 30 }} />
             </IconButton>
           </Link>
         </nav>

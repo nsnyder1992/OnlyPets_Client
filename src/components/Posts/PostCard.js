@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PostCard = ({ post, editPost, deletePost, likePost, unlikePost }) => {
+const PostCard = ({ post, deletePost }) => {
   const classes = useStyles();
   const [urlArray, setUrlArray] = useState();
 
@@ -95,7 +95,9 @@ const PostCard = ({ post, editPost, deletePost, likePost, unlikePost }) => {
                     >
                       <Button>Edit</Button>
                     </Link>
-                    <Button onClick={() => deletePost(post.id)}>Delete</Button>
+                    <Button onClick={() => deletePost(post.id, post)}>
+                      Delete
+                    </Button>
                   </Box>
                 </Popover>
               </div>
@@ -116,12 +118,7 @@ const PostCard = ({ post, editPost, deletePost, likePost, unlikePost }) => {
       </CardContent>
       <CardActions disableSpacing className={classes.actions}>
         <div className={classes.actionsLeft}>
-          <Likes
-            id={post.id}
-            likes={post.likes}
-            likePost={likePost}
-            unlikePost={unlikePost}
-          />
+          <Likes id={post.id} likes={post.likes} />
           <TimeAgo createdAt={post.createdAt} />
         </div>
         <div className={classes.actionsRight}>

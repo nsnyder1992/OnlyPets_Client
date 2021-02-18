@@ -15,6 +15,10 @@ const Posts = () => {
     switch (action.type) {
       case "STACK_IMAGES":
         return { ...state, images: state.images.concat(action.images) };
+      case "DELETE_IMAGE":
+        const index = state.images.indexOf(action.post);
+        state.images.splice(index, 1);
+        return { ...state, images: state.images };
       case "FETCHING_IMAGES":
         return { ...state, fetching: action.fetching };
       default:
@@ -55,7 +59,7 @@ const Posts = () => {
       });
   };
 
-  const deletePost = (postId) => {
+  const deletePost = (postId, post) => {
     fetch(`http://localhost:3001/post/${postId}`, {
       method: "DELETE",
       headers: new Headers({
@@ -64,47 +68,14 @@ const Posts = () => {
     })
       .then((res) => res.json())
       .then((json) => {
-        getPosts();
-      })
-      .catch((err) => console.error(err));
-  };
-
-  const editPost = (postId) => {
-    console.log(postId);
-  };
-
-  const likePost = (postId) => {
-    fetch(`http://localhost:3001/post/like/${postId}`, {
-      method: "PUT",
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        getPosts();
-        console.log(json);
-      })
-      .catch((err) => console.error(err));
-  };
-
-  const unlikePost = (postId) => {
-    fetch(`http://localhost:3001/post/unlike/${postId}`, {
-      method: "PUT",
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        getPosts();
-        console.log(json);
+        imgDispatch({ type: "DELETE_IMAGE", post: post });
       })
       .catch((err) => console.error(err));
   };
 
   useEffect(async () => {
     imgDispatch({ type: "FETCHING_IMAGES", fetching: true });
+    console.log("fetching");
     getPosts();
   }, [imgDispatch, pager.page]);
 
@@ -128,16 +99,7 @@ const Posts = () => {
   return (
     <div class="posts">
       {imgData?.images.map((post, index) => {
-        return (
-          <PostCard
-            post={post}
-            editPost={editPost}
-            deletePost={deletePost}
-            likePost={likePost}
-            unlikePost={unlikePost}
-            key={index}
-          />
-        );
+        return <PostCard post={post} deletePost={deletePost} key={index} />;
       })}
       <div id="page-bottom-boundary" ref={bottomBoundaryRef}></div>
     </div>

@@ -6,18 +6,42 @@ import "fontsource-roboto";
 
 // A component import
 import Navbar from "./home/Navbar";
+import { useState } from "react";
 
 // Defining our <App /> component the function name matches the file name
 function App() {
+  document.title = "JustPets";
+  const tempToken =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJuaWNrQHRlc3QuY29tIiwiaWF0IjoxNjEzNjgyMDczLCJleHAiOjE2MTM3Njg0NzN9.AhJwMo7x28FRB4_uEvTvIQ48XUhe4v3MGP7YTRl4e3s";
+  const tempToken2 =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJuaWNrMkB0ZXN0LmNvbSIsImlhdCI6MTYxMzY4MzMxNiwiZXhwIjoxNjEzNzY5NzE2fQ.kRcFjPe9b7CeMG96CpMUYjDYJj_VIa4AyYLhbo4-61I";
+  const [sessionToken, setSessionToken] = useState(tempToken2);
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     setSessionToken(localStorage.getItem("token"));
+  //   }
+  // }, []);
+
+  // const updateToken = (newToken) => {
+  //   localStorage.setItem("token", newToken);
+  //   setSessionToken(newToken);
+  //   console.log(sessionToken);
+  // };
+
+  // const clearToken = () => {
+  //   localStorage.clear();
+  //   setSessionToken("");
+  // };
+
   // All functional components need to return jsx with one parent element
   return (
     <div className="App">
-      {" "}
       {/* Parent Element. Also we can't use the word class, so we use className in jsx*/}
       {/* Navbar is our imported component*/}
       <Router>
         <div>
-          <Navbar />
+          <Navbar sessionToken={sessionToken} />
         </div>
       </Router>
     </div>

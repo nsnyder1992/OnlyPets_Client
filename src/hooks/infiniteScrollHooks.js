@@ -1,14 +1,19 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
 // make API calls and pass the returned data via dispatch
-export const useFetch = (array, data, dispatch, fetchUrl) => {
+export const useFetch = (array, data, dispatch, fetchUrl, sessionToken) => {
   //states
   const [totalPosts, setTotalPosts] = useState();
 
   useEffect(() => {
     if (array.length >= totalPosts) return;
     dispatch({ type: "FETCHING_IMAGES", fetching: true });
-    fetch(fetchUrl)
+    fetch(fetchUrl, {
+      method: "GET",
+      headers: new Headers({
+        authorization: sessionToken,
+      }),
+    })
       .then((data) => data.json())
       .then((json) => {
         setTotalPosts(json.total);
@@ -21,6 +26,21 @@ export const useFetch = (array, data, dispatch, fetchUrl) => {
         return e;
       });
   }, [dispatch, data.page]);
+};
+
+export const deleteFromDispatch = (post, dispatch, fetchUrl, sessionToken) => {
+  fetch(fetchUrl, {
+    method: "DELETE",
+    headers: new Headers({
+      "Content-Type": "application/json",
+      authorization: sessionToken,
+    }),
+  })
+    .then((res) => res.json())
+    .then((json) => {
+      dispatch({ type: "DELETE_IMAGE", post: post });
+    })
+    .catch((err) => console.error(err));
 };
 
 // infinite scrolling with intersection observer

@@ -4,12 +4,16 @@ import { useReducer, useRef } from "react";
 import PostCard from "./PostCard";
 
 //import hooks
-import { useFetch, useInfiniteScroll } from "../../hooks/infiniteScrollHooks";
+import {
+  useFetch,
+  useInfiniteScroll,
+  deleteFromDispatch,
+} from "../../hooks/infiniteScrollHooks";
 
 //css
 import "./styles/Posts.css";
 
-const Posts = () => {
+const Posts = ({ sessionToken }) => {
   //reducers
   const postReducer = (state, action) => {
     switch (action.type) {
@@ -47,30 +51,32 @@ const Posts = () => {
     postData.posts,
     pager,
     postDispatch,
-    `http://localhost:3001/post/${pager.page}/${4}`
+    `http://localhost:3001/post/${pager.page}/${4}`,
+    sessionToken
   );
+
+  const deletePost = (postId, post) =>
+    deleteFromDispatch(
+      post,
+      postDispatch,
+      `http://localhost:3001/post/${postId}`,
+      sessionToken
+    );
 
   let bottomBoundaryRef = useRef(null);
   useInfiniteScroll(bottomBoundaryRef, pagerDispatch);
 
-  const deletePost = (postId, post) => {
-    fetch(`http://localhost:3001/post/${postId}`, {
-      method: "DELETE",
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        postDispatch({ type: "DELETE_IMAGE", post: post });
-      })
-      .catch((err) => console.error(err));
-  };
-
   return (
     <div className="posts">
       {postData?.posts.map((post, index) => {
-        return <PostCard post={post} deletePost={deletePost} key={index} />;
+        return (
+          <PostCard
+            post={post}
+            deletePost={deletePost}
+            key={index}
+            sessionToken={sessionToken}
+          />
+        );
       })}
       <div id="page-bottom-boundary" ref={bottomBoundaryRef}></div>
     </div>

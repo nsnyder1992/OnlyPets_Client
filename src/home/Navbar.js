@@ -19,7 +19,7 @@ import Profile from "../components/Profile";
 import "./Navbar.css";
 
 // Function name matches file name
-const Navbar = () => {
+const Navbar = ({ sessionToken }) => {
   const [route, setRoute] = useState("/");
   // return must have one parent element
   return (
@@ -61,22 +61,46 @@ const Navbar = () => {
       <div className="apps">
         <Switch>
           <Route exact path="/">
-            <Home route={route} setRoute={setRoute} />
+            <Home
+              route={route}
+              setRoute={setRoute}
+              sessionToken={sessionToken}
+            />
           </Route>
           <Route exact path="/post">
-            <NewPost route={route} setRoute={setRoute} />
+            <NewPost
+              route={route}
+              setRoute={setRoute}
+              sessionToken={sessionToken}
+            />
           </Route>
           <Route path="/editPost/:postId/:id/:desc/:file">
-            <EditPost route={route} setRoute={setRoute} />
+            <EditPost
+              route={route}
+              setRoute={setRoute}
+              sessionToken={sessionToken}
+            />
           </Route>
           <Route exact path="/pet">
-            <YourPets route={route} setRoute={setRoute} />
+            <YourPets
+              route={route}
+              setRoute={setRoute}
+              sessionToken={sessionToken}
+            />
           </Route>
           <Route exact path="/editPet">
-            <YourPets route={route} setRoute={setRoute} />
+            <YourPets
+              route={route}
+              setRoute={setRoute}
+              sessionToken={sessionToken}
+            />
           </Route>
           <Route exact path="/profile">
-            <Profile route={route} setRoute={setRoute} />
+            <Profile
+              route={route}
+              setRoute={setRoute}
+              sessionToken={sessionToken}
+            />
           </Route>
         </Switch>
       </div>

@@ -39,7 +39,12 @@ const EditPost = (props) => {
       let formData = new FormData();
       let filename = file.name.split(".")[0];
 
-      const res = await fetch(`${backend}/${filename}`);
+      const res = await fetch(`${backend}/${filename}`, {
+        method: "GET",
+        headers: new Headers({
+          authorization: props.sessionToken,
+        }),
+      });
       const json = await res.json();
 
       //set form data
@@ -66,6 +71,7 @@ const EditPost = (props) => {
         }),
         headers: new Headers({
           "Content-Type": "application/json",
+          authorization: props.sessionToken,
         }),
       });
 
@@ -82,6 +88,7 @@ const EditPost = (props) => {
       }),
       headers: new Headers({
         "Content-Type": "application/json",
+        authorization: props.sessionToken,
       }),
     });
 

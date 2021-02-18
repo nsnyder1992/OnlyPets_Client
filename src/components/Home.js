@@ -6,7 +6,7 @@ import Posts from "./Posts/Posts";
 //css
 import "./styles/Layouts.css";
 
-const Home = ({ setRoute }) => {
+const Home = ({ setRoute, sessionToken }) => {
   const [type, setType] = useState("all");
 
   useEffect(() => {
@@ -15,8 +15,8 @@ const Home = ({ setRoute }) => {
 
   return (
     <div className="home">
-      <HomeHeader type={type} setType={setType} />
-      <Posts />
+      <HomeHeader type={type} setType={setType} sessionToken={sessionToken} />
+      <Posts sessionToken={sessionToken} />
     </div>
   );
 };

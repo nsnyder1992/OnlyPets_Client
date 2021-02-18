@@ -3,7 +3,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 
-const Likes = ({ id, likes }) => {
+const Likes = ({ id, likes, sessionToken }) => {
   const [numLikes, setNumLikes] = useState(likes);
   const [liked, setLiked] = useState(false);
 
@@ -23,6 +23,7 @@ const Likes = ({ id, likes }) => {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
+        authorization: sessionToken,
       }),
     })
       .then((res) => res.json())
@@ -38,6 +39,7 @@ const Likes = ({ id, likes }) => {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
+        authorization: sessionToken,
       }),
     })
       .then((res) => res.json())
@@ -53,6 +55,7 @@ const Likes = ({ id, likes }) => {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",
+        authorization: sessionToken,
       }),
     })
       .then((res) => res.json())

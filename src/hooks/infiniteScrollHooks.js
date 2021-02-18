@@ -1,14 +1,10 @@
-import { useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 // make API calls and pass the returned data via dispatch
-export const useFetch = (
-  array,
-  totalPosts,
-  setTotalPosts,
-  data,
-  dispatch,
-  fetchUrl
-) => {
+export const useFetch = (array, data, dispatch, fetchUrl) => {
+  //states
+  const [totalPosts, setTotalPosts] = useState();
+
   useEffect(() => {
     if (array.length >= totalPosts) return;
     dispatch({ type: "FETCHING_IMAGES", fetching: true });
@@ -17,7 +13,6 @@ export const useFetch = (
       .then((json) => {
         setTotalPosts(json.total);
         const posts = json.posts;
-        console.log(json);
         dispatch({ type: "STACK_IMAGES", posts });
         dispatch({ type: "FETCHING_IMAGES", fetching: false });
       })

@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useCallback, useRef, useState } from "react";
+import { useReducer, useRef } from "react";
 
 //import components
 import PostCard from "./PostCard";
@@ -10,9 +10,6 @@ import { useFetch, useInfiniteScroll } from "../../hooks/infiniteScrollHooks";
 import "./styles/Posts.css";
 
 const Posts = () => {
-  //states
-  const [totalPosts, setTotalPosts] = useState();
-
   //reducers
   const postReducer = (state, action) => {
     switch (action.type) {
@@ -32,7 +29,6 @@ const Posts = () => {
   const pageReducer = (state, action) => {
     switch (action.type) {
       case "ADVANCE_PAGE":
-        console.log(action.type);
         return { ...state, page: state.page + 1 };
       default:
         return state;
@@ -48,8 +44,6 @@ const Posts = () => {
 
   useFetch(
     postData.posts,
-    totalPosts,
-    setTotalPosts,
     pager,
     postDispatch,
     `http://localhost:3001/post/${pager.page}/${4}`

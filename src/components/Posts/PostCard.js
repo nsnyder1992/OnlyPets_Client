@@ -106,11 +106,7 @@ const PostCard = ({ post, deletePost }) => {
         }
       />
 
-      <CardMedia
-        className={classes.media}
-        image={post.photoUrl}
-        title="Paella dish"
-      />
+      <CardMedia className={classes.media} image={post.photoUrl} />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           {post.description}

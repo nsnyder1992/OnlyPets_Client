@@ -35,6 +35,7 @@ const Posts = () => {
     }
   };
 
+  //use reducers
   const [postData, postDispatch] = useReducer(postReducer, {
     posts: [],
     fetching: true,
@@ -67,7 +68,7 @@ const Posts = () => {
   };
 
   return (
-    <div class="posts">
+    <div className="posts">
       {postData?.posts.map((post, index) => {
         return <PostCard post={post} deletePost={deletePost} key={index} />;
       })}

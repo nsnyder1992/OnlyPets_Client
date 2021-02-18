@@ -57,7 +57,7 @@ const EditPost = (props) => {
       });
       const cloudinaryJson = await cloudinaryRes.json();
 
-      const postRes = await fetch(`http://localhost:3001/post/${postId}`, {
+      await fetch(`http://localhost:3001/post/${postId}`, {
         method: "PUT",
         body: JSON.stringify({
           photoUrl: cloudinaryJson.url,
@@ -68,12 +68,12 @@ const EditPost = (props) => {
           "Content-Type": "application/json",
         }),
       });
-      const postJson = await postRes.json();
+
       history.push("/");
       return;
     }
 
-    const postRes = await fetch(`http://localhost:3001/post/${postId}`, {
+    await fetch(`http://localhost:3001/post/${postId}`, {
       method: "PUT",
       body: JSON.stringify({
         photoUrl: fileUrl,
@@ -85,7 +85,6 @@ const EditPost = (props) => {
       }),
     });
 
-    const postJson = await postRes.json();
     history.push("/");
   };
 

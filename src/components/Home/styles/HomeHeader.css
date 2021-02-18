@@ -1,5 +1,6 @@
 .header {
   height: 50px;
+  margin: 12px 0px 3px;
 }
 
 hr {
@@ -8,5 +9,5 @@ hr {
 
 .button {
   position: relative;
-  top: -5px;
+  top: -7px;
 }

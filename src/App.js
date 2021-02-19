@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 
 // adding css to jsx is that easy
@@ -6,7 +7,7 @@ import "fontsource-roboto";
 
 // A component import
 import Navbar from "./home/Navbar";
-import { useState } from "react";
+import Auth from "./components/SignupLogin/Auth";
 
 // Defining our <App /> component the function name matches the file name
 function App() {
@@ -45,6 +46,7 @@ function App() {
       <Router>
         <div>
           <Navbar sessionToken={sessionToken} />
+          <Auth />
         </div>
       </Router>
     </div>

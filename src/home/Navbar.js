@@ -9,11 +9,11 @@ import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import PetsOutlinedIcon from "@material-ui/icons/PetsOutlined";
 
 //components
-import Home from "../components/Home";
+import Home from "../components/Home/Home";
 import AddNew from "../components/AddNew/AddNew";
 import EditPost from "../components/EditPosts/EditPost";
-import YourPets from "../components/YourPets";
-import Profile from "../components/Profile";
+import YourPets from "../components/YourPets/YourPets";
+import Profile from "../components/Profile/Profile";
 
 //css
 import "./Navbar.css";

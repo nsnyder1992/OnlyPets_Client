@@ -11,12 +11,15 @@ import { useState } from "react";
 // Defining our <App /> component the function name matches the file name
 function App() {
   document.title = "JustPets";
+
+  //set temporary tokens here until we get a working login!!!!
   const tempToken =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJuaWNrQHRlc3QuY29tIiwiaWF0IjoxNjEzNjgyMDczLCJleHAiOjE2MTM3Njg0NzN9.AhJwMo7x28FRB4_uEvTvIQ48XUhe4v3MGP7YTRl4e3s";
   const tempToken2 =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJuaWNrMkB0ZXN0LmNvbSIsImlhdCI6MTYxMzY4MzMxNiwiZXhwIjoxNjEzNzY5NzE2fQ.kRcFjPe9b7CeMG96CpMUYjDYJj_VIa4AyYLhbo4-61I";
   const [sessionToken, setSessionToken] = useState(tempToken2);
 
+  // uncomment for login, siginup and authorization, wants we get a working login
   // useEffect(() => {
   //   if (localStorage.getItem("token")) {
   //     setSessionToken(localStorage.getItem("token"));

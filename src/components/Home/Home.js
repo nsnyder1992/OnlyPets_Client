@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
 //components
-import HomeHeader from "./Home/HomeHeader";
-import Posts from "./Posts/Posts";
-import Pets from "./Pets/Pets.js";
+import HomeHeader from "./HomeHeader";
+import Posts from "../Posts/Posts";
+import Pets from "../Pets/Pets.js";
 
 //css
-import "./styles/Layouts.css";
+import "../styles/Layouts.css";
 
 const Home = ({ setRoute, sessionToken }) => {
   const [type, setType] = useState("all");

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 //components
 import PostHeader from "./EditPosts/PostHeader";
@@ -8,6 +9,9 @@ import PostBody from "./EditPosts/PostBody";
 import "./styles/Layouts.css";
 
 const NewPost = (props) => {
+  // history
+  const history = useHistory();
+
   //file states
   const [fileUrl, setFileUrl] = useState();
 
@@ -64,6 +68,7 @@ const NewPost = (props) => {
     });
     const postJson = await postRes.json();
     console.log(postJson);
+    history.push("/");
   };
 
   return (

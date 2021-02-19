@@ -28,19 +28,53 @@ export const useFetch = (array, data, dispatch, fetchUrl, sessionToken) => {
   }, [dispatch, data.page]);
 };
 
-export const deleteFromDispatch = (post, dispatch, fetchUrl, sessionToken) => {
-  fetch(fetchUrl, {
+export const deleteFromDispatch = async (
+  post,
+  dispatch,
+  fetchUrl,
+  sigUrl,
+  cloudinaryUrl,
+  sessionToken
+) => {
+  let folder = post?.photoUrl.split("/")[7];
+  let public_id = post?.photoUrl.split("/")[8];
+
+  //get cloudinary security from backend
+  const res = await fetch(`${sigUrl}/${folder}/${public_id}`, {
+    method: "GET",
+    headers: new Headers({
+      authorization: sessionToken,
+    }),
+  });
+  const json = await res.json();
+
+  //set form data
+  let formData = new FormData();
+  formData.append("api_key", json.key);
+  formData.append("timestamp", json.timestamp);
+  // formData.append("folder", json.folder);
+  formData.append("public_id", json.public_id);
+  formData.append("invalidate", json.invalidate);
+  formData.append("signature", json.signature);
+
+  //post to cloudinary and get url for storage
+  const cloudinaryRes = await fetch(cloudinaryUrl, {
+    method: "POST",
+    body: formData,
+  });
+  const cloudinaryJson = await cloudinaryRes.json();
+  console.log(cloudinaryJson);
+
+  const postRes = await fetch(fetchUrl, {
     method: "DELETE",
     headers: new Headers({
       "Content-Type": "application/json",
       authorization: sessionToken,
     }),
-  })
-    .then((res) => res.json())
-    .then((json) => {
-      dispatch({ type: "DELETE_IMAGE", post: post });
-    })
-    .catch((err) => console.error(err));
+  });
+  await dispatch({ type: "DELETE_IMAGE", post: post });
+  const postJson = await postRes.json();
+  console.log(postJson);
 };
 
 // infinite scrolling with intersection observer

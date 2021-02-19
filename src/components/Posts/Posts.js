@@ -55,13 +55,21 @@ const Posts = ({ sessionToken }) => {
     sessionToken
   );
 
-  const deletePost = (postId, post) =>
+  const backend = "http://localhost:3001/post/cloudinary/delete";
+  const cloudinaryUrl =
+    "https://api.cloudinary.com/v1_1/nsnyder1992/image/destroy";
+
+  const deletePost = (postId, post) => {
+    const deleteUrl = `http://localhost:3001/post/${postId}`;
     deleteFromDispatch(
       post,
       postDispatch,
-      `http://localhost:3001/post/${postId}`,
+      deleteUrl,
+      backend,
+      cloudinaryUrl,
       sessionToken
     );
+  };
 
   let bottomBoundaryRef = useRef(null);
   useInfiniteScroll(bottomBoundaryRef, pagerDispatch);

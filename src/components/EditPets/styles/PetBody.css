@@ -23,7 +23,7 @@ form {
 
 hr {
   width: 100%;
-  margin-top: 0px;
+  margin-top: 5px;
 }
 
 .container {
@@ -32,5 +32,5 @@ hr {
 
 .row {
   margin-top: 10px;
-  margin-bottom: 0px;
+  margin-bottom: 1px;
 }

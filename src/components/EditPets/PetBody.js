@@ -43,8 +43,6 @@ const PetBody = () => {
         <div className="row">
           <PetTypes type={type} setType={setType} />
         </div>
-
-        <div className="row"></div>
       </form>
       <hr />
     </div>

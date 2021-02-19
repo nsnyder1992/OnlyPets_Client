@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-import { Grid } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 
 //components
+import PetTypes from "./PetTypes";
 
 //css
 import "./styles/PetBody.css";
@@ -10,46 +11,43 @@ import "./styles/PetBody.css";
 const PetBody = () => {
   const [name, setName] = useState();
   const [description, setDescription] = useState();
+  const [type, setType] = useState("dog");
 
   return (
-    <form id="post-form">
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <input
+    <div className="container">
+      <form id="pet-form">
+        <div className="row">
+          <TextField
+            className="text-field"
             id="name"
-            placeholder="Add a Name..."
+            label="Pet Name"
+            fullWidth
             value={name ? name : null}
             onChange={(e) => setName(e.target.value)}
+            variant="outlined"
           />
-        </Grid>
-        <Grid item xs={12}>
-          <input
+        </div>
+        <div className="row">
+          <TextField
+            className="text-field"
             id="description"
-            placeholder="Add a Description..."
+            multiline
+            rows={2}
+            label="Description"
+            fullWidth
             value={description ? description : null}
             onChange={(e) => setDescription(e.target.value)}
+            variant="outlined"
           />
-        </Grid>
-        <Grid item xs={12}>
-          <input
-            id="type"
-            placeholder="Add a Type..."
-            value={description ? description : null}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <input
-            id="money"
-            placeholder="Add a Money to Subscribe..."
-            value={description ? description : null}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-        </Grid>
-      </Grid>
+        </div>
+        <div className="row">
+          <PetTypes type={type} setType={setType} />
+        </div>
+
+        <div className="row"></div>
+      </form>
       <hr />
-      <div className="row"></div>
-    </form>
+    </div>
   );
 };
 

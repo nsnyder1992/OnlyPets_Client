@@ -1,0 +1,8 @@
+#type-select-form {
+  min-width: 50px;
+  width: 100%;
+}
+
+#type-select {
+  text-align: left;
+}

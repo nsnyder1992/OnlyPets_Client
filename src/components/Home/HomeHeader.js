@@ -1,5 +1,6 @@
-import { Grid, Typography, IconButton } from "@material-ui/core";
+import { Grid, Typography, IconButton, Link } from "@material-ui/core";
 import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
+import SubjectOutlinedIcon from "@material-ui/icons/SubjectOutlined";
 
 //components
 import Categories from "./Categories";
@@ -7,7 +8,7 @@ import Categories from "./Categories";
 //css
 import "./styles/HomeHeader.css";
 
-const HomeHeader = ({ type, setType }) => {
+const HomeHeader = ({ type, setType, toggleView, viewPosts }) => {
   return (
     <div>
       <header className="header">
@@ -17,8 +18,8 @@ const HomeHeader = ({ type, setType }) => {
           </Grid>
           <Grid item xs={3} />
           <Grid item xs={4}>
-            <IconButton className="button">
-              <ExploreOutlinedIcon />
+            <IconButton className="button" onClick={toggleView}>
+              {viewPosts ? <ExploreOutlinedIcon /> : <SubjectOutlinedIcon />}
             </IconButton>
           </Grid>
           <Grid item xs={2} />

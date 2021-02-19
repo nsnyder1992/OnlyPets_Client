@@ -1,9 +1,18 @@
-.create-post {
-  width: 85%;
-  max-width: 1450px;
-}
-
 .home {
   width: 85%;
   max-width: 1250px;
+}
+
+.add-new {
+  width: 85%;
+  max-width: 1250px;
+}
+
+.create-post-pet {
+  width: 100%;
+  max-width: 1250px;
+}
+
+.create-post {
+  width: 100%;
 }

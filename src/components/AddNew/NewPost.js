@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 //components
-import PostHeader from "./EditPosts/PostHeader";
-import PostBody from "./EditPosts/PostBody";
+import PostHeader from "../EditPosts/PostHeader";
+import PostBody from "../EditPosts/PostBody";
 
 //css
-import "./styles/Layouts.css";
+import "../styles/Layouts.css";
 
 const NewPost = (props) => {
   // history

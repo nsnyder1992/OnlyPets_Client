@@ -58,8 +58,8 @@ const Subscribe = ({ id, sessionToken }) => {
     })
       .then((res) => res.json())
       .then((json) => {
-        let likes = json.numSub ? json.numSub : 0;
-        setNumSubs(likes);
+        let numSub = json.numSub ? json.numSub : 0;
+        setNumSubs(numSub);
         setIsSubed(json.userSub);
       })
       .catch((err) => console.error(err));
@@ -72,7 +72,6 @@ const Subscribe = ({ id, sessionToken }) => {
   return (
     <IconButton aria-label="add to favorites" onClick={handleSubscribe}>
       <SubscriptionsOutlinedIcon color={isSubed ? "primary" : "inherit"} />
-      <Typography>{numSubs}</Typography>
     </IconButton>
   );
 };

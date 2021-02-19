@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Route, Link, Switch } from "react-router-dom";
 
 //material components
-import { IconButton } from "@material-ui/core";
+import { Grid, IconButton } from "@material-ui/core";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
@@ -10,8 +10,8 @@ import PetsOutlinedIcon from "@material-ui/icons/PetsOutlined";
 
 //components
 import Home from "../components/Home";
-import NewPost from "../components/NewPost";
-import EditPost from "../components/EditPost";
+import AddNew from "../components/AddNew/AddNew";
+import EditPost from "../components/EditPosts/EditPost";
 import YourPets from "../components/YourPets";
 import Profile from "../components/Profile";
 
@@ -68,11 +68,7 @@ const Navbar = ({ sessionToken }) => {
             />
           </Route>
           <Route exact path="/post">
-            <NewPost
-              route={route}
-              setRoute={setRoute}
-              sessionToken={sessionToken}
-            />
+            <AddNew />
           </Route>
           <Route path="/editPost/:postId/:id/:desc/:file">
             <EditPost

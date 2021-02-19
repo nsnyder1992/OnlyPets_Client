@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 //components
-import EditHeader from "./EditPosts/EditHeader";
-import PostBody from "./EditPosts/PostBody";
+import EditHeader from "./EditHeader";
+import PostBody from "./PostBody";
 
 //css
-import "./styles/Layouts.css";
+import "../styles/Layouts.css";
 
 const EditPost = (props) => {
   //get params from url

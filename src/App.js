@@ -6,6 +6,7 @@ import "fontsource-roboto";
 
 // A component import
 import Navbar from "./home/Navbar";
+import Auth from "./components/SignupLogin/Auth";
 
 // Defining our <App /> component the function name matches the file name
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Router>
         <div>
           <Navbar />
+          <Auth />
         </div>
       </Router>
     </div>

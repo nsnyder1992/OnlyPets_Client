@@ -68,7 +68,11 @@ const Navbar = ({ sessionToken }) => {
             />
           </Route>
           <Route exact path="/post">
-            <AddNew />
+            <AddNew
+              route={route}
+              setRoute={setRoute}
+              sessionToken={sessionToken}
+            />
           </Route>
           <Route path="/editPost/:postId/:id/:desc/:file">
             <EditPost

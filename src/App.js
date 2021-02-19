@@ -17,7 +17,7 @@ function App() {
   const tempToken =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJuaWNrQHRlc3QuY29tIiwiaWF0IjoxNjEzNjgyMDczLCJleHAiOjE2MTM3Njg0NzN9.AhJwMo7x28FRB4_uEvTvIQ48XUhe4v3MGP7YTRl4e3s";
   const tempToken2 =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJuaWNrMkB0ZXN0LmNvbSIsImlhdCI6MTYxMzY4MzMxNiwiZXhwIjoxNjEzNzY5NzE2fQ.kRcFjPe9b7CeMG96CpMUYjDYJj_VIa4AyYLhbo4-61I";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJuaWNrMkB0ZXN0LmNvbSIsImlhdCI6MTYxMzc2MDQxMCwiZXhwIjoxNjEzODQ2ODEwfQ.M4Cn05Jx5Az7bRJ4aIGbqmwri1bIIQeh0AUbmnsfy8I";
   const [sessionToken, setSessionToken] = useState(tempToken2);
 
   // uncomment for login, siginup and authorization, wants we get a working login

@@ -20,6 +20,7 @@ const Posts = ({ sessionToken }) => {
       case "STACK_IMAGES":
         return { ...state, posts: state.posts.concat(action.posts) };
       case "DELETE_IMAGE":
+        console.log(action.post);
         const index = state.posts.indexOf(action.post);
         state.posts.splice(index, 1);
         return { ...state, posts: state.posts };

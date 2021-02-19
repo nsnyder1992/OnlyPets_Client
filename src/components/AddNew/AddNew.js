@@ -7,7 +7,7 @@ import AddNewHeader from "./AddNewHeader";
 import NewPost from "./NewPost";
 import NewPet from "./NewPet";
 
-const AddNew = ({ route, setRoute }) => {
+const AddNew = ({ route, setRoute, sessionToken }) => {
   const [viewPosts, setViewPosts] = useState(true); //true NewPost, false NewPet
   const toggleView = () => {
     setViewPosts(!viewPosts);
@@ -19,8 +19,20 @@ const AddNew = ({ route, setRoute }) => {
         <Grid container spacing={0}>
           <Grid item xs={2} />
           <Grid item xs={8}>
-            {viewPosts ? <NewPost route={route} setRoute={setRoute} /> : null}
-            {viewPosts ? null : <NewPet route={route} setRoute={setRoute} />}
+            {viewPosts ? (
+              <NewPost
+                route={route}
+                setRoute={setRoute}
+                sessionToken={sessionToken}
+              />
+            ) : null}
+            {viewPosts ? null : (
+              <NewPet
+                route={route}
+                setRoute={setRoute}
+                sessionToken={sessionToken}
+              />
+            )}
           </Grid>
           <Grid item xs={2} />
         </Grid>

@@ -3,8 +3,8 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 
-const Likes = ({ id, likes, sessionToken }) => {
-  const [numLikes, setNumLikes] = useState(likes);
+const Likes = ({ id, sessionToken }) => {
+  const [numLikes, setNumLikes] = useState();
   const [liked, setLiked] = useState(false);
 
   const handleLike = () => {

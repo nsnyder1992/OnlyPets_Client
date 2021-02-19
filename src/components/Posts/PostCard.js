@@ -119,7 +119,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
         </div>
         <div className={classes.actionsRight}>
           <Tips />
-          <Subscribe />
+          <Subscribe id={post.petId} sessionToken={sessionToken} />
         </div>
       </CardActions>
     </Card>

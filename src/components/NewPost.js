@@ -54,6 +54,7 @@ const NewPost = (props) => {
     });
     const cloudinaryJson = await cloudinaryRes.json();
 
+    //post to backend
     const postRes = await fetch("http://localhost:3001/post/", {
       method: "Post",
       body: JSON.stringify({

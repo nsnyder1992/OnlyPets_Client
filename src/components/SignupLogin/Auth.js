@@ -1,43 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
 
 import Signup from './Signup';
 import Login from './Login';
 
-const useStyles = makeStyles((theme) => ({
-    container: {
-        display: 'grid',
-        gridTemplateColumns: 'repeat(12, 1fr)',
-        gridGap: theme.spacing(3),
-    },
-    paper: {
-        padding: theme.spacing(1),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-        whiteSpace: 'nowrap',
-        marginBottom: theme.spacing(1),
-    },
-    divider: {
-        margin: theme.spacing(2, 0),
-    },
-}));
+import './styles/Auth.css'
+
 
 const Auth = (props) => {
-    const classes = useStyles();
+    const [authComp, setAuthComp] = useState(false)
+    const onClick = () => setAuthComp(!false)
 
     return (
-        <Grid className="auth-container" container spacing={2}>
-            <Grid container item xs={6}>
-                <Signup updateToken={props.updateToken} />
-            </Grid>
-            <Grid container item xs={6}>
-                <Login updateToken={props.updateToken} />
-            </Grid>
-        </Grid>
+        <div className="auth-container">
+            <Grid>
+                {authComp ? <Signup updateToken={props.updateToken} /> :
+                    <Login updateToken={props.updateToken} />}
+                {authComp ? <Button color="primary" onClick={onClick}>Already have an account? Login.</Button> :
+                    <Button color="primary" onClick={onClick}>Don't have an account yet? Sign up.</Button>}
 
+            </Grid>
+
+        </div>
     )
 }
 

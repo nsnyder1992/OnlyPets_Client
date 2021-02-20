@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PostCard = ({ post, deletePost }) => {
+const PostCard = ({ post, deletePost, sessionToken }) => {
   const classes = useStyles();
   const [urlArray, setUrlArray] = useState();
 
@@ -114,12 +114,12 @@ const PostCard = ({ post, deletePost }) => {
       </CardContent>
       <CardActions disableSpacing className={classes.actions}>
         <div className={classes.actionsLeft}>
-          <Likes id={post.id} likes={post.likes} />
+          <Likes id={post.id} likes={post.likes} sessionToken={sessionToken} />
           <TimeAgo createdAt={post.createdAt} />
         </div>
         <div className={classes.actionsRight}>
           <Tips />
-          <Subscribe />
+          <Subscribe id={post.petId} sessionToken={sessionToken} />
         </div>
       </CardActions>
     </Card>

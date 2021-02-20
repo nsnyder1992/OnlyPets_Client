@@ -1,0 +1,36 @@
+input {
+  border: none;
+  border-color: transparent;
+  font-size: 1rem;
+  margin-top: 15px;
+  margin-bottom: 6px;
+}
+
+input:focus {
+  border: none;
+  border-color: transparent;
+  outline: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-content: left;
+  flex-wrap: wrap;
+  margin: 10px 10px 0px;
+}
+
+hr {
+  width: 100%;
+  margin-top: 5px;
+}
+
+.container {
+  margin: 0px;
+}
+
+.row {
+  margin-top: 10px;
+  margin-bottom: 1px;
+}

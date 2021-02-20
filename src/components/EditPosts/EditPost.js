@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 //components
-import EditHeader from "./EditPosts/EditHeader";
-import PostBody from "./EditPosts/PostBody";
+import EditHeader from "./EditHeader";
+import PostBody from "./PostBody";
 
 //css
-import "./styles/Layouts.css";
+import "../styles/Layouts.css";
 
 const EditPost = (props) => {
   //get params from url
@@ -39,7 +39,12 @@ const EditPost = (props) => {
       let formData = new FormData();
       let filename = file.name.split(".")[0];
 
-      const res = await fetch(`${backend}/${filename}`);
+      const res = await fetch(`${backend}/${filename}`, {
+        method: "GET",
+        headers: new Headers({
+          authorization: props.sessionToken,
+        }),
+      });
       const json = await res.json();
 
       //set form data
@@ -57,7 +62,7 @@ const EditPost = (props) => {
       });
       const cloudinaryJson = await cloudinaryRes.json();
 
-      const postRes = await fetch(`http://localhost:3001/post/${postId}`, {
+      await fetch(`http://localhost:3001/post/${postId}`, {
         method: "PUT",
         body: JSON.stringify({
           photoUrl: cloudinaryJson.url,
@@ -66,14 +71,15 @@ const EditPost = (props) => {
         }),
         headers: new Headers({
           "Content-Type": "application/json",
+          authorization: props.sessionToken,
         }),
       });
-      const postJson = await postRes.json();
+
       history.push("/");
       return;
     }
 
-    const postRes = await fetch(`http://localhost:3001/post/${postId}`, {
+    await fetch(`http://localhost:3001/post/${postId}`, {
       method: "PUT",
       body: JSON.stringify({
         photoUrl: fileUrl,
@@ -82,10 +88,10 @@ const EditPost = (props) => {
       }),
       headers: new Headers({
         "Content-Type": "application/json",
+        authorization: props.sessionToken,
       }),
     });
 
-    const postJson = await postRes.json();
     history.push("/");
   };
 

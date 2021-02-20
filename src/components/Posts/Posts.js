@@ -4,18 +4,23 @@ import { useReducer, useRef } from "react";
 import PostCard from "./PostCard";
 
 //import hooks
-import { useFetch, useInfiniteScroll } from "../../hooks/infiniteScrollHooks";
+import {
+  useFetch,
+  useInfiniteScroll,
+  deleteFromDispatch,
+} from "../../hooks/infiniteScrollHooks";
 
 //css
 import "./styles/Posts.css";
 
-const Posts = () => {
+const Posts = ({ sessionToken }) => {
   //reducers
   const postReducer = (state, action) => {
     switch (action.type) {
       case "STACK_IMAGES":
         return { ...state, posts: state.posts.concat(action.posts) };
       case "DELETE_IMAGE":
+        console.log(action.post);
         const index = state.posts.indexOf(action.post);
         state.posts.splice(index, 1);
         return { ...state, posts: state.posts };
@@ -35,6 +40,7 @@ const Posts = () => {
     }
   };
 
+  //use reducers
   const [postData, postDispatch] = useReducer(postReducer, {
     posts: [],
     fetching: true,
@@ -46,30 +52,40 @@ const Posts = () => {
     postData.posts,
     pager,
     postDispatch,
-    `http://localhost:3001/post/${pager.page}/${4}`
+    `http://localhost:3001/post/${pager.page}/${4}`,
+    sessionToken
   );
+
+  const backend = "http://localhost:3001/post/cloudinary/delete";
+  const cloudinaryUrl =
+    "https://api.cloudinary.com/v1_1/nsnyder1992/image/destroy";
+
+  const deletePost = (postId, post) => {
+    const deleteUrl = `http://localhost:3001/post/${postId}`;
+    deleteFromDispatch(
+      post,
+      postDispatch,
+      deleteUrl,
+      backend,
+      cloudinaryUrl,
+      sessionToken
+    );
+  };
 
   let bottomBoundaryRef = useRef(null);
   useInfiniteScroll(bottomBoundaryRef, pagerDispatch);
 
-  const deletePost = (postId, post) => {
-    fetch(`http://localhost:3001/post/${postId}`, {
-      method: "DELETE",
-      headers: new Headers({
-        "Content-Type": "application/json",
-      }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        postDispatch({ type: "DELETE_IMAGE", post: post });
-      })
-      .catch((err) => console.error(err));
-  };
-
   return (
-    <div class="posts">
+    <div className="posts">
       {postData?.posts.map((post, index) => {
-        return <PostCard post={post} deletePost={deletePost} key={index} />;
+        return (
+          <PostCard
+            post={post}
+            deletePost={deletePost}
+            key={index}
+            sessionToken={sessionToken}
+          />
+        );
       })}
       <div id="page-bottom-boundary" ref={bottomBoundaryRef}></div>
     </div>

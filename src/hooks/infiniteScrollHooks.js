@@ -1,14 +1,19 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
 // make API calls and pass the returned data via dispatch
-export const useFetch = (array, data, dispatch, fetchUrl) => {
+export const useFetch = (array, data, dispatch, fetchUrl, sessionToken) => {
   //states
   const [totalPosts, setTotalPosts] = useState();
 
   useEffect(() => {
     if (array.length >= totalPosts) return;
     dispatch({ type: "FETCHING_IMAGES", fetching: true });
-    fetch(fetchUrl)
+    fetch(fetchUrl, {
+      method: "GET",
+      headers: new Headers({
+        authorization: sessionToken,
+      }),
+    })
       .then((data) => data.json())
       .then((json) => {
         setTotalPosts(json.total);
@@ -21,6 +26,55 @@ export const useFetch = (array, data, dispatch, fetchUrl) => {
         return e;
       });
   }, [dispatch, data.page]);
+};
+
+export const deleteFromDispatch = async (
+  post,
+  dispatch,
+  fetchUrl,
+  sigUrl,
+  cloudinaryUrl,
+  sessionToken
+) => {
+  let folder = post?.photoUrl.split("/")[7];
+  let public_id = post?.photoUrl.split("/")[8];
+
+  //get cloudinary security from backend
+  const res = await fetch(`${sigUrl}/${folder}/${public_id}`, {
+    method: "GET",
+    headers: new Headers({
+      authorization: sessionToken,
+    }),
+  });
+  const json = await res.json();
+
+  //set form data
+  let formData = new FormData();
+  formData.append("api_key", json.key);
+  formData.append("timestamp", json.timestamp);
+  // formData.append("folder", json.folder);
+  formData.append("public_id", json.public_id);
+  formData.append("invalidate", json.invalidate);
+  formData.append("signature", json.signature);
+
+  //post to cloudinary and get url for storage
+  const cloudinaryRes = await fetch(cloudinaryUrl, {
+    method: "POST",
+    body: formData,
+  });
+  const cloudinaryJson = await cloudinaryRes.json();
+  console.log(cloudinaryJson);
+
+  const postRes = await fetch(fetchUrl, {
+    method: "DELETE",
+    headers: new Headers({
+      "Content-Type": "application/json",
+      authorization: sessionToken,
+    }),
+  });
+  await dispatch({ type: "DELETE_IMAGE", post: post });
+  const postJson = await postRes.json();
+  console.log(postJson);
 };
 
 // infinite scrolling with intersection observer

@@ -1,13 +1,17 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 //components
-import PostHeader from "./EditPosts/PostHeader";
-import PostBody from "./EditPosts/PostBody";
+import PostHeader from "../EditPosts/PostHeader";
+import PostBody from "../EditPosts/PostBody";
 
 //css
-import "./styles/Layouts.css";
+import "../styles/Layouts.css";
 
-const NewPost = () => {
+const NewPost = (props) => {
+  // history
+  const history = useHistory();
+
   //file states
   const [fileUrl, setFileUrl] = useState();
 
@@ -27,7 +31,12 @@ const NewPost = () => {
     let filename = file.name.split(".")[0];
 
     //get cloudinary security from backend
-    const res = await fetch(`${backend}/${filename}`);
+    const res = await fetch(`${backend}/${filename}`, {
+      method: "GET",
+      headers: new Headers({
+        authorization: props.sessionToken,
+      }),
+    });
     const json = await res.json();
 
     //set form data
@@ -45,6 +54,7 @@ const NewPost = () => {
     });
     const cloudinaryJson = await cloudinaryRes.json();
 
+    //post to backend
     const postRes = await fetch("http://localhost:3001/post/", {
       method: "Post",
       body: JSON.stringify({
@@ -54,10 +64,12 @@ const NewPost = () => {
       }),
       headers: new Headers({
         "Content-Type": "application/json",
+        authorization: props.sessionToken,
       }),
     });
     const postJson = await postRes.json();
     console.log(postJson);
+    history.push("/");
   };
 
   return (

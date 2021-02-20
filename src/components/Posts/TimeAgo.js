@@ -15,10 +15,10 @@ const TimeAgo = ({ createdAt }) => {
     let today = new Date();
     let secondsAgo = (today - date) / 1000;
 
-    let tempTimeAgo = "< 1min";
+    let tempTimeAgo = "over a Month ago";
 
     if (secondsAgo < secToMth)
-      tempTimeAgo = Math.floor(secondsAgo / 2.628e6) + "weeks ago";
+      tempTimeAgo = Math.floor(secondsAgo / secToWks) + "weeks ago";
 
     if (secondsAgo < secToWks)
       tempTimeAgo = Math.floor(secondsAgo / secToDay) + "days ago";
@@ -29,7 +29,7 @@ const TimeAgo = ({ createdAt }) => {
     if (secondsAgo < secToHrs)
       tempTimeAgo = Math.floor(secondsAgo / secToMin) + "min ago";
 
-    if (secondsAgo < secToMin) tempTimeAgo = "< 1min";
+    if (secondsAgo < secToMin) tempTimeAgo = "now";
 
     setTimeAgo(tempTimeAgo);
   };

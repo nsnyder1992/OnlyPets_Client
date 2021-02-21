@@ -1,8 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Link, Switch } from "react-router-dom";
 
 //material components
-import { Grid, IconButton } from "@material-ui/core";
+import React from "react";
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
+import { Avatar, IconButton, Typography, Button } from "@material-ui/core";
+
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
@@ -18,9 +27,54 @@ import Profile from "../components/Profile/Profile";
 //css
 import "./Navbar.css";
 
+const useStyles = makeStyles({
+  list: {
+    width: 250,
+  },
+  fullList: {
+    width: "auto",
+  },
+});
+
 // Function name matches file name
-const Navbar = ({ sessionToken }) => {
+const Navbar = ({ sessionToken, clearToken }) => {
   const [route, setRoute] = useState("/");
+  const [userName, setUsername] = useState();
+  const [state, setState] = useState({
+    top: false,
+    left: false,
+    bottom: false,
+    right: false,
+  });
+
+  const classes = useStyles();
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/user/`, {
+      method: "GET",
+      headers: new Headers({
+        authorization: sessionToken,
+      }),
+    })
+      .then((res) => res.json())
+      .then((user) => {
+        console.log(user);
+        setUsername(user.username);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   // return must have one parent element
   return (
     <header>
@@ -44,11 +98,9 @@ const Navbar = ({ sessionToken }) => {
             </IconButton>
           </Link>
 
-          <Link to="/profile">
-            <IconButton>
-              <PersonOutlineIcon style={{ fontSize: 30 }} />
-            </IconButton>
-          </Link>
+          <IconButton onClick={toggleDrawer("right", true)}>
+            <PersonOutlineIcon style={{ fontSize: 30 }} />
+          </IconButton>
         </nav>
       </div>
 
@@ -57,6 +109,32 @@ const Navbar = ({ sessionToken }) => {
           width: "99%",
         }}
       />
+
+      <Drawer
+        anchor={"right"}
+        open={state["right"]}
+        onClose={toggleDrawer("right", false)}
+      >
+        <div
+          className={clsx(classes.list)}
+          role="presentation"
+          onClick={toggleDrawer("right", false)}
+          onKeyDown={toggleDrawer("right", false)}
+        >
+          <List>
+            <ListItem>
+              <Avatar style={{ marginRight: 5 }}>
+                {userName ? userName[0].toUpperCase() : null}
+              </Avatar>
+              <Typography>{userName}</Typography>
+            </ListItem>
+            <Divider />
+            <ListItem>
+              <Button onClick={clearToken}>Logout</Button>
+            </ListItem>
+          </List>
+        </div>
+      </Drawer>
 
       <div className="apps">
         <Switch>

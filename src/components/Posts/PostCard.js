@@ -60,6 +60,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
   };
 
   useEffect(() => {
+    console.log(post);
     getEditUrl();
   }, []);
 
@@ -75,7 +76,13 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
           <PopupState variant="popover" popupId="demo-popup-popover">
             {(popupState) => (
               <div>
-                <IconButton aria-label="settings" {...bindTrigger(popupState)}>
+                <IconButton
+                  aria-label="settings"
+                  disabled={
+                    post.ownerId !== parseInt(localStorage.getItem("userId"))
+                  }
+                  {...bindTrigger(popupState)}
+                >
                   <MoreVertIcon />
                 </IconButton>
                 <Popover

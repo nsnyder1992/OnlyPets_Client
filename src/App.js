@@ -23,8 +23,9 @@ function App() {
     }
   }, []);
 
-  const updateToken = (newToken) => {
+  const updateToken = (newToken, userId) => {
     localStorage.setItem("token", newToken);
+    localStorage.setItem("userId", parseInt(userId));
     setSessionToken(newToken);
     console.log(sessionToken);
   };
@@ -39,17 +40,17 @@ function App() {
     <div className="App">
       {/* Parent Element. Also we can't use the word class, so we use className in jsx*/}
       {/* Navbar is our imported component*/}
-      <Router>
-        {!localStorage.getItem("token") ? (
-          <Auth updateToken={updateToken} />
-        ) : (
+      {!localStorage.getItem("token") ? (
+        <Auth updateToken={updateToken} />
+      ) : (
+        <Router>
           <Switch>
             <div>
-              <Navbar sessionToken={sessionToken} />
+              <Navbar sessionToken={sessionToken} clearToken={clearToken} />
             </div>
           </Switch>
-        )}
-      </Router>
+        </Router>
+      )}
     </div>
   );
 }

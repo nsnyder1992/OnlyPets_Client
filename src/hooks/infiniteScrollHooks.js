@@ -1,12 +1,12 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
 // make API calls and pass the returned data via dispatch
-export const useFetch = (array, data, dispatch, fetchUrl, sessionToken) => {
+export const useFetch = (array, pager, dispatch, fetchUrl, sessionToken) => {
   //states
   const [totalPosts, setTotalPosts] = useState();
-
+  // console.log("useFetch", sessionToken);
   useEffect(() => {
-    if (array.length >= totalPosts) return;
+    if (array.length >= totalPosts || sessionToken == undefined) return;
     dispatch({ type: "FETCHING_IMAGES", fetching: true });
     fetch(fetchUrl, {
       method: "GET",
@@ -25,7 +25,7 @@ export const useFetch = (array, data, dispatch, fetchUrl, sessionToken) => {
         dispatch({ type: "FETCHING_IMAGES", fetching: false });
         return e;
       });
-  }, [dispatch, data.page]);
+  }, [dispatch, pager.page]);
 };
 
 export const deleteFromDispatch = async (
@@ -36,34 +36,34 @@ export const deleteFromDispatch = async (
   cloudinaryUrl,
   sessionToken
 ) => {
-  let folder = post?.photoUrl.split("/")[7];
-  let public_id = post?.photoUrl.split("/")[8];
+  // let folder = post?.photoUrl.split("/")[7];
+  // let public_id = post?.photoUrl.split("/")[8];
 
-  //get cloudinary security from backend
-  const res = await fetch(`${sigUrl}/${folder}/${public_id}`, {
-    method: "GET",
-    headers: new Headers({
-      authorization: sessionToken,
-    }),
-  });
-  const json = await res.json();
+  // //get cloudinary security from backend
+  // const res = await fetch(`${sigUrl}/${folder}/${public_id}`, {
+  //   method: "GET",
+  //   headers: new Headers({
+  //     authorization: sessionToken,
+  //   }),
+  // });
+  // const json = await res.json();
 
-  //set form data
-  let formData = new FormData();
-  formData.append("api_key", json.key);
-  formData.append("timestamp", json.timestamp);
-  // formData.append("folder", json.folder);
-  formData.append("public_id", json.public_id);
-  formData.append("invalidate", json.invalidate);
-  formData.append("signature", json.signature);
+  // //set form data
+  // let formData = new FormData();
+  // formData.append("api_key", json.key);
+  // formData.append("timestamp", json.timestamp);
+  // // formData.append("folder", json.folder);
+  // formData.append("public_id", json.public_id);
+  // formData.append("invalidate", json.invalidate);
+  // formData.append("signature", json.signature);
 
-  //post to cloudinary and get url for storage
-  const cloudinaryRes = await fetch(cloudinaryUrl, {
-    method: "POST",
-    body: formData,
-  });
-  const cloudinaryJson = await cloudinaryRes.json();
-  console.log(cloudinaryJson);
+  // //post to cloudinary and get url for storage
+  // const cloudinaryRes = await fetch(cloudinaryUrl, {
+  //   method: "POST",
+  //   body: formData,
+  // });
+  // const cloudinaryJson = await cloudinaryRes.json();
+  // console.log(cloudinaryJson);
 
   const postRes = await fetch(fetchUrl, {
     method: "DELETE",
@@ -93,6 +93,7 @@ export const useInfiniteScroll = (scrollRef, dispatch) => {
   );
 
   useEffect(() => {
+    console.log("useInfiniteScroll");
     if (scrollRef.current) {
       scrollObserver(scrollRef.current);
     }

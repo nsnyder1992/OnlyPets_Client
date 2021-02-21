@@ -33,8 +33,7 @@ const Login = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.sessionToken);
-        props.updateToken(data.sessionToken);
+        props.updateToken(data.sessionToken, data.user.id);
       });
   };
 

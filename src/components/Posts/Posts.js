@@ -22,7 +22,8 @@ const Posts = ({ sessionToken }) => {
       case "DELETE_IMAGE":
         console.log(action.post);
         const index = state.posts.indexOf(action.post);
-        state.posts.splice(index, 1);
+        console.log(index);
+        if (index > -1) state.posts.splice(index, 1);
         return { ...state, posts: state.posts };
       case "FETCHING_IMAGES":
         return { ...state, fetching: action.fetching };

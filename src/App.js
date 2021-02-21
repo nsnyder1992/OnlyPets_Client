@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // adding css to jsx is that easy
 import "./App.css"; // This pattern is preferred where css for this component has a matching .css filename
@@ -44,10 +44,12 @@ function App() {
       {/* Parent Element. Also we can't use the word class, so we use className in jsx*/}
       {/* Navbar is our imported component*/}
       <Router>
-        <div>
-          <Navbar sessionToken={sessionToken} />
-          <Auth />
-        </div>
+        <Switch>
+          <Route exact path="/" component={Auth} />
+          <div>
+            <Navbar sessionToken={sessionToken} />
+          </div>
+        </Switch>
       </Router>
     </div>
   );

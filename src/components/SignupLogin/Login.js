@@ -37,7 +37,7 @@ const Login = (props) => {
 
     return (
         <div>
-            <Container maxWidth="sm">
+            <Container>
                 <Typography variant="h4">Login</Typography>
                 <form className={classes.root} noValidate onSubmit={handleSubmit}>
                     <TextField
@@ -46,19 +46,18 @@ const Login = (props) => {
                         label="Required"
                         defaultValue="username"
                         variant="outlined"
+                        onChange={(e) => setUsername(e.target.value)}
+                        value={username}
                     />
-                    <Input onChange={(e) => setUsername(e.target.value)} name="username" value={username} />
-
-
                     <TextField
                         id="outlined-password-input"
                         label="Password"
                         type="password"
                         autoComplete="current-password"
                         variant="outlined"
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
                     />
-                    <Input onChange={(e) => setPassword(e.target.value)} name="password" value={password} />
-
                     <Button variant="contained" color="primary" type="submit">Login</Button>
                 </form>
             </Container>

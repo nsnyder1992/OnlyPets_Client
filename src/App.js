@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // adding css to jsx is that easy
@@ -21,22 +21,22 @@ function App() {
   const [sessionToken, setSessionToken] = useState(tempToken2);
 
   // uncomment for login, siginup and authorization, wants we get a working login
-  // useEffect(() => {
-  //   if (localStorage.getItem("token")) {
-  //     setSessionToken(localStorage.getItem("token"));
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setSessionToken(localStorage.getItem("token"));
+    }
+  }, []);
 
-  // const updateToken = (newToken) => {
-  //   localStorage.setItem("token", newToken);
-  //   setSessionToken(newToken);
-  //   console.log(sessionToken);
-  // };
+  const updateToken = (newToken) => {
+    localStorage.setItem("token", newToken);
+    setSessionToken(newToken);
+    console.log(sessionToken);
+  };
 
-  // const clearToken = () => {
-  //   localStorage.clear();
-  //   setSessionToken("");
-  // };
+  const clearToken = () => {
+    localStorage.clear();
+    setSessionToken("");
+  };
 
   // All functional components need to return jsx with one parent element
   return (
@@ -44,12 +44,15 @@ function App() {
       {/* Parent Element. Also we can't use the word class, so we use className in jsx*/}
       {/* Navbar is our imported component*/}
       <Router>
-        <Switch>
-          <Route exact path="/" component={Auth} />
-          <div>
-            <Navbar sessionToken={sessionToken} />
-          </div>
-        </Switch>
+        {!sessionToken ? (
+          <Auth updateToken={updateToken} />
+        ) : (
+          <Switch>
+            <div>
+              <Navbar sessionToken={sessionToken} />
+            </div>
+          </Switch>
+        )}
       </Router>
     </div>
   );

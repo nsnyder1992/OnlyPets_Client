@@ -14,11 +14,7 @@ function App() {
   document.title = "JustPets";
 
   //set temporary tokens here until we get a working login!!!!
-  const tempToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJuaWNrQHRlc3QuY29tIiwiaWF0IjoxNjEzNjgyMDczLCJleHAiOjE2MTM3Njg0NzN9.AhJwMo7x28FRB4_uEvTvIQ48XUhe4v3MGP7YTRl4e3s";
-  const tempToken2 =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJuaWNrMkB0ZXN0LmNvbSIsImlhdCI6MTYxMzkzOTg0OCwiZXhwIjoxNjE0MDI2MjQ4fQ.Bp_ku8Py1uTjpFsoiT83qaU5X2izcesF9IzZ8jRFQTQ";
-  const [sessionToken, setSessionToken] = useState(tempToken2);
+  const [sessionToken, setSessionToken] = useState();
 
   // uncomment for login, siginup and authorization, wants we get a working login
   useEffect(() => {

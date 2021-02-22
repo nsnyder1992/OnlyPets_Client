@@ -10,7 +10,9 @@ import Pets from "../Pets/Pets.js";
 import "../styles/Layouts.css";
 
 const Home = ({ setRoute, sessionToken }) => {
-  const [type, setType] = useState("all");
+  const [type, setType] = useState(
+    localStorage.getItem("petType") ? localStorage.getItem("petType") : "all"
+  );
   const [viewPosts, setViewPosts] = useState(true); //true posts, false explore pets
 
   const toggleView = () => {

@@ -1,21 +1,33 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useEffect, useCallback, useRef, useState } from "react";
 
 // make API calls and pass the returned data via dispatch
 export const useFetch = (
   array,
   totalPosts,
   setTotalPosts,
+  petType,
   pager,
   dispatch,
+  pagerDispatch,
   fetchUrl,
   sessionToken
 ) => {
-  useEffect(() => {
+  const [lastType, setLastType] = useState();
+  useEffect(async () => {
+    if (sessionToken == undefined) return; //if no sessionToken stop process
+    if (petType !== lastType) {
+      dispatch({ type: "UPDATING_IMAGES", posts: [] }); //reset posts
+      pagerDispatch({ type: "UPDATING_PAGE", page: 1 }); //reset pagerDispatch
+      setLastType(petType); // set last type
+      setTotalPosts(1); //need at least one post for below logic to work
+      return; //end this useEffect the above will initiate another useEffect cycle
+    }
     console.log(array.length, totalPosts);
-    if (array.length >= totalPosts || sessionToken == undefined) return;
 
+    if (array.length >= totalPosts) return; // this stops the re-renders if last post is ever reached
+
+    //Get posts and store them using the Dispatches!!!
     dispatch({ type: "FETCHING_IMAGES", fetching: true });
-    console.log("useFetch", fetchUrl);
     fetch(fetchUrl, {
       method: "GET",
       headers: new Headers({
@@ -33,41 +45,7 @@ export const useFetch = (
         dispatch({ type: "FETCHING_IMAGES", fetching: false });
         return e;
       });
-  }, [dispatch, pager]);
-};
-
-export const useUpdateFetch = (
-  petType,
-  setTotalPosts,
-  dispatch,
-  pagerDispatch,
-  fetchUrl,
-  sessionToken
-) => {
-  useEffect(async () => {
-    if (sessionToken == undefined) return;
-    console.log(petType);
-    dispatch({ type: "FETCHING_IMAGES", fetching: true });
-    await fetch(fetchUrl, {
-      method: "GET",
-      headers: new Headers({
-        authorization: sessionToken,
-      }),
-    })
-      .then((data) => data.json())
-      .then(async (json) => {
-        await setTotalPosts(json.total);
-        console.log(json.posts);
-        const posts = json.posts;
-        dispatch({ type: "UPDATING_IMAGES", posts });
-        pagerDispatch({ type: "UPDATING_PAGE", page: 1 });
-        dispatch({ type: "FETCHING_IMAGES", fetching: false });
-      })
-      .catch((e) => {
-        dispatch({ type: "FETCHING_IMAGES", fetching: false });
-        return e;
-      });
-  }, [petType]);
+  }, [dispatch, pager, petType]);
 };
 
 export const deleteFromDispatch = async (

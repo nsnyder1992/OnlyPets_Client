@@ -56,26 +56,20 @@ const Posts = ({ sessionToken, petType }) => {
     posts: [],
     fetching: true,
   });
-
   const [pager, pagerDispatch] = useReducer(pageReducer, { page: 1 });
-  const fetchUrl = `http://localhost:3001/post/byPetType/${petType}/${
-    pager.page
-  }/${4}`;
-  useUpdateFetch(
-    petType,
-    setTotalPosts,
-    postDispatch,
-    pagerDispatch,
-    fetchUrl,
-    sessionToken
-  );
+
+  //fetch constants
+  const limit = 4;
+  const fetchUrl = `http://localhost:3001/post/byPetType/${petType}/${pager.page}/${limit}`;
 
   useFetch(
     postData.posts,
     totalPosts,
     setTotalPosts,
+    petType,
     pager,
     postDispatch,
+    pagerDispatch,
     fetchUrl,
     sessionToken
   );

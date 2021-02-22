@@ -19,6 +19,7 @@ const NewPost = ({ sessionToken }) => {
   const [fileUrl, setFileUrl] = useState();
 
   //model states
+  const [petType, setPetType] = useState();
   const [petId, setPetId] = useState();
   const [description, setDescription] = useState();
 
@@ -29,14 +30,29 @@ const NewPost = ({ sessionToken }) => {
       "https://api.cloudinary.com/v1_1/nsnyder1992/image/upload";
     const file = document.getElementById("file-upload").files[0];
 
-    await uploadImg(
+    //upload to cloudinary
+    const cloudinaryJson = await uploadImg(
       signatureUrl,
       cloudinaryUrl,
       file,
-      description,
-      petId,
       sessionToken
     );
+
+    //post to backend
+    await fetch("http://localhost:3001/post/", {
+      method: "Post",
+      body: JSON.stringify({
+        photoUrl: cloudinaryJson.url,
+        description: description,
+        petId: petId,
+        petType: petType,
+      }),
+      headers: new Headers({
+        "Content-Type": "application/json",
+        authorization: sessionToken,
+      }),
+    });
+
     history.push("/");
   };
 
@@ -49,6 +65,7 @@ const NewPost = ({ sessionToken }) => {
         setDescription={setDescription}
         setFileUrl={setFileUrl}
         sessionToken={sessionToken}
+        setPetType={setPetType}
         petId={petId}
         setPetId={setPetId}
       />

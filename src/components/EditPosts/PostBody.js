@@ -14,6 +14,7 @@ const PostBody = ({
   setDescription,
   setFileUrl,
   sessionToken,
+  setPetType,
   petId,
   setPetId,
 }) => {
@@ -36,6 +37,7 @@ const PostBody = ({
           <Grid item xs={2}>
             <SelectPet
               sessionToken={sessionToken}
+              setPetType={setPetType}
               petId={petId}
               setPetId={setPetId}
             />

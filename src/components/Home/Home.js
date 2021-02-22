@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 //components
 import HomeHeader from "./HomeHeader";
@@ -30,9 +31,9 @@ const Home = ({ setRoute, sessionToken }) => {
         viewPosts={viewPosts}
       />
       {viewPosts ? (
-        <Posts sessionToken={sessionToken} setRoute={setRoute} />
+        <Posts sessionToken={sessionToken} setRoute={setRoute} petType={type} />
       ) : (
-        <Pets sessionToken={sessionToken} setRoute={setRoute} />
+        <Pets sessionToken={sessionToken} setRoute={setRoute} petType={type} />
       )}
     </div>
   );

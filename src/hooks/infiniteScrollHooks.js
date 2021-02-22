@@ -8,6 +8,7 @@ export const useFetch = (array, pager, dispatch, fetchUrl, sessionToken) => {
   useEffect(() => {
     if (array.length >= totalPosts || sessionToken == undefined) return;
     dispatch({ type: "FETCHING_IMAGES", fetching: true });
+    console.log("useFetch", fetchUrl);
     fetch(fetchUrl, {
       method: "GET",
       headers: new Headers({
@@ -26,6 +27,38 @@ export const useFetch = (array, pager, dispatch, fetchUrl, sessionToken) => {
         return e;
       });
   }, [dispatch, pager.page]);
+};
+
+export const useUpdateFetch = (
+  petType,
+  dispatch,
+  pagerDispatch,
+  fetchUrl,
+  sessionToken
+) => {
+  useEffect(() => {
+    if (sessionToken == undefined) return;
+    console.log(petType);
+    dispatch({ type: "FETCHING_IMAGES", fetching: true });
+    fetch(fetchUrl, {
+      method: "GET",
+      headers: new Headers({
+        authorization: sessionToken,
+      }),
+    })
+      .then((data) => data.json())
+      .then((json) => {
+        console.log(json.posts);
+        const posts = json.posts;
+        dispatch({ type: "UPDATING_IMAGES", posts });
+        pagerDispatch({ type: "UPDATING_PAGE", page: 1 });
+        dispatch({ type: "FETCHING_IMAGES", fetching: false });
+      })
+      .catch((e) => {
+        dispatch({ type: "FETCHING_IMAGES", fetching: false });
+        return e;
+      });
+  }, [petType]);
 };
 
 export const deleteFromDispatch = async (

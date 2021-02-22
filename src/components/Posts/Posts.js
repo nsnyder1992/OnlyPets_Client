@@ -1,4 +1,5 @@
-import { useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
+import { useHistory } from "react-router-dom";
 
 //import components
 import PostCard from "./PostCard";
@@ -6,6 +7,7 @@ import PostCard from "./PostCard";
 //import hooks
 import {
   useFetch,
+  useUpdateFetch,
   useInfiniteScroll,
   deleteFromDispatch,
 } from "../../hooks/infiniteScrollHooks";
@@ -14,11 +16,18 @@ import {
 import "./styles/Posts.css";
 
 const Posts = ({ sessionToken, petType }) => {
+  const [baseUrl, setBaseUrl] = useState(
+    `http://localhost:3001/post/byPetType/${petType}`
+  );
+
   //reducers
   const postReducer = (state, action) => {
     switch (action.type) {
       case "STACK_IMAGES":
         return { ...state, posts: state.posts.concat(action.posts) };
+      case "UPDATING_IMAGES":
+        console.log("updating images", action.posts);
+        return { ...state, posts: action.posts };
       case "DELETE_IMAGE":
         console.log(action.post);
         const index = state.posts.indexOf(action.post);
@@ -34,6 +43,8 @@ const Posts = ({ sessionToken, petType }) => {
 
   const pageReducer = (state, action) => {
     switch (action.type) {
+      case "UPDATING_PAGE":
+        return { ...state, page: action.page };
       case "ADVANCE_PAGE":
         return { ...state, page: state.page + 1 };
       default:
@@ -48,14 +59,14 @@ const Posts = ({ sessionToken, petType }) => {
   });
 
   const [pager, pagerDispatch] = useReducer(pageReducer, { page: 1 });
+  const fetchUrl = `http://localhost:3001/post/byPetType/${petType}/${
+    pager.page
+  }/${4}`;
+  useUpdateFetch(petType, postDispatch, pagerDispatch, fetchUrl, sessionToken);
 
-  useFetch(
-    postData.posts,
-    pager,
-    postDispatch,
-    `http://localhost:3001/post/${pager.page}/${4}`,
-    sessionToken
-  );
+  useFetch(postData.posts, pager, postDispatch, fetchUrl, sessionToken);
+
+  // useUpdateFetch(postDispatch, `${baseUrl}/${pager.page}/${4}`, sessionToken);
 
   const backend = "http://localhost:3001/post/cloudinary/delete";
   const cloudinaryUrl =

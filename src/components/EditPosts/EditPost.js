@@ -30,6 +30,7 @@ const EditPost = (props) => {
   const [fileUrl, setFileUrl] = useState(initFileUrl);
 
   //model states
+  const [petType, setPetType] = useState();
   const [petId, setPetId] = useState(id);
   const [description, setDescription] = useState(desc);
 
@@ -39,15 +40,26 @@ const EditPost = (props) => {
 
     //get cloudinary security from backend
     if (file) {
-      uploadEditedImg(
+      const cloudinaryJson = await uploadEditedImg(
         signatureUrl,
         cloudinaryUrl,
         file,
-        description,
-        petId,
-        postId,
         props.sessionToken
       );
+
+      await fetch(`http://localhost:3001/post/${postId}`, {
+        method: "PUT",
+        body: JSON.stringify({
+          photoUrl: cloudinaryJson.url,
+          description: description,
+          petId: petId,
+          petType: petType,
+        }),
+        headers: new Headers({
+          "Content-Type": "application/json",
+          authorization: props.sessionToken,
+        }),
+      });
 
       history.push("/");
       return;
@@ -59,6 +71,7 @@ const EditPost = (props) => {
         photoUrl: fileUrl,
         description: description,
         petId: petId,
+        petType: petType,
       }),
       headers: new Headers({
         "Content-Type": "application/json",
@@ -84,6 +97,7 @@ const EditPost = (props) => {
         setDescription={setDescription}
         setFileUrl={setFileUrl}
         sessionToken={props.sessionToken}
+        setPetType={setPetType}
         petId={petId}
         setPetId={setPetId}
       />

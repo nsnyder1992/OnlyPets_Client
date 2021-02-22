@@ -4,8 +4,19 @@ import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 
 import "./styles/SelectPet.css";
 
-const SelectPet = ({ sessionToken, petId, setPetId }) => {
+const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
   const [pets, setPets] = useState();
+
+  const handleChange = (e) => {
+    let petId = e.target.value;
+    setPetId(petId);
+    let petType;
+    pets.forEach((pet) => {
+      if (pet.id === petId) petType = pet.type;
+    });
+    console.log(petType);
+    setPetType(petType);
+  };
 
   useEffect(() => {
     fetch(`http://localhost:3001/pet/owned`, {
@@ -32,7 +43,7 @@ const SelectPet = ({ sessionToken, petId, setPetId }) => {
           id="pet-select"
           disableUnderline
           value={petId ? petId : null}
-          onChange={(e) => setPetId(e.target.value)}
+          onChange={handleChange}
         >
           {/*hardcoded the below but will need to map over user pets in the
           future */}

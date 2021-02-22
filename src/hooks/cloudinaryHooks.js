@@ -3,8 +3,6 @@ export const uploadImg = async (
   signatureUrl,
   cloudinaryUrl,
   file,
-  description,
-  petId,
   sessionToken
 ) => {
   let formData = new FormData();
@@ -34,31 +32,13 @@ export const uploadImg = async (
     body: formData,
   });
   const cloudinaryJson = await cloudinaryRes.json();
-
-  //post to backend
-  const postRes = await fetch("http://localhost:3001/post/", {
-    method: "Post",
-    body: JSON.stringify({
-      photoUrl: cloudinaryJson.url,
-      description: description,
-      petId: petId,
-    }),
-    headers: new Headers({
-      "Content-Type": "application/json",
-      authorization: sessionToken,
-    }),
-  });
-  const postJson = await postRes.json();
-  console.log(postJson);
+  return cloudinaryJson;
 };
 
 export const uploadEditedImg = async (
   signatureUrl,
   cloudinaryUrl,
   file,
-  description,
-  petId,
-  postId,
   sessionToken
 ) => {
   let formData = new FormData();
@@ -86,17 +66,5 @@ export const uploadEditedImg = async (
     body: formData,
   });
   const cloudinaryJson = await cloudinaryRes.json();
-
-  await fetch(`http://localhost:3001/post/${postId}`, {
-    method: "PUT",
-    body: JSON.stringify({
-      photoUrl: cloudinaryJson.url,
-      description: description,
-      petId: petId,
-    }),
-    headers: new Headers({
-      "Content-Type": "application/json",
-      authorization: sessionToken,
-    }),
-  });
+  return cloudinaryJson;
 };

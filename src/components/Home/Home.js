@@ -32,7 +32,7 @@ const Home = ({ setRoute, sessionToken }) => {
       {viewPosts ? (
         <Posts sessionToken={sessionToken} setRoute={setRoute} />
       ) : (
-        <Pets sessionToken={sessionToken} />
+        <Pets sessionToken={sessionToken} setRoute={setRoute} />
       )}
     </div>
   );

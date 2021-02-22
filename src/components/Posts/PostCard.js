@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+//material components
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -23,6 +24,8 @@ import Subscribe from "./Subscribe";
 import TimeAgo from "./TimeAgo";
 import { useEffect, useState } from "react";
 
+import "./styles/PostCard.css";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 650,
@@ -41,6 +44,14 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
+  popover: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  header: {
+    display: "flex",
+    justifyContent: "right",
+  },
   actionsRight: {
     justifyItems: "right",
   },
@@ -53,23 +64,42 @@ const useStyles = makeStyles((theme) => ({
 const PostCard = ({ post, deletePost, sessionToken }) => {
   const classes = useStyles();
   const [urlArray, setUrlArray] = useState();
+  const [petName, setPetName] = useState();
 
   const getEditUrl = () => {
     let url = post.photoUrl.split("upload")[1];
     setUrlArray(url.split("/"));
   };
 
+  const getPetName = () => {
+    fetch(`http://localhost:3001/pet/${post.petId}`, {
+      method: "GET",
+      headers: new Headers({
+        authorization: sessionToken,
+      }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        setPetName(json.pet.name);
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
+    console.log(sessionToken);
     console.log(post);
+    getPetName();
     getEditUrl();
   }, []);
 
   return (
     <Card className={classes.root}>
       <CardHeader
+        className={classes.header}
         avatar={
           <Avatar aria-label="Pet" className={classes.avatar}>
-            {post.petId}
+            {petName ? petName[0].toUpperCase() : null}
           </Avatar>
         }
         action={
@@ -95,6 +125,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
                     vertical: "top",
                     horizontal: "center",
                   }}
+                  className={classes.popover}
                 >
                   <Box p={2}>
                     <Link
@@ -111,6 +142,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
             )}
           </PopupState>
         }
+        title={<Typography>{petName}</Typography>}
       />
 
       <CardMedia className={classes.media} image={post.photoUrl} />

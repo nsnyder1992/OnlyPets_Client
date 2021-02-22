@@ -13,7 +13,7 @@ import {
 //css
 import "./styles/Posts.css";
 
-const Posts = ({ sessionToken }) => {
+const Posts = ({ sessionToken, petType }) => {
   //reducers
   const postReducer = (state, action) => {
     switch (action.type) {

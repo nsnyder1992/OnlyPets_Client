@@ -5,6 +5,9 @@ import { useParams, useHistory } from "react-router-dom";
 import EditHeader from "./EditHeader";
 import PostBody from "./PostBody";
 
+//hooks
+import { uploadEditedImg } from "../../hooks/cloudinaryHooks";
+
 //css
 import "../styles/Layouts.css";
 
@@ -16,7 +19,7 @@ const EditPost = (props) => {
   const history = useHistory();
 
   //urls
-  const backend = "http://localhost:3001/post/cloudinary";
+  const signatureUrl = "http://localhost:3001/post/cloudinary";
   const cloudinaryUrl =
     "https://api.cloudinary.com/v1_1/nsnyder1992/image/upload";
   const initFileUrl =
@@ -36,44 +39,15 @@ const EditPost = (props) => {
 
     //get cloudinary security from backend
     if (file) {
-      let formData = new FormData();
-      let filename = file.name.split(".")[0];
-
-      const res = await fetch(`${backend}/${filename}`, {
-        method: "GET",
-        headers: new Headers({
-          authorization: props.sessionToken,
-        }),
-      });
-      const json = await res.json();
-
-      //set form data
-      formData.append("file", file);
-      formData.append("api_key", json.key);
-      formData.append("timestamp", json.timestamp);
-      formData.append("folder", json.folder);
-      formData.append("public_id", json.public_id);
-      formData.append("signature", json.signature);
-
-      //post to cloudinary and get url for storage
-      const cloudinaryRes = await fetch(cloudinaryUrl, {
-        method: "POST",
-        body: formData,
-      });
-      const cloudinaryJson = await cloudinaryRes.json();
-
-      await fetch(`http://localhost:3001/post/${postId}`, {
-        method: "PUT",
-        body: JSON.stringify({
-          photoUrl: cloudinaryJson.url,
-          description: description,
-          petId: petId,
-        }),
-        headers: new Headers({
-          "Content-Type": "application/json",
-          authorization: props.sessionToken,
-        }),
-      });
+      uploadEditedImg(
+        signatureUrl,
+        cloudinaryUrl,
+        file,
+        description,
+        petId,
+        postId,
+        props.sessionToken
+      );
 
       history.push("/");
       return;
@@ -109,7 +83,7 @@ const EditPost = (props) => {
         description={description}
         setDescription={setDescription}
         setFileUrl={setFileUrl}
-        pets={[]}
+        sessionToken={props.sessionToken}
         petId={petId}
         setPetId={setPetId}
       />

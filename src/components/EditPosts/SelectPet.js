@@ -4,7 +4,25 @@ import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 
 import "./styles/SelectPet.css";
 
-const SelectPet = ({ pets, petId, setPetId }) => {
+const SelectPet = ({ sessionToken, petId, setPetId }) => {
+  const [pets, setPets] = useState();
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/pet/owned`, {
+      method: "GET",
+      headers: new Headers({
+        authorization: sessionToken,
+      }),
+    })
+      .then((res) => res.json())
+      .then((pets) => {
+        console.log(pets);
+        setPets(pets.pets);
+        setPetId(pets.pets[0].id);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   return (
     <div className="pet-select-div">
       <FormControl id="pet-select-form">

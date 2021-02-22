@@ -1,12 +1,19 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 
 // make API calls and pass the returned data via dispatch
-export const useFetch = (array, pager, dispatch, fetchUrl, sessionToken) => {
-  //states
-  const [totalPosts, setTotalPosts] = useState();
-  // console.log("useFetch", sessionToken);
+export const useFetch = (
+  array,
+  totalPosts,
+  setTotalPosts,
+  pager,
+  dispatch,
+  fetchUrl,
+  sessionToken
+) => {
   useEffect(() => {
+    console.log(array.length, totalPosts);
     if (array.length >= totalPosts || sessionToken == undefined) return;
+
     dispatch({ type: "FETCHING_IMAGES", fetching: true });
     console.log("useFetch", fetchUrl);
     fetch(fetchUrl, {
@@ -26,28 +33,30 @@ export const useFetch = (array, pager, dispatch, fetchUrl, sessionToken) => {
         dispatch({ type: "FETCHING_IMAGES", fetching: false });
         return e;
       });
-  }, [dispatch, pager.page]);
+  }, [dispatch, pager]);
 };
 
 export const useUpdateFetch = (
   petType,
+  setTotalPosts,
   dispatch,
   pagerDispatch,
   fetchUrl,
   sessionToken
 ) => {
-  useEffect(() => {
+  useEffect(async () => {
     if (sessionToken == undefined) return;
     console.log(petType);
     dispatch({ type: "FETCHING_IMAGES", fetching: true });
-    fetch(fetchUrl, {
+    await fetch(fetchUrl, {
       method: "GET",
       headers: new Headers({
         authorization: sessionToken,
       }),
     })
       .then((data) => data.json())
-      .then((json) => {
+      .then(async (json) => {
+        await setTotalPosts(json.total);
         console.log(json.posts);
         const posts = json.posts;
         dispatch({ type: "UPDATING_IMAGES", posts });

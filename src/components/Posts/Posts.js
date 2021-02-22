@@ -16,9 +16,8 @@ import {
 import "./styles/Posts.css";
 
 const Posts = ({ sessionToken, petType }) => {
-  const [baseUrl, setBaseUrl] = useState(
-    `http://localhost:3001/post/byPetType/${petType}`
-  );
+  //states
+  const [totalPosts, setTotalPosts] = useState();
 
   //reducers
   const postReducer = (state, action) => {
@@ -62,9 +61,24 @@ const Posts = ({ sessionToken, petType }) => {
   const fetchUrl = `http://localhost:3001/post/byPetType/${petType}/${
     pager.page
   }/${4}`;
-  useUpdateFetch(petType, postDispatch, pagerDispatch, fetchUrl, sessionToken);
+  useUpdateFetch(
+    petType,
+    setTotalPosts,
+    postDispatch,
+    pagerDispatch,
+    fetchUrl,
+    sessionToken
+  );
 
-  useFetch(postData.posts, pager, postDispatch, fetchUrl, sessionToken);
+  useFetch(
+    postData.posts,
+    totalPosts,
+    setTotalPosts,
+    pager,
+    postDispatch,
+    fetchUrl,
+    sessionToken
+  );
 
   // useUpdateFetch(postDispatch, `${baseUrl}/${pager.page}/${4}`, sessionToken);
 

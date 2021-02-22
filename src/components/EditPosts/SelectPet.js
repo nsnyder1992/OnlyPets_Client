@@ -30,6 +30,7 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
         console.log(pets);
         setPets(pets.pets);
         setPetId(pets.pets[0].id);
+        setPetType(pets.pets[0].type);
       })
       .catch((err) => console.error(err));
   }, []);

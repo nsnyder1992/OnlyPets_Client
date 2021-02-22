@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 
 //components
 import HomeHeader from "./HomeHeader";

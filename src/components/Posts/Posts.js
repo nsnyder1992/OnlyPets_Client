@@ -1,5 +1,4 @@
-import { useEffect, useReducer, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useReducer, useRef, useState } from "react";
 
 //import components
 import PostCard from "./PostCard";
@@ -7,7 +6,6 @@ import PostCard from "./PostCard";
 //import hooks
 import {
   useFetch,
-  useUpdateFetch,
   useInfiniteScroll,
   deleteFromDispatch,
 } from "../../hooks/infiniteScrollHooks";

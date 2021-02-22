@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 
 import "./styles/SelectPet.css";
@@ -16,9 +18,9 @@ const SelectPet = ({ pets, petId, setPetId }) => {
         >
           {/*hardcoded the below but will need to map over user pets in the
           future */}
-          <MenuItem value={1}>Fluffy</MenuItem>
-          <MenuItem value={2}>Cindy</MenuItem>
-          <MenuItem value={3}>Bruce</MenuItem>
+          {pets?.map((pet) => {
+            return <MenuItem value={pet.id}>{pet.name}</MenuItem>;
+          })}
         </Select>
       </FormControl>
     </div>

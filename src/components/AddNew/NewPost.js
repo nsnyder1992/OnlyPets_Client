@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 //components
@@ -8,7 +8,7 @@ import PostBody from "../EditPosts/PostBody";
 //css
 import "../styles/Layouts.css";
 
-const NewPost = (props) => {
+const NewPost = ({ sessionToken }) => {
   // history
   const history = useHistory();
 
@@ -16,9 +16,26 @@ const NewPost = (props) => {
   const [fileUrl, setFileUrl] = useState();
 
   //model states
-  const [petId, setPetId] = useState(1);
-  const [postName, setPostName] = useState("New Post");
+  const [petId, setPetId] = useState();
   const [description, setDescription] = useState();
+  const [pets, setPets] = useState();
+
+  useEffect(() => {
+    if (!sessionToken) return;
+    fetch(`http://localhost:3001/pet/owned`, {
+      method: "GET",
+      headers: new Headers({
+        authorization: localStorage.getItem("token"),
+      }),
+    })
+      .then((res) => res.json())
+      .then((pets) => {
+        console.log(pets);
+        setPets(pets.pets);
+        setPetId(pets.pets[0].id);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   //send image to cloudinary and post data to backend server
   const handleSubmit = async (e) => {
@@ -34,7 +51,7 @@ const NewPost = (props) => {
     const res = await fetch(`${backend}/${filename}`, {
       method: "GET",
       headers: new Headers({
-        authorization: props.sessionToken,
+        authorization: sessionToken,
       }),
     });
     const json = await res.json();
@@ -64,7 +81,7 @@ const NewPost = (props) => {
       }),
       headers: new Headers({
         "Content-Type": "application/json",
-        authorization: props.sessionToken,
+        authorization: sessionToken,
       }),
     });
     const postJson = await postRes.json();
@@ -74,19 +91,13 @@ const NewPost = (props) => {
 
   return (
     <div className="create-post">
-      <PostHeader
-        petId={petId}
-        fileUrl={fileUrl}
-        handleSubmit={handleSubmit}
-        postName={postName}
-        setPostName={setPostName}
-      />
+      <PostHeader petId={petId} fileUrl={fileUrl} handleSubmit={handleSubmit} />
 
       <PostBody
         fileUrl={fileUrl}
         setDescription={setDescription}
         setFileUrl={setFileUrl}
-        pets={[]}
+        pets={pets}
         petId={petId}
         setPetId={setPetId}
       />

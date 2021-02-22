@@ -40,7 +40,7 @@ function App() {
     <div className="App">
       {/* Parent Element. Also we can't use the word class, so we use className in jsx*/}
       {/* Navbar is our imported component*/}
-      {!localStorage.getItem("token") ? (
+      {!sessionToken ? (
         <Auth updateToken={updateToken} />
       ) : (
         <Router>

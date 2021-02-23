@@ -68,6 +68,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
 
   const getEditUrl = () => {
     let url = post.photoUrl.split("upload")[1];
+    console.log(url);
     setUrlArray(url.split("/"));
   };
 
@@ -109,7 +110,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
                 <IconButton
                   aria-label="settings"
                   disabled={
-                    post.ownerId !== parseInt(localStorage.getItem("userId"))
+                    post.pet.userId !== parseInt(localStorage.getItem("userId"))
                   }
                   {...bindTrigger(popupState)}
                 >

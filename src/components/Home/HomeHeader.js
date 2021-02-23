@@ -1,6 +1,6 @@
 import { Grid, Typography, IconButton, Link, Button } from "@material-ui/core";
 import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
-import SubjectOutlinedIcon from "@material-ui/icons/SubjectOutlined";
+import PetsOutlinedIcon from "@material-ui/icons/PetsOutlined";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 
 //components
@@ -24,21 +24,27 @@ const HomeHeader = ({ type, setType, toggleView, viewPosts, setPage }) => {
               <Typography variant="h5">Home</Typography>
             </Button>
           </Grid>
-          <Grid item xs={3} />
-          <Grid item xs={1}>
+          <Grid item xs={1} />
+          <Grid item xs={2}>
             <IconButton className="button" onClick={(e) => setPage(e, "all")}>
-              {" "}
-              {/* for explore pets onClick={viewPosts ? toggleView : preventDefault} */}
               <ExploreOutlinedIcon />
             </IconButton>
           </Grid>
-          <Grid item xs={2} />
-          <Grid item xs={1}>
+          <Grid item xs={1} />
+          <Grid item xs={2}>
+            <IconButton
+              className="button"
+              onClick={viewPosts ? toggleView : preventDefault}
+            >
+              <PetsOutlinedIcon />
+            </IconButton>
+          </Grid>
+          <Grid item xs={1} />
+          <Grid item xs={2}>
             <IconButton className="button" onClick={(e) => setPage(e, "liked")}>
               <FavoriteIcon />
             </IconButton>
           </Grid>
-          <Grid item xs={2} />
           <Grid item xs={2}>
             <Categories type={type} setType={setType} />
           </Grid>

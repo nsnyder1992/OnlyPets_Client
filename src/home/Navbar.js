@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Link, Switch } from "react-router-dom";
 
 //material components
-import { Grid, IconButton } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
@@ -14,16 +14,55 @@ import AddNew from "../components/AddNew/AddNew";
 import EditPost from "../components/EditPosts/EditPost";
 import YourPets from "../components/YourPets/YourPets";
 import Profile from "../components/Profile/Profile";
+import ProfilePanel from "./ProfilePanel";
 
 //css
 import "./Navbar.css";
 
 // Function name matches file name
-const Navbar = ({ sessionToken }) => {
+const Navbar = ({ sessionToken, clearToken }) => {
   const [route, setRoute] = useState("/");
+  const [drawerState, setDrawerState] = useState({ right: false });
+
+  const [userName, setUsername] = useState();
+
+  useEffect(() => {
+    if (sessionToken) {
+      fetch(`http://localhost:3001/user/self`, {
+        method: "GET",
+        headers: new Headers({
+          authorization: sessionToken,
+        }),
+      })
+        .then((res) => res.json())
+        .then((user) => {
+          console.log(user);
+          setUsername(user.username);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
+
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setDrawerState({ ...drawerState, right: open });
+  };
+
   // return must have one parent element
   return (
     <header>
+      <ProfilePanel
+        userName={userName}
+        clearToken={clearToken}
+        toggleDrawer={toggleDrawer}
+        state={drawerState}
+      />
       <div className="navbar">
         <nav>
           <Link to="/">
@@ -44,20 +83,16 @@ const Navbar = ({ sessionToken }) => {
             </IconButton>
           </Link>
 
-          <Link to="/profile">
-            <IconButton>
-              <PersonOutlineIcon style={{ fontSize: 30 }} />
-            </IconButton>
-          </Link>
+          <IconButton onClick={toggleDrawer("right", true)}>
+            <PersonOutlineIcon style={{ fontSize: 30 }} />
+          </IconButton>
         </nav>
       </div>
-
       <hr
         style={{
           width: "99%",
         }}
       />
-
       <div className="apps">
         <Switch>
           <Route exact path="/">

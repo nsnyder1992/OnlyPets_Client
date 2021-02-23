@@ -39,7 +39,12 @@ const TimeAgo = ({ createdAt }) => {
   }, []);
 
   return (
-    <Typography variant="body2" color="textSecondary" component="p">
+    <Typography
+      variant="body2"
+      color="textSecondary"
+      component="p"
+      align="left"
+    >
       {timeAgo}
     </Typography>
   );

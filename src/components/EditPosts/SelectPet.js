@@ -1,8 +1,40 @@
+import { useEffect, useState } from "react";
+
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 
 import "./styles/SelectPet.css";
 
-const SelectPet = ({ pets, petId, setPetId }) => {
+const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
+  const [pets, setPets] = useState();
+
+  const handleChange = (e) => {
+    let petId = e.target.value;
+    setPetId(petId);
+    let petType;
+    pets.forEach((pet) => {
+      if (pet.id === petId) petType = pet.type;
+    });
+    console.log(petType);
+    setPetType(petType);
+  };
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/pet/owned`, {
+      method: "GET",
+      headers: new Headers({
+        authorization: sessionToken,
+      }),
+    })
+      .then((res) => res.json())
+      .then((pets) => {
+        console.log(pets);
+        setPets(pets.pets);
+        setPetId(pets.pets[0].id);
+        setPetType(pets.pets[0].type);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   return (
     <div className="pet-select-div">
       <FormControl id="pet-select-form">
@@ -12,13 +44,13 @@ const SelectPet = ({ pets, petId, setPetId }) => {
           id="pet-select"
           disableUnderline
           value={petId ? petId : null}
-          onChange={(e) => setPetId(e.target.value)}
+          onChange={handleChange}
         >
           {/*hardcoded the below but will need to map over user pets in the
           future */}
-          <MenuItem value={1}>Fluffy</MenuItem>
-          <MenuItem value={2}>Cindy</MenuItem>
-          <MenuItem value={3}>Bruce</MenuItem>
+          {pets?.map((pet) => {
+            return <MenuItem value={pet.id}>{pet.name}</MenuItem>;
+          })}
         </Select>
       </FormControl>
     </div>

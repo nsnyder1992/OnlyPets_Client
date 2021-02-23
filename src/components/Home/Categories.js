@@ -4,6 +4,11 @@ import { Select, FormControl, MenuItem } from "@material-ui/core";
 import "./styles/Categories.css";
 
 const Categories = ({ type, setType }) => {
+  const handleClick = (e) => {
+    setType(e.target.value);
+    localStorage.setItem("petType", e.target.value);
+  };
+
   return (
     <FormControl id="cat-select-form">
       {/* <InputLabel id="cat-label"> </InputLabel> */}
@@ -12,7 +17,7 @@ const Categories = ({ type, setType }) => {
         id="cat-select"
         disableUnderline
         value={type}
-        onChange={(e) => setType(e.target.value)}
+        onChange={handleClick}
       >
         {/*hardcoded the below but will need to map over pet types unique in the
           future */}

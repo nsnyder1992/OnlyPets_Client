@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // adding css to jsx is that easy
@@ -14,43 +14,43 @@ function App() {
   document.title = "JustPets";
 
   //set temporary tokens here until we get a working login!!!!
-  const tempToken =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJuaWNrQHRlc3QuY29tIiwiaWF0IjoxNjEzNjgyMDczLCJleHAiOjE2MTM3Njg0NzN9.AhJwMo7x28FRB4_uEvTvIQ48XUhe4v3MGP7YTRl4e3s";
-  const tempToken2 =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJuaWNrMkB0ZXN0LmNvbSIsImlhdCI6MTYxMzc2MDQxMCwiZXhwIjoxNjEzODQ2ODEwfQ.M4Cn05Jx5Az7bRJ4aIGbqmwri1bIIQeh0AUbmnsfy8I";
-  const [sessionToken, setSessionToken] = useState(tempToken2);
+  const [sessionToken, setSessionToken] = useState();
 
   // uncomment for login, siginup and authorization, wants we get a working login
-  // useEffect(() => {
-  //   if (localStorage.getItem("token")) {
-  //     setSessionToken(localStorage.getItem("token"));
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setSessionToken(localStorage.getItem("token"));
+    }
+  }, []);
 
-  // const updateToken = (newToken) => {
-  //   localStorage.setItem("token", newToken);
-  //   setSessionToken(newToken);
-  //   console.log(sessionToken);
-  // };
+  const updateToken = (newToken, userId) => {
+    localStorage.setItem("token", newToken);
+    localStorage.setItem("userId", parseInt(userId));
+    setSessionToken(newToken);
+    console.log(sessionToken);
+  };
 
-  // const clearToken = () => {
-  //   localStorage.clear();
-  //   setSessionToken("");
-  // };
+  const clearToken = () => {
+    localStorage.clear();
+    setSessionToken("");
+  };
 
   // All functional components need to return jsx with one parent element
   return (
     <div className="App">
       {/* Parent Element. Also we can't use the word class, so we use className in jsx*/}
       {/* Navbar is our imported component*/}
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Auth} />
-          <div>
-            <Navbar sessionToken={sessionToken} />
-          </div>
-        </Switch>
-      </Router>
+      {!sessionToken ? (
+        <Auth updateToken={updateToken} />
+      ) : (
+        <Router>
+          <Switch>
+            <div>
+              <Navbar sessionToken={sessionToken} clearToken={clearToken} />
+            </div>
+          </Switch>
+        </Router>
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useReducer, useRef } from "react";
+import { useReducer, useRef, useState } from "react";
 
 //import components
 import PostCard from "./PostCard";
@@ -13,16 +13,23 @@ import {
 //css
 import "./styles/Posts.css";
 
-const Posts = ({ sessionToken }) => {
+const Posts = ({ sessionToken, petType, postType }) => {
+  //states
+  const [totalPosts, setTotalPosts] = useState();
+
   //reducers
   const postReducer = (state, action) => {
     switch (action.type) {
       case "STACK_IMAGES":
         return { ...state, posts: state.posts.concat(action.posts) };
+      case "UPDATING_IMAGES":
+        console.log("updating images", action.posts);
+        return { ...state, posts: action.posts };
       case "DELETE_IMAGE":
         console.log(action.post);
         const index = state.posts.indexOf(action.post);
-        state.posts.splice(index, 1);
+        console.log(index);
+        if (index > -1) state.posts.splice(index, 1);
         return { ...state, posts: state.posts };
       case "FETCHING_IMAGES":
         return { ...state, fetching: action.fetching };
@@ -33,6 +40,8 @@ const Posts = ({ sessionToken }) => {
 
   const pageReducer = (state, action) => {
     switch (action.type) {
+      case "UPDATING_PAGE":
+        return { ...state, page: action.page };
       case "ADVANCE_PAGE":
         return { ...state, page: state.page + 1 };
       default:
@@ -45,16 +54,28 @@ const Posts = ({ sessionToken }) => {
     posts: [],
     fetching: true,
   });
-
   const [pager, pagerDispatch] = useReducer(pageReducer, { page: 1 });
+
+  //fetch constants
+  const limit = 4;
+  let baseUrl = "http://localhost:3001/post/byPetType";
+  if (postType != "all") baseUrl = `http://localhost:3001/post/${postType}`;
+  const fetchUrl = `${baseUrl}/${petType}/${pager.page}/${limit}`;
 
   useFetch(
     postData.posts,
+    totalPosts,
+    setTotalPosts,
+    postType,
+    petType,
     pager,
     postDispatch,
-    `http://localhost:3001/post/${pager.page}/${4}`,
+    pagerDispatch,
+    fetchUrl,
     sessionToken
   );
+
+  // useUpdateFetch(postDispatch, `${baseUrl}/${pager.page}/${4}`, sessionToken);
 
   const backend = "http://localhost:3001/post/cloudinary/delete";
   const cloudinaryUrl =

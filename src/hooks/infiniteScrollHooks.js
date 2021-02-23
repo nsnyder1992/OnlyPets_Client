@@ -1,12 +1,35 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useEffect, useCallback, useRef, useState } from "react";
 
 // make API calls and pass the returned data via dispatch
-export const useFetch = (array, data, dispatch, fetchUrl, sessionToken) => {
-  //states
-  const [totalPosts, setTotalPosts] = useState();
+export const useFetch = (
+  array,
+  totalPosts,
+  setTotalPosts,
+  postType,
+  petType,
+  pager,
+  dispatch,
+  pagerDispatch,
+  fetchUrl,
+  sessionToken
+) => {
+  const [lastPetType, setLastPetType] = useState();
+  const [lastPostType, setLastPostType] = useState();
+  useEffect(async () => {
+    if (sessionToken == undefined) return; //if no sessionToken stop process
+    if (petType !== lastPetType || postType !== lastPostType) {
+      dispatch({ type: "UPDATING_IMAGES", posts: [] }); //reset posts
+      pagerDispatch({ type: "UPDATING_PAGE", page: 1 }); //reset pagerDispatch
+      setLastPetType(petType); // set last pet type
+      setLastPostType(postType); // set last pet type
+      setTotalPosts(1); //need at least one post for below logic to work
+      return; //end this useEffect the above will initiate another useEffect cycle
+    }
+    console.log(array.length, totalPosts);
 
-  useEffect(() => {
-    if (array.length >= totalPosts) return;
+    if (array.length >= totalPosts) return; // this stops the re-renders if last post is ever reached
+
+    //Get posts and store them using the Dispatches!!!
     dispatch({ type: "FETCHING_IMAGES", fetching: true });
     fetch(fetchUrl, {
       method: "GET",
@@ -25,7 +48,7 @@ export const useFetch = (array, data, dispatch, fetchUrl, sessionToken) => {
         dispatch({ type: "FETCHING_IMAGES", fetching: false });
         return e;
       });
-  }, [dispatch, data.page]);
+  }, [dispatch, pager, petType, postType]);
 };
 
 export const deleteFromDispatch = async (
@@ -36,34 +59,34 @@ export const deleteFromDispatch = async (
   cloudinaryUrl,
   sessionToken
 ) => {
-  let folder = post?.photoUrl.split("/")[7];
-  let public_id = post?.photoUrl.split("/")[8];
+  // let folder = post?.photoUrl.split("/")[7];
+  // let public_id = post?.photoUrl.split("/")[8];
 
-  //get cloudinary security from backend
-  const res = await fetch(`${sigUrl}/${folder}/${public_id}`, {
-    method: "GET",
-    headers: new Headers({
-      authorization: sessionToken,
-    }),
-  });
-  const json = await res.json();
+  // //get cloudinary security from backend
+  // const res = await fetch(`${sigUrl}/${folder}/${public_id}`, {
+  //   method: "GET",
+  //   headers: new Headers({
+  //     authorization: sessionToken,
+  //   }),
+  // });
+  // const json = await res.json();
 
-  //set form data
-  let formData = new FormData();
-  formData.append("api_key", json.key);
-  formData.append("timestamp", json.timestamp);
-  // formData.append("folder", json.folder);
-  formData.append("public_id", json.public_id);
-  formData.append("invalidate", json.invalidate);
-  formData.append("signature", json.signature);
+  // //set form data
+  // let formData = new FormData();
+  // formData.append("api_key", json.key);
+  // formData.append("timestamp", json.timestamp);
+  // // formData.append("folder", json.folder);
+  // formData.append("public_id", json.public_id);
+  // formData.append("invalidate", json.invalidate);
+  // formData.append("signature", json.signature);
 
-  //post to cloudinary and get url for storage
-  const cloudinaryRes = await fetch(cloudinaryUrl, {
-    method: "POST",
-    body: formData,
-  });
-  const cloudinaryJson = await cloudinaryRes.json();
-  console.log(cloudinaryJson);
+  // //post to cloudinary and get url for storage
+  // const cloudinaryRes = await fetch(cloudinaryUrl, {
+  //   method: "POST",
+  //   body: formData,
+  // });
+  // const cloudinaryJson = await cloudinaryRes.json();
+  // console.log(cloudinaryJson);
 
   const postRes = await fetch(fetchUrl, {
     method: "DELETE",
@@ -93,6 +116,7 @@ export const useInfiniteScroll = (scrollRef, dispatch) => {
   );
 
   useEffect(() => {
+    console.log("useInfiniteScroll");
     if (scrollRef.current) {
       scrollObserver(scrollRef.current);
     }

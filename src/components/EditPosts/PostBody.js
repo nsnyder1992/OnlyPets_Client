@@ -13,7 +13,8 @@ const PostBody = ({
   description,
   setDescription,
   setFileUrl,
-  pets,
+  sessionToken,
+  setPetType,
   petId,
   setPetId,
 }) => {
@@ -34,7 +35,12 @@ const PostBody = ({
             <UploadImage setFileUrl={setFileUrl} />
           </Grid>
           <Grid item xs={2}>
-            <SelectPet pets={pets} petId={petId} setPetId={setPetId} />
+            <SelectPet
+              sessionToken={sessionToken}
+              setPetType={setPetType}
+              petId={petId}
+              setPetId={setPetId}
+            />
           </Grid>
         </Grid>
         <hr />

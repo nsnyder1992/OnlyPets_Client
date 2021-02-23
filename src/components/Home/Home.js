@@ -9,10 +9,21 @@ import Pets from "../Pets/Pets.js";
 import "../styles/Layouts.css";
 
 const Home = ({ setRoute, sessionToken }) => {
-  const [type, setType] = useState("all");
+  const [type, setType] = useState(
+    localStorage.getItem("petType") ? localStorage.getItem("petType") : "all"
+  );
   const [viewPosts, setViewPosts] = useState(true); //true posts, false explore pets
+  const [postType, setPostType] = useState("subscribed");
 
-  const toggleView = () => {
+  const postToggle = (e, type) => {
+    e.preventDefault();
+    if (postType !== type) setPostType(type);
+    if (!viewPosts) setViewPosts(!viewPosts);
+    console.log(type);
+  };
+
+  const toggleView = (e) => {
+    e.preventDefault();
     setViewPosts(!viewPosts);
   };
 
@@ -28,11 +39,17 @@ const Home = ({ setRoute, sessionToken }) => {
         sessionToken={sessionToken}
         toggleView={toggleView}
         viewPosts={viewPosts}
+        setPage={postToggle}
       />
       {viewPosts ? (
-        <Posts sessionToken={sessionToken} setRoute={setRoute} />
+        <Posts
+          sessionToken={sessionToken}
+          setRoute={setRoute}
+          petType={type}
+          postType={postType}
+        />
       ) : (
-        <Pets sessionToken={sessionToken} />
+        <Pets sessionToken={sessionToken} setRoute={setRoute} petType={type} />
       )}
     </div>
   );

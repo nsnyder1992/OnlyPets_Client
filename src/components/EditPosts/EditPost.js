@@ -5,6 +5,9 @@ import { useParams, useHistory } from "react-router-dom";
 import EditHeader from "./EditHeader";
 import PostBody from "./PostBody";
 
+//hooks
+import { uploadEditedImg } from "../../hooks/cloudinaryHooks";
+
 //css
 import "../styles/Layouts.css";
 
@@ -16,7 +19,7 @@ const EditPost = (props) => {
   const history = useHistory();
 
   //urls
-  const backend = "http://localhost:3001/post/cloudinary";
+  const signatureUrl = "http://localhost:3001/post/cloudinary";
   const cloudinaryUrl =
     "https://api.cloudinary.com/v1_1/nsnyder1992/image/upload";
   const initFileUrl =
@@ -27,6 +30,7 @@ const EditPost = (props) => {
   const [fileUrl, setFileUrl] = useState(initFileUrl);
 
   //model states
+  const [petType, setPetType] = useState();
   const [petId, setPetId] = useState(id);
   const [description, setDescription] = useState(desc);
 
@@ -36,31 +40,12 @@ const EditPost = (props) => {
 
     //get cloudinary security from backend
     if (file) {
-      let formData = new FormData();
-      let filename = file.name.split(".")[0];
-
-      const res = await fetch(`${backend}/${filename}`, {
-        method: "GET",
-        headers: new Headers({
-          authorization: props.sessionToken,
-        }),
-      });
-      const json = await res.json();
-
-      //set form data
-      formData.append("file", file);
-      formData.append("api_key", json.key);
-      formData.append("timestamp", json.timestamp);
-      formData.append("folder", json.folder);
-      formData.append("public_id", json.public_id);
-      formData.append("signature", json.signature);
-
-      //post to cloudinary and get url for storage
-      const cloudinaryRes = await fetch(cloudinaryUrl, {
-        method: "POST",
-        body: formData,
-      });
-      const cloudinaryJson = await cloudinaryRes.json();
+      const cloudinaryJson = await uploadEditedImg(
+        signatureUrl,
+        cloudinaryUrl,
+        file,
+        props.sessionToken
+      );
 
       await fetch(`http://localhost:3001/post/${postId}`, {
         method: "PUT",
@@ -68,6 +53,7 @@ const EditPost = (props) => {
           photoUrl: cloudinaryJson.url,
           description: description,
           petId: petId,
+          petType: petType,
         }),
         headers: new Headers({
           "Content-Type": "application/json",
@@ -85,6 +71,7 @@ const EditPost = (props) => {
         photoUrl: fileUrl,
         description: description,
         petId: petId,
+        petType: petType,
       }),
       headers: new Headers({
         "Content-Type": "application/json",
@@ -109,7 +96,8 @@ const EditPost = (props) => {
         description={description}
         setDescription={setDescription}
         setFileUrl={setFileUrl}
-        pets={[]}
+        sessionToken={props.sessionToken}
+        setPetType={setPetType}
         petId={petId}
         setPetId={setPetId}
       />

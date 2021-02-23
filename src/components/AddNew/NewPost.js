@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 //components
 import PostHeader from "../EditPosts/PostHeader";
 import PostBody from "../EditPosts/PostBody";
 
+//hooks
+import { uploadImg } from "../../hooks/cloudinaryHooks";
+
 //css
 import "../styles/Layouts.css";
 
-const NewPost = (props) => {
+const NewPost = ({ sessionToken }) => {
   // history
   const history = useHistory();
 
@@ -16,77 +19,56 @@ const NewPost = (props) => {
   const [fileUrl, setFileUrl] = useState();
 
   //model states
-  const [petId, setPetId] = useState(1);
-  const [postName, setPostName] = useState("New Post");
+  const [petType, setPetType] = useState();
+  const [petId, setPetId] = useState();
   const [description, setDescription] = useState();
 
   //send image to cloudinary and post data to backend server
-  const handleSubmit = async (e) => {
-    const backend = "http://localhost:3001/post/cloudinary";
+  const handleSubmit = async () => {
+    const signatureUrl = "http://localhost:3001/post/cloudinary";
     const cloudinaryUrl =
       "https://api.cloudinary.com/v1_1/nsnyder1992/image/upload";
     const file = document.getElementById("file-upload").files[0];
 
-    let formData = new FormData();
-    let filename = file.name.split(".")[0];
-
-    //get cloudinary security from backend
-    const res = await fetch(`${backend}/${filename}`, {
-      method: "GET",
-      headers: new Headers({
-        authorization: props.sessionToken,
-      }),
-    });
-    const json = await res.json();
-
-    //set form data
-    formData.append("file", file);
-    formData.append("api_key", json.key);
-    formData.append("timestamp", json.timestamp);
-    formData.append("folder", json.folder);
-    formData.append("public_id", json.public_id);
-    formData.append("signature", json.signature);
-
-    //post to cloudinary and get url for storage
-    const cloudinaryRes = await fetch(cloudinaryUrl, {
-      method: "POST",
-      body: formData,
-    });
-    const cloudinaryJson = await cloudinaryRes.json();
+    //upload to cloudinary
+    const cloudinaryJson = await uploadImg(
+      signatureUrl,
+      cloudinaryUrl,
+      file,
+      sessionToken
+    );
 
     //post to backend
-    const postRes = await fetch("http://localhost:3001/post/", {
+    await fetch("http://localhost:3001/post/", {
       method: "Post",
       body: JSON.stringify({
         photoUrl: cloudinaryJson.url,
         description: description,
         petId: petId,
+        petType: petType,
       }),
       headers: new Headers({
         "Content-Type": "application/json",
-        authorization: props.sessionToken,
+        authorization: sessionToken,
       }),
-    });
-    const postJson = await postRes.json();
-    console.log(postJson);
+    })
+      .then((res) => res.json())
+      .then((json) => console.log(json))
+      .catch((err) => console.log(err));
+
     history.push("/");
   };
 
   return (
     <div className="create-post">
-      <PostHeader
-        petId={petId}
-        fileUrl={fileUrl}
-        handleSubmit={handleSubmit}
-        postName={postName}
-        setPostName={setPostName}
-      />
+      <PostHeader petId={petId} fileUrl={fileUrl} handleSubmit={handleSubmit} />
 
       <PostBody
         fileUrl={fileUrl}
         setDescription={setDescription}
         setFileUrl={setFileUrl}
-        pets={[]}
+        sessionToken={sessionToken}
+        setPetType={setPetType}
         petId={petId}
         setPetId={setPetId}
       />

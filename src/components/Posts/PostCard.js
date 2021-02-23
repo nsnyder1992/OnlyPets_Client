@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 650,
     width: "90%",
     minWidth: 200,
-    margin: 10,
+    margin: 5,
   },
   media: {
     height: 0,
@@ -43,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
   actions: {
     display: "flex",
     justifyContent: "space-between",
+    marginBottom: 0,
+  },
+  content: {
+    paddingLeft: 16,
+    marginTop: 3,
   },
   popover: {
     display: "flex",
@@ -58,6 +63,10 @@ const useStyles = makeStyles((theme) => ({
   actionsLeft: {
     display: "flex",
     alignItems: "center",
+  },
+  timeAgo: {
+    paddingLeft: 16,
+    paddingTop: 12,
   },
 }));
 
@@ -92,10 +101,10 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
     console.log(post);
     getPetName();
     getEditUrl();
-  }, []);
+  }, [post]); //added post to dependencies now petName updates after a delete
 
   return (
-    <Card className={classes.root}>
+    <div className={classes.root}>
       <CardHeader
         className={classes.header}
         avatar={
@@ -151,7 +160,6 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
       <CardActions disableSpacing className={classes.actions}>
         <div className={classes.actionsLeft}>
           <Likes id={post.id} likes={post.likes} sessionToken={sessionToken} />
-          <TimeAgo createdAt={post.createdAt} />
         </div>
         <div className={classes.actionsRight}>
           <Tips />
@@ -159,12 +167,22 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
         </div>
       </CardActions>
 
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
+      {/* <CardContent className={classes.content}> */}
+      <div className={classes.content}>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          component="p"
+          align="left"
+        >
           {post.description}
         </Typography>
-      </CardContent>
-    </Card>
+      </div>
+      {/* </CardContent> */}
+      <div className={classes.timeAgo}>
+        <TimeAgo createdAt={post.createdAt} />
+      </div>
+    </div>
   );
 };
 

@@ -13,8 +13,17 @@ const Home = ({ setRoute, sessionToken }) => {
     localStorage.getItem("petType") ? localStorage.getItem("petType") : "all"
   );
   const [viewPosts, setViewPosts] = useState(true); //true posts, false explore pets
+  const [postType, setPostType] = useState("subscribed");
 
-  const toggleView = () => {
+  const postToggle = (e, type) => {
+    e.preventDefault();
+    if (postType !== type) setPostType(type);
+    if (!viewPosts) setViewPosts(!viewPosts);
+    console.log(type);
+  };
+
+  const toggleView = (e) => {
+    e.preventDefault();
     setViewPosts(!viewPosts);
   };
 
@@ -30,9 +39,15 @@ const Home = ({ setRoute, sessionToken }) => {
         sessionToken={sessionToken}
         toggleView={toggleView}
         viewPosts={viewPosts}
+        setPage={postToggle}
       />
       {viewPosts ? (
-        <Posts sessionToken={sessionToken} setRoute={setRoute} petType={type} />
+        <Posts
+          sessionToken={sessionToken}
+          setRoute={setRoute}
+          petType={type}
+          postType={postType}
+        />
       ) : (
         <Pets sessionToken={sessionToken} setRoute={setRoute} petType={type} />
       )}

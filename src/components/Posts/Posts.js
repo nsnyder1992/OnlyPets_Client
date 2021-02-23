@@ -13,7 +13,7 @@ import {
 //css
 import "./styles/Posts.css";
 
-const Posts = ({ sessionToken, petType }) => {
+const Posts = ({ sessionToken, petType, postType }) => {
   //states
   const [totalPosts, setTotalPosts] = useState();
 
@@ -58,12 +58,15 @@ const Posts = ({ sessionToken, petType }) => {
 
   //fetch constants
   const limit = 4;
-  const fetchUrl = `http://localhost:3001/post/byPetType/${petType}/${pager.page}/${limit}`;
+  let baseUrl = "http://localhost:3001/post/byPetType";
+  if (postType != "all") baseUrl = `http://localhost:3001/post/${postType}`;
+  const fetchUrl = `${baseUrl}/${petType}/${pager.page}/${limit}`;
 
   useFetch(
     postData.posts,
     totalPosts,
     setTotalPosts,
+    postType,
     petType,
     pager,
     postDispatch,

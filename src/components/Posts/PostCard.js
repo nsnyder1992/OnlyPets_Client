@@ -147,11 +147,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
       />
 
       <CardMedia className={classes.media} image={post.photoUrl} />
-      <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {post.description}
-        </Typography>
-      </CardContent>
+
       <CardActions disableSpacing className={classes.actions}>
         <div className={classes.actionsLeft}>
           <Likes id={post.id} likes={post.likes} sessionToken={sessionToken} />
@@ -162,6 +158,12 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
           <Subscribe id={post.petId} sessionToken={sessionToken} />
         </div>
       </CardActions>
+
+      <CardContent>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {post.description}
+        </Typography>
+      </CardContent>
     </Card>
   );
 };

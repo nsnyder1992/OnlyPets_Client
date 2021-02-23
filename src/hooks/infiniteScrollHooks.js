@@ -5,6 +5,7 @@ export const useFetch = (
   array,
   totalPosts,
   setTotalPosts,
+  postType,
   petType,
   pager,
   dispatch,
@@ -12,13 +13,15 @@ export const useFetch = (
   fetchUrl,
   sessionToken
 ) => {
-  const [lastType, setLastType] = useState();
+  const [lastPetType, setLastPetType] = useState();
+  const [lastPostType, setLastPostType] = useState();
   useEffect(async () => {
     if (sessionToken == undefined) return; //if no sessionToken stop process
-    if (petType !== lastType) {
+    if (petType !== lastPetType || postType !== lastPostType) {
       dispatch({ type: "UPDATING_IMAGES", posts: [] }); //reset posts
       pagerDispatch({ type: "UPDATING_PAGE", page: 1 }); //reset pagerDispatch
-      setLastType(petType); // set last type
+      setLastPetType(petType); // set last pet type
+      setLastPostType(postType); // set last pet type
       setTotalPosts(1); //need at least one post for below logic to work
       return; //end this useEffect the above will initiate another useEffect cycle
     }
@@ -45,7 +48,7 @@ export const useFetch = (
         dispatch({ type: "FETCHING_IMAGES", fetching: false });
         return e;
       });
-  }, [dispatch, pager, petType]);
+  }, [dispatch, pager, petType, postType]);
 };
 
 export const deleteFromDispatch = async (

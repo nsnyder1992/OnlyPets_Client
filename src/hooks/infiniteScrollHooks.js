@@ -51,8 +51,13 @@ export const useFetch = (
     })
       .then((data) => data.json())
       .then((json) => {
+        //update total posts to know when user will get to the last post
         setTotalPosts(json.total ? json.total : json.count); //some endpoints use total some use count...
+
+        //abstract posts from json.posts
         const posts = json.posts;
+
+        //send to dispatch
         dispatch({ type: "STACK_IMAGES", posts });
         dispatch({ type: "FETCHING_IMAGES", fetching: false });
       })

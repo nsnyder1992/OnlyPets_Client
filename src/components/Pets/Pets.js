@@ -53,7 +53,7 @@ const Pets = ({ sessionToken }) => {
 
   return (
     <div className="posts">
-      <h1>ExplorePets</h1>
+      <Typography variant="h5">Explore Pets</Typography>
       {postData?.posts.map((index) => {
         return (
           <PostCard

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 //material components
 import { makeStyles } from "@material-ui/core/styles";
@@ -6,21 +6,15 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { indigo } from "@material-ui/core/colors";
-import Popover from "@material-ui/core/Popover";
-import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import Box from "@material-ui/core/Box";
-import { Button } from "@material-ui/core";
 
 //components
 import Likes from "./Likes";
 import Tips from "./Tips";
 import Subscribe from "./Subscribe";
 import TimeAgo from "./TimeAgo";
-import { useEffect, useState } from "react";
+import PostCardOptions from "./PostCardOptions";
 
 import "./styles/PostCard.css";
 
@@ -94,7 +88,6 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         setPetName(json.pet.name);
       })
       .catch((err) => console.log(err));
@@ -117,48 +110,12 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
         }
         // handles edit and delete of a post
         action={
-          <PopupState variant="popover" popupId="demo-popup-popover">
-            {(popupState) => (
-              <div>
-                <IconButton
-                  aria-label="settings"
-                  disabled={
-                    // if user !== owner disable button
-                    post.pet.userId !== parseInt(localStorage.getItem("userId"))
-                  }
-                  {...bindTrigger(popupState)}
-                >
-                  <MoreVertIcon />
-                </IconButton>
-                <Popover
-                  {...bindPopover(popupState)}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "center",
-                  }}
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "center",
-                  }}
-                  className={classes.popover}
-                >
-                  {/* Edit and delete post */}
-                  <Box p={2}>
-                    {/* edit post url with queries */}
-                    <Link
-                      to={`/editPost/${post.id}/${post.petId}/${post.description}/${urlArray}`}
-                    >
-                      <Button>Edit</Button>
-                    </Link>
-                    {/* delete post from postData.post and server/DB */}
-                    <Button onClick={() => deletePost(post.id, post)}>
-                      Delete
-                    </Button>
-                  </Box>
-                </Popover>
-              </div>
-            )}
-          </PopupState>
+          <PostCardOptions
+            post={post}
+            deletePost={deletePost}
+            urlArray={urlArray}
+            classes={classes}
+          />
         }
         title={<Typography>{petName}</Typography>}
       />

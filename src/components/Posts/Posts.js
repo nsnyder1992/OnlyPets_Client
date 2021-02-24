@@ -34,8 +34,8 @@ const Posts = ({ sessionToken, petType, postType }) => {
   See ../../hooks/infiniteScrollHooks for more details
 
   ****************************************************/
-  //reducers (preform som action on states)
 
+  //reducers (preform som action on states)
   //This handles the state of posts and how to keep them
   //in their state
   const postReducer = (state, action) => {
@@ -43,12 +43,9 @@ const Posts = ({ sessionToken, petType, postType }) => {
       case "STACK_IMAGES":
         return { ...state, posts: state.posts.concat(action.posts) };
       case "UPDATING_IMAGES":
-        console.log("updating images", action.posts);
         return { ...state, posts: action.posts };
       case "DELETE_IMAGE":
-        console.log(action.post);
         const index = state.posts.indexOf(action.post);
-        console.log(index);
         if (index > -1) state.posts.splice(index, 1);
         return { ...state, posts: state.posts };
       case "FETCHING_IMAGES":

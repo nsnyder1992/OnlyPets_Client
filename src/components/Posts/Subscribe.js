@@ -19,7 +19,7 @@ const Subscribe = ({ id, sessionToken }) => {
   };
 
   //get number of subscribers and if user has subscribed
-  const getSubs = () => {
+  const getSubs = (id) => {
     fetch(`http://localhost:3001/subscribe/num/${id}`, {
       method: "GET",
       headers: new Headers({
@@ -72,8 +72,8 @@ const Subscribe = ({ id, sessionToken }) => {
 
   //on change in id token update card
   useEffect(() => {
-    getSubs();
-  });
+    getSubs(id);
+  }, [id]);
 
   return (
     <IconButton aria-label="add to favorites" onClick={handleSubscribe}>

@@ -23,7 +23,7 @@ const Likes = ({ id, sessionToken }) => {
   };
 
   //get number of likes and init if liked by user
-  const getLikes = () => {
+  const getLikes = (id) => {
     fetch(`${BASEURL}/${id}`, {
       method: "GET",
       headers: new Headers({
@@ -76,8 +76,8 @@ const Likes = ({ id, sessionToken }) => {
 
   //on id change update number and if user likes this post
   useEffect(() => {
-    getLikes();
-  });
+    getLikes(id);
+  }, [id]);
 
   return (
     // toggle likes using button

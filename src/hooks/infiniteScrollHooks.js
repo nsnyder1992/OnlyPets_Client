@@ -3,8 +3,6 @@ import { useEffect, useCallback, useRef, useState } from "react";
 // make API calls and pass the returned data via dispatch
 export const useFetch = (
   array,
-  totalPosts,
-  setTotalPosts,
   postType,
   petType,
   pager,
@@ -13,6 +11,9 @@ export const useFetch = (
   fetchUrl,
   sessionToken
 ) => {
+  //get/set total posts to stop render after getting to last post
+  const [totalPosts, setTotalPosts] = useState();
+
   //init last Type states to check for changes later
   const [lastPetType, setLastPetType] = useState();
   const [lastPostType, setLastPostType] = useState();
@@ -50,7 +51,7 @@ export const useFetch = (
     })
       .then((data) => data.json())
       .then((json) => {
-        setTotalPosts(json.total);
+        setTotalPosts(json.total ? json.total : json.count); //some endpoints use total some use count...
         const posts = json.posts;
         dispatch({ type: "STACK_IMAGES", posts });
         dispatch({ type: "FETCHING_IMAGES", fetching: false });

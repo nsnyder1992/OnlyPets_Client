@@ -15,9 +15,6 @@ import "./styles/Posts.css";
 import { Typography } from "@material-ui/core";
 
 const Posts = ({ sessionToken, petType, postType }) => {
-  //states
-  const [totalPosts, setTotalPosts] = useState();
-
   /*************************************************** 
   
   To implement the infinite scroll feature that follows
@@ -84,8 +81,6 @@ const Posts = ({ sessionToken, petType, postType }) => {
   //Fetch hook to handle getting/updating posts based on [postDispatch, pager, postType, petType]
   useFetch(
     postData.posts,
-    totalPosts,
-    setTotalPosts,
     postType,
     petType,
     pager,

@@ -36,7 +36,7 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
         setPetType(pets.pets[0].type);
       })
       .catch((err) => console.error(err));
-  });
+  }, []); //need the dep array here to allow the value below to be correct for some reason :/???
 
   return (
     <div className="pet-select-div">

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import { IconButton, Typography } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import SubscriptionsOutlinedIcon from "@material-ui/icons/SubscriptionsOutlined";
 
 const Subscribe = ({ id, sessionToken }) => {
@@ -73,7 +73,7 @@ const Subscribe = ({ id, sessionToken }) => {
   //on change in id token update card
   useEffect(() => {
     getSubs();
-  }, [id]);
+  });
 
   return (
     <IconButton aria-label="add to favorites" onClick={handleSubscribe}>

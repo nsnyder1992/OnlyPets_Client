@@ -33,7 +33,7 @@ const Home = ({ setRoute, sessionToken }) => {
   //route the app is on
   useEffect(() => {
     setRoute("/");
-  }, []);
+  });
 
   return (
     <div className="home">

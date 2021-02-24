@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 //components
@@ -34,10 +34,13 @@ const EditPost = (props) => {
   const [petId, setPetId] = useState(id);
   const [description, setDescription] = useState(desc);
 
+  //create a ref to be used by the file-upload input
+  const fileUpload = useRef(null);
+
   //send image to cloudinary if image is new and post data to backend server
   const handleSubmit = async (e) => {
     //get file from input id "file-upload"
-    const file = document.getElementById("file-upload").files[0];
+    const file = fileUpload.current.files[0];
 
     //if file upload send to cloudinary if not just update backend
     if (file) {
@@ -98,6 +101,7 @@ const EditPost = (props) => {
 
       <PostBody
         fileUrl={fileUrl}
+        fileUpload={fileUpload}
         description={description}
         setDescription={setDescription}
         setFileUrl={setFileUrl}

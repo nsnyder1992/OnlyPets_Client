@@ -41,10 +41,6 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 16,
     marginTop: 3,
   },
-  popover: {
-    display: "flex",
-    flexDirection: "column",
-  },
   header: {
     display: "flex",
     justifyContent: "right",
@@ -68,18 +64,11 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
   //styles
   const classes = useStyles();
 
-  //states to set petName and edit url data
-  const [urlArray, setUrlArray] = useState(); //this helps with querying edit url
+  //states
   const [petName, setPetName] = useState();
 
-  //update url to after cloudinary upload to update image
-  const getEditUrl = () => {
-    let url = post.photoUrl.split("upload")[1];
-    setUrlArray(url.split("/"));
-  };
-
   //get pet name give post.petId
-  const getPetName = () => {
+  const getPetName = (post) => {
     fetch(`${BASEURL}/${post.petId}`, {
       method: "GET",
       headers: new Headers({
@@ -93,11 +82,10 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
       .catch((err) => console.log(err));
   };
 
-  //on change in [post] update petName and urlArray states
+  //on change in [post] update petName
   useEffect(() => {
-    getPetName();
-    getEditUrl();
-  }, []); //added post to dependencies now petName updates after a delete
+    getPetName(post);
+  }, [post]); //added post to dependencies now petName updates after a delete
 
   return (
     <div className={classes.root}>
@@ -109,14 +97,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
           </Avatar>
         }
         // handles edit and delete of a post
-        action={
-          <PostCardOptions
-            post={post}
-            deletePost={deletePost}
-            urlArray={urlArray}
-            classes={classes}
-          />
-        }
+        action={<PostCardOptions post={post} deletePost={deletePost} />}
         title={<Typography>{petName}</Typography>}
       />
 
@@ -144,7 +125,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
       </div>
 
       <div className={classes.timeAgo}>
-        <TimeAgo createdAt={post.createdAt} />
+        <TimeAgo dateString={post.createdAt} />
       </div>
     </div>
   );

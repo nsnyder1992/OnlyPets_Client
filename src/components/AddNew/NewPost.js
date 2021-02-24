@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 
 //components
@@ -16,19 +16,22 @@ const NewPost = ({ sessionToken }) => {
   const history = useHistory();
 
   //file states
-  const [fileUrl, setFileUrl] = useState();
+  const [fileUrl, setFileUrl] = useState("");
 
   //states to set by form (../EditPosts/PostBody)
-  const [petType, setPetType] = useState();
-  const [petId, setPetId] = useState();
-  const [description, setDescription] = useState();
+  const [petType, setPetType] = useState("");
+  const [petId, setPetId] = useState("");
+  const [description, setDescription] = useState("");
+
+  //create a ref to be used by the file-upload input
+  const fileUpload = useRef(null);
 
   //send image to cloudinary and post data to backend server
   const handleSubmit = async () => {
     const signatureUrl = "http://localhost:3001/post/cloudinary";
     const cloudinaryUrl =
       "https://api.cloudinary.com/v1_1/nsnyder1992/image/upload";
-    const file = document.getElementById("file-upload").files[0];
+    const file = fileUpload.current.files[0];
 
     //upload to cloudinary
     const cloudinaryJson = await uploadImg(
@@ -65,6 +68,7 @@ const NewPost = ({ sessionToken }) => {
 
       <PostBody
         fileUrl={fileUrl}
+        fileUpload={fileUpload}
         setDescription={setDescription}
         setFileUrl={setFileUrl}
         sessionToken={sessionToken}

@@ -1,7 +1,7 @@
 import { IconButton } from "@material-ui/core";
 import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 
-const UploadImage = ({ setFileUrl }) => {
+const UploadImage = ({ setFileUrl, fileUpload }) => {
   //on change of input get file and create a URL and set fileURL
   const handleFileUpload = (e) => {
     let file = e.target.files[0];
@@ -24,6 +24,7 @@ const UploadImage = ({ setFileUrl }) => {
         <input
           type="file"
           hidden
+          ref={fileUpload}
           onChange={handleFileUpload}
           id="file-upload"
         />

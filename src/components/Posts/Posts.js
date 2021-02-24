@@ -120,7 +120,7 @@ const Posts = ({ sessionToken, petType, postType }) => {
   return (
     <div className="posts">
       {/* if posts not empty display posts else display a custom message */}
-      {postData.posts.length > 0 ? (
+      {postData.posts.length >= 0 ? (
         postData.posts.map((post, index) => {
           return (
             <PostCard

@@ -10,6 +10,7 @@ import "./styles/PostBody.css";
 
 const PostBody = ({
   fileUrl,
+  fileUpload,
   description,
   setDescription,
   setFileUrl,
@@ -33,7 +34,7 @@ const PostBody = ({
       <div className="row">
         <Grid container spacing={1}>
           <Grid item xs={2}>
-            <UploadImage setFileUrl={setFileUrl} />
+            <UploadImage setFileUrl={setFileUrl} fileUpload={fileUpload} />
           </Grid>
           <Grid item xs={2}>
             {/* Pets displayed are only the users pets */}

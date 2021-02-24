@@ -17,9 +17,8 @@ export const useFetch = (
   const [lastPetType, setLastPetType] = useState();
   const [lastPostType, setLastPostType] = useState();
 
-  //this useEffect will run when changes are made to any of [dispatch, pager, petType, postType]
-  useEffect(async () => {
-    if (sessionToken == undefined) return; //if no sessionToken stop process
+  const fetchData = async () => {
+    if (sessionToken === undefined) return; //if no sessionToken stop process
 
     //check if Last types have changed if so reset posts and page
     if (petType !== lastPetType || postType !== lastPostType) {
@@ -60,6 +59,11 @@ export const useFetch = (
         dispatch({ type: "FETCHING_IMAGES", fetching: false });
         return e;
       });
+  };
+
+  //this useEffect will run when changes are made to any of [dispatch, pager, petType, postType]
+  useEffect(() => {
+    fetchData();
   }, [dispatch, pager, petType, postType]);
 };
 

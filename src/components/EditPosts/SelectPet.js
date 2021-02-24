@@ -31,13 +31,12 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
     })
       .then((res) => res.json())
       .then((pets) => {
-        console.log(pets);
         setPets(pets.pets);
         setPetId(pets.pets[0].id);
         setPetType(pets.pets[0].type);
       })
       .catch((err) => console.error(err));
-  }, []);
+  });
 
   return (
     <div className="pet-select-div">
@@ -51,8 +50,12 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
           onChange={handleChange}
         >
           {/*Map over pets displaying them and setting their id to value */}
-          {pets?.map((pet) => {
-            return <MenuItem value={pet.id}>{pet.name}</MenuItem>;
+          {pets?.map((pet, index) => {
+            return (
+              <MenuItem key={index} value={pet.id}>
+                {pet.name}
+              </MenuItem>
+            );
           })}
         </Select>
       </FormControl>

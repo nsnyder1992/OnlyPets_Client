@@ -1,4 +1,4 @@
-import { Grid, Typography, IconButton, Link, Button } from "@material-ui/core";
+import { Grid, Typography, IconButton, Button } from "@material-ui/core";
 import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
 import PetsOutlinedIcon from "@material-ui/icons/PetsOutlined";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -18,11 +18,7 @@ const HomeHeader = ({ type, setType, toggleView, viewPosts, setPage }) => {
         <Grid container spacing={2}>
           <Grid item xs={1}>
             {/* Home button == subscribed pet's posts */}
-            <Button
-              onClick={(e) => setPage(e, "subscribed")}
-              disableUnderline
-              color="inherit"
-            >
+            <Button onClick={(e) => setPage(e, "subscribed")} color="inherit">
               <Typography variant="h5">Home</Typography>
             </Button>
           </Grid>

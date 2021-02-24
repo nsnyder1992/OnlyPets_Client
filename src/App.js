@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 // adding css to jsx is that easy
 import "./App.css"; // This pattern is preferred where css for this component has a matching .css filename

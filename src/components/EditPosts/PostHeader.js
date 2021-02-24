@@ -1,6 +1,7 @@
 import { Grid, Button, Typography } from "@material-ui/core";
 
 const PostHeader = ({ petId, fileUrl, handleSubmit }) => {
+  //handles submitting data from PostBody, and en/disable Post button
   return (
     <header>
       <Grid container spacing={3}>

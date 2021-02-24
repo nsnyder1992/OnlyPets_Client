@@ -13,21 +13,33 @@ export const useFetch = (
   fetchUrl,
   sessionToken
 ) => {
+  //init last Type states to check for changes later
   const [lastPetType, setLastPetType] = useState();
   const [lastPostType, setLastPostType] = useState();
+
+  //this useEffect will run when changes are made to any of [dispatch, pager, petType, postType]
   useEffect(async () => {
     if (sessionToken == undefined) return; //if no sessionToken stop process
+
+    //check if Last types have changed if so reset posts and page
     if (petType !== lastPetType || postType !== lastPostType) {
       dispatch({ type: "UPDATING_IMAGES", posts: [] }); //reset posts
       pagerDispatch({ type: "UPDATING_PAGE", page: 1 }); //reset pagerDispatch
-      setLastPetType(petType); // set last pet type
-      setLastPostType(postType); // set last pet type
-      setTotalPosts(1); //need at least one post for below logic to work
-      return; //end this useEffect the above will initiate another useEffect cycle
+
+      //set last types so we know when it changes again
+      setLastPetType(petType);
+      setLastPostType(postType);
+
+      //need at least one post for below logic to work
+      setTotalPosts(1);
+
+      //end this useEffect the above changes to dispatch and pager will initiate another useEffect cycle
+      return;
     }
     console.log(array.length, totalPosts);
 
-    if (array.length >= totalPosts) return; // this stops the re-renders if last post is ever reached
+    // this stops the re-renders if the last post is ever reached
+    if (array.length >= totalPosts) return;
 
     //Get posts and store them using the Dispatches!!!
     dispatch({ type: "FETCHING_IMAGES", fetching: true });
@@ -88,6 +100,7 @@ export const deleteFromDispatch = async (
   // const cloudinaryJson = await cloudinaryRes.json();
   // console.log(cloudinaryJson);
 
+  //delete posts and update the posts
   const postRes = await fetch(fetchUrl, {
     method: "DELETE",
     headers: new Headers({
@@ -95,13 +108,22 @@ export const deleteFromDispatch = async (
       authorization: sessionToken,
     }),
   });
+
+  //this finds the index of post in postData.posts and deletes and updates it
   await dispatch({ type: "DELETE_IMAGE", post: post });
+
+  //check if deleted
   const postJson = await postRes.json();
   console.log(postJson);
 };
 
 // infinite scrolling with intersection observer
 export const useInfiniteScroll = (scrollRef, dispatch) => {
+  /******************************************************************** 
+  Looks over objects in DOM and if it intersects with specified Ref
+  it will advance the pager initiating the above useFetch Hook getting
+  more posts!!!!!!!!
+  ********************************************************************/
   const scrollObserver = useCallback(
     (node) => {
       new IntersectionObserver((entries) => {
@@ -124,6 +146,9 @@ export const useInfiniteScroll = (scrollRef, dispatch) => {
 };
 
 // lazy load images with intersection observer
+/*************************************************************
+ * THE BELOW IS NOT USED SOMETHING IS WRONG WITH IT :/
+ *************************************************************/
 export const useLazyLoading = (imgSelector, items) => {
   const imgObserver = useCallback((node) => {
     const intObs = new IntersectionObserver((entries) => {

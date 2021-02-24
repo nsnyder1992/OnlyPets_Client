@@ -4,9 +4,9 @@ import { Select, FormControl, MenuItem } from "@material-ui/core";
 import "./styles/PetTypes.css";
 
 const PetTypes = ({ type, setType }) => {
+  // handles selection logic for petType
   return (
     <FormControl id="type-select-form">
-      {/* <InputLabel id="cat-label"> </InputLabel> */}
       <Select
         labelId="type-label"
         id="type-select"

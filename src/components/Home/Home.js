@@ -9,12 +9,14 @@ import Pets from "../Pets/Pets.js";
 import "../styles/Layouts.css";
 
 const Home = ({ setRoute, sessionToken }) => {
+  //pet type is initialized from local storage or set to 'all'
   const [type, setType] = useState(
     localStorage.getItem("petType") ? localStorage.getItem("petType") : "all"
   );
   const [viewPosts, setViewPosts] = useState(true); //true posts, false explore pets
-  const [postType, setPostType] = useState("subscribed");
+  const [postType, setPostType] = useState("subscribed"); //sets endpoint to get posts
 
+  //toggle which post you will see, subscribed or likes!
   const postToggle = (e, type) => {
     e.preventDefault();
     if (postType !== type) setPostType(type);
@@ -22,11 +24,13 @@ const Home = ({ setRoute, sessionToken }) => {
     console.log(type);
   };
 
+  //toggles to see explore pets
   const toggleView = (e) => {
     e.preventDefault();
     setViewPosts(!viewPosts);
   };
 
+  //route the app is on
   useEffect(() => {
     setRoute("/");
   }, []);
@@ -41,6 +45,7 @@ const Home = ({ setRoute, sessionToken }) => {
         viewPosts={viewPosts}
         setPage={postToggle}
       />
+      {/* Toggle Posts or Pets */}
       {viewPosts ? (
         <Posts
           sessionToken={sessionToken}

@@ -36,10 +36,12 @@ const EditPost = (props) => {
 
   //send image to cloudinary if image is new and post data to backend server
   const handleSubmit = async (e) => {
+    //get file from input id "file-upload"
     const file = document.getElementById("file-upload").files[0];
 
-    //get cloudinary security from backend
+    //if file upload send to cloudinary if not just update backend
     if (file) {
+      //get cloudinary signature from backend and send to cloudinary
       const cloudinaryJson = await uploadEditedImg(
         signatureUrl,
         cloudinaryUrl,
@@ -47,6 +49,7 @@ const EditPost = (props) => {
         props.sessionToken
       );
 
+      //update post
       await fetch(`http://localhost:3001/post/${postId}`, {
         method: "PUT",
         body: JSON.stringify({
@@ -65,6 +68,7 @@ const EditPost = (props) => {
       return;
     }
 
+    //update post but not cloudinary
     await fetch(`http://localhost:3001/post/${postId}`, {
       method: "PUT",
       body: JSON.stringify({
@@ -79,6 +83,7 @@ const EditPost = (props) => {
       }),
     });
 
+    //push route back to home
     history.push("/");
   };
 

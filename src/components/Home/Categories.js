@@ -4,6 +4,7 @@ import { Select, FormControl, MenuItem } from "@material-ui/core";
 import "./styles/Categories.css";
 
 const Categories = ({ type, setType }) => {
+  //handles setting hte petType for server endpoint
   const handleClick = (e) => {
     setType(e.target.value);
     localStorage.setItem("petType", e.target.value);
@@ -11,7 +12,6 @@ const Categories = ({ type, setType }) => {
 
   return (
     <FormControl id="cat-select-form">
-      {/* <InputLabel id="cat-label"> </InputLabel> */}
       <Select
         labelId="cat-label"
         id="cat-select"

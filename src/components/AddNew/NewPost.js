@@ -18,7 +18,7 @@ const NewPost = ({ sessionToken }) => {
   //file states
   const [fileUrl, setFileUrl] = useState();
 
-  //model states
+  //states to set by form (../EditPosts/PostBody)
   const [petType, setPetType] = useState();
   const [petId, setPetId] = useState();
   const [description, setDescription] = useState();

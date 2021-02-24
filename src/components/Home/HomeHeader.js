@@ -10,12 +10,14 @@ import Categories from "./Categories";
 import "./styles/HomeHeader.css";
 
 const HomeHeader = ({ type, setType, toggleView, viewPosts, setPage }) => {
+  //prevent page refresh
   const preventDefault = (event) => event.preventDefault();
   return (
     <div>
       <header className="header">
         <Grid container spacing={2}>
           <Grid item xs={1}>
+            {/* Home button == subscribed pet's posts */}
             <Button
               onClick={(e) => setPage(e, "subscribed")}
               disableUnderline
@@ -26,12 +28,17 @@ const HomeHeader = ({ type, setType, toggleView, viewPosts, setPage }) => {
           </Grid>
           <Grid item xs={1} />
           <Grid item xs={2}>
-            <IconButton className="button" onClick={(e) => setPage(e, "all")}>
+            {/* Compass button == all pet's posts */}
+            <IconButton
+              className="button"
+              onClick={(e) => setPage(e, "byPetType")}
+            >
               <ExploreOutlinedIcon />
             </IconButton>
           </Grid>
           <Grid item xs={1} />
           <Grid item xs={2}>
+            {/* Pet button == explore pets */}
             <IconButton
               className="button"
               onClick={viewPosts ? toggleView : preventDefault}
@@ -41,6 +48,7 @@ const HomeHeader = ({ type, setType, toggleView, viewPosts, setPage }) => {
           </Grid>
           <Grid item xs={1} />
           <Grid item xs={2}>
+            {/* Heart button == users liked posts */}
             <IconButton className="button" onClick={(e) => setPage(e, "liked")}>
               <FavoriteIcon />
             </IconButton>

@@ -2,10 +2,8 @@ import { Link } from "react-router-dom";
 
 //material components
 import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
@@ -70,19 +68,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const BASEURL = "http://localhost:3001/pet";
+
 const PostCard = ({ post, deletePost, sessionToken }) => {
+  //styles
   const classes = useStyles();
-  const [urlArray, setUrlArray] = useState();
+
+  //states to set petName and edit url data
+  const [urlArray, setUrlArray] = useState(); //this helps with querying edit url
   const [petName, setPetName] = useState();
 
+  //update url to after cloudinary upload to update image
   const getEditUrl = () => {
     let url = post.photoUrl.split("upload")[1];
-    console.log(url);
     setUrlArray(url.split("/"));
   };
 
+  //get pet name give post.petId
   const getPetName = () => {
-    fetch(`http://localhost:3001/pet/${post.petId}`, {
+    fetch(`${BASEURL}/${post.petId}`, {
       method: "GET",
       headers: new Headers({
         authorization: sessionToken,
@@ -96,12 +100,11 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
       .catch((err) => console.log(err));
   };
 
+  //on change in [post] update petName and urlArray states
   useEffect(() => {
-    console.log(sessionToken);
-    console.log(post);
     getPetName();
     getEditUrl();
-  }, [post]); //added post to dependencies now petName updates after a delete
+  }, []); //added post to dependencies now petName updates after a delete
 
   return (
     <div className={classes.root}>
@@ -112,6 +115,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
             {petName ? petName[0].toUpperCase() : null}
           </Avatar>
         }
+        // handles edit and delete of a post
         action={
           <PopupState variant="popover" popupId="demo-popup-popover">
             {(popupState) => (
@@ -119,6 +123,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
                 <IconButton
                   aria-label="settings"
                   disabled={
+                    // if user !== owner disable button
                     post.pet.userId !== parseInt(localStorage.getItem("userId"))
                   }
                   {...bindTrigger(popupState)}
@@ -137,12 +142,15 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
                   }}
                   className={classes.popover}
                 >
+                  {/* Edit and delete post */}
                   <Box p={2}>
+                    {/* edit post url with queries */}
                     <Link
                       to={`/editPost/${post.id}/${post.petId}/${post.description}/${urlArray}`}
                     >
                       <Button>Edit</Button>
                     </Link>
+                    {/* delete post from postData.post and server/DB */}
                     <Button onClick={() => deletePost(post.id, post)}>
                       Delete
                     </Button>
@@ -167,7 +175,6 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
         </div>
       </CardActions>
 
-      {/* <CardContent className={classes.content}> */}
       <div className={classes.content}>
         <Typography
           variant="body2"
@@ -178,7 +185,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
           {post.description}
         </Typography>
       </div>
-      {/* </CardContent> */}
+
       <div className={classes.timeAgo}>
         <TimeAgo createdAt={post.createdAt} />
       </div>

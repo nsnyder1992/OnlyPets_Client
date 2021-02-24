@@ -18,6 +18,7 @@ const PostBody = ({
   petId,
   setPetId,
 }) => {
+  //form for entering data to be submitted
   return (
     <form id="post-form">
       <ImgDisplay fileUrl={fileUrl} className="row" />
@@ -35,6 +36,7 @@ const PostBody = ({
             <UploadImage setFileUrl={setFileUrl} />
           </Grid>
           <Grid item xs={2}>
+            {/* Pets displayed are only the users pets */}
             <SelectPet
               sessionToken={sessionToken}
               setPetType={setPetType}

@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 
 const TimeAgo = ({ createdAt }) => {
+  //states
   const [timeAgo, setTimeAgo] = useState();
 
   const getTimeAgo = () => {
+    //seconds to different units constants
     const secToMin = 60;
     const secToHrs = 3600;
     const secToDay = 86400;
@@ -15,8 +17,10 @@ const TimeAgo = ({ createdAt }) => {
     let today = new Date();
     let secondsAgo = (today - date) / 1000;
 
+    //init text as over a Month ago
     let tempTimeAgo = "over a Month ago";
 
+    //set the text to least time unit
     if (secondsAgo < secToMth)
       tempTimeAgo = Math.floor(secondsAgo / secToWks) + "weeks ago";
 
@@ -34,9 +38,10 @@ const TimeAgo = ({ createdAt }) => {
     setTimeAgo(tempTimeAgo);
   };
 
+  //on change in [createdAt] update timeAgo text
   useEffect(() => {
     getTimeAgo();
-  }, []);
+  }, [createdAt]);
 
   return (
     <Typography

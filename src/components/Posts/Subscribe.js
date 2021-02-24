@@ -4,9 +4,11 @@ import { IconButton, Typography } from "@material-ui/core";
 import SubscriptionsOutlinedIcon from "@material-ui/icons/SubscriptionsOutlined";
 
 const Subscribe = ({ id, sessionToken }) => {
+  //states
   const [numSubs, setNumSubs] = useState();
   const [isSubed, setIsSubed] = useState(false);
 
+  //toggle isSubscribed and update number of subscribers
   const handleSubscribe = () => {
     if (!isSubed) {
       subPet(id);
@@ -16,6 +18,7 @@ const Subscribe = ({ id, sessionToken }) => {
     setIsSubed(!isSubed);
   };
 
+  //get number of subscribers and if user has subscribed
   const getSubs = () => {
     fetch(`http://localhost:3001/subscribe/num/${id}`, {
       method: "GET",
@@ -32,6 +35,7 @@ const Subscribe = ({ id, sessionToken }) => {
       .catch((err) => console.error(err));
   };
 
+  //subscribe to pet
   const subPet = (id) => {
     fetch(`http://localhost:3001/subscribe/${id}`, {
       method: "POST",
@@ -48,6 +52,7 @@ const Subscribe = ({ id, sessionToken }) => {
       .catch((err) => console.error(err));
   };
 
+  //unsubscribe to pet
   const unsubPet = (id) => {
     fetch(`http://localhost:3001/subscribe/${id}`, {
       method: "DELETE",
@@ -65,9 +70,10 @@ const Subscribe = ({ id, sessionToken }) => {
       .catch((err) => console.error(err));
   };
 
+  //on change in id token update card
   useEffect(() => {
     getSubs();
-  }, []);
+  }, [id]);
 
   return (
     <IconButton aria-label="add to favorites" onClick={handleSubscribe}>

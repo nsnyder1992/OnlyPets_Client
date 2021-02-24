@@ -5,19 +5,23 @@ import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 import "./styles/SelectPet.css";
 
 const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
+  //state that will store all the users pets
   const [pets, setPets] = useState();
 
+  //if change to select set petId and petType
   const handleChange = (e) => {
     let petId = e.target.value;
     setPetId(petId);
+
     let petType;
     pets.forEach((pet) => {
       if (pet.id === petId) petType = pet.type;
     });
-    console.log(petType);
+
     setPetType(petType);
   };
 
+  //on rendering of component get all current users pets
   useEffect(() => {
     fetch(`http://localhost:3001/pet/owned`, {
       method: "GET",
@@ -46,8 +50,7 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
           value={petId ? petId : null}
           onChange={handleChange}
         >
-          {/*hardcoded the below but will need to map over user pets in the
-          future */}
+          {/*Map over pets displaying them and setting their id to value */}
           {pets?.map((pet) => {
             return <MenuItem value={pet.id}>{pet.name}</MenuItem>;
           })}

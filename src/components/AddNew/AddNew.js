@@ -9,9 +9,12 @@ import NewPet from "./NewPet";
 
 const AddNew = ({ route, setRoute, sessionToken }) => {
   const [viewPosts, setViewPosts] = useState(true); //true NewPost, false NewPet
+
+  //toggle between adding a new post or pet
   const toggleView = () => {
     setViewPosts(!viewPosts);
   };
+
   return (
     <div className="add-new">
       <AddNewHeader toggleView={toggleView} viewPosts={viewPosts} />
@@ -19,14 +22,14 @@ const AddNew = ({ route, setRoute, sessionToken }) => {
         <Grid container spacing={0}>
           <Grid item xs={2} />
           <Grid item xs={8}>
+            {/* NewPost or NewPet? */}
             {viewPosts ? (
               <NewPost
                 route={route}
                 setRoute={setRoute}
                 sessionToken={sessionToken}
               />
-            ) : null}
-            {viewPosts ? null : (
+            ) : (
               <NewPet
                 route={route}
                 setRoute={setRoute}

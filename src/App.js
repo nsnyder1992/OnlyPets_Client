@@ -8,6 +8,7 @@ import "fontsource-roboto";
 // A component import
 import Navbar from "./home/Navbar";
 import Auth from "./components/SignupLogin/Auth";
+import Pets from "./components/Pets/Pets";
 
 // Defining our <App /> component the function name matches the file name
 function App() {
@@ -43,14 +44,14 @@ function App() {
       {!sessionToken ? (
         <Auth updateToken={updateToken} />
       ) : (
-        <Router>
-          <Switch>
-            <div>
-              <Navbar sessionToken={sessionToken} clearToken={clearToken} />
-            </div>
-          </Switch>
-        </Router>
-      )}
+          <Router>
+            <Switch>
+              <div>
+                <Navbar sessionToken={sessionToken} clearToken={clearToken} />
+              </div>
+            </Switch>
+          </Router>
+        )}
     </div>
   );
 }

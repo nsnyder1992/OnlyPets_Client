@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useReducer, useRef } from "react";
 
 import { Typography } from "@material-ui/core";
 
@@ -7,18 +7,15 @@ import {
   useInfiniteScroll
 } from "../../hooks/infiniteScrollHooks";
 
-import "./styles/Posts.css";
+import PostCard from "../Posts/PostCard"
 
-const Pets = () => {
+import "../Posts/styles/Posts.css";
+
+const Pets = ({ sessionToken }) => {
   const postReducer = (state, action) => {
     switch (action.type) {
       case "STACK_IMAGES":
         return { ...state, posts: state.posts.concat(action.posts) };
-      case "DELETE_IMAGE":
-        console.log(action.post);
-        const index = state.posts.indexOf(action.post);
-        state.posts.splice(index, 1);
-        return { ...state, posts: state.posts };
       case "FETCHING_IMAGES":
         return { ...state, fetching: action.fetching };
       default:
@@ -51,19 +48,15 @@ const Pets = () => {
     sessionToken
   );
 
-  // const backend = "http://localhost:3001/post/cloudinary/delete";
-  // const cloudinaryUrl =
-  //   "https://api.cloudinary.com/v1_1/nsnyder1992/image/destroy";
-
-
   let bottomBoundaryRef = useRef(null);
   useInfiniteScroll(bottomBoundaryRef, pagerDispatch);
 
   return (
     <div className="posts">
+      <h1>ExplorePets</h1>
       {postData?.posts.map((index) => {
         return (
-          <PetsCard
+          <PostCard
             key={index}
             sessionToken={sessionToken}
           />

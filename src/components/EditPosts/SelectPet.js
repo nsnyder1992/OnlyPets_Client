@@ -31,12 +31,13 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
     })
       .then((res) => res.json())
       .then((pets) => {
+        console.log(pets);
         setPets(pets.pets);
         setPetId(pets.pets[0].id);
         setPetType(pets.pets[0].type);
       })
       .catch((err) => console.error(err));
-  }, []); //need the dep array here to allow the value below to be correct for some reason :/???
+  }, [sessionToken]); //need the dep array here to allow the value below to be correct for some reason :/???
 
   return (
     <div className="pet-select-div">

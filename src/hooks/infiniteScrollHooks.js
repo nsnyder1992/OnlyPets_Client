@@ -38,7 +38,7 @@ export const useFetch = (
     }
     console.log(array.length, totalPosts);
 
-    // this stops the re-renders if the last post is ever reached
+    // this stops the fetch if the last post is ever reached
     if (array.length >= totalPosts) return;
 
     //Get posts and store them using the Dispatches!!!

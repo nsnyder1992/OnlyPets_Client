@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
@@ -23,7 +23,8 @@ const Likes = ({ id, sessionToken }) => {
   };
 
   //get number of likes and init if liked by user
-  const getLikes = (id) => {
+  //using useCallback as suggested by rule react-hooks/exhaustive-deps
+  const getLikes = useCallback(() => {
     fetch(`${BASEURL}/${id}`, {
       method: "GET",
       headers: new Headers({
@@ -37,7 +38,7 @@ const Likes = ({ id, sessionToken }) => {
         setLiked(json.userLiked);
       })
       .catch((err) => console.error(err));
-  };
+  }, [id, sessionToken]);
 
   //send a req to server to like post
   const likePost = (postId) => {
@@ -67,6 +68,7 @@ const Likes = ({ id, sessionToken }) => {
     })
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         let likes = json.numLikes ? json.numLikes : 0;
         setNumLikes(likes);
         setLiked(json.userLiked);
@@ -76,8 +78,8 @@ const Likes = ({ id, sessionToken }) => {
 
   //on id change update number and if user likes this post
   useEffect(() => {
-    getLikes(id);
-  }, [id]);
+    getLikes();
+  });
 
   return (
     // toggle likes using button

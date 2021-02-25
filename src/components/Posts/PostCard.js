@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 //material components
 import { makeStyles } from "@material-ui/core/styles";
@@ -68,7 +68,8 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
   const [petName, setPetName] = useState();
 
   //get pet name give post.petId
-  const getPetName = (post) => {
+  //using useCallback as suggested by rule react-hooks/exhaustive-deps
+  const getPetName = useCallback(() => {
     fetch(`${BASEURL}/${post.petId}`, {
       method: "GET",
       headers: new Headers({
@@ -80,12 +81,12 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
         setPetName(json.pet.name);
       })
       .catch((err) => console.log(err));
-  };
+  }, [post, sessionToken]);
 
   //on change in [post] update petName
   useEffect(() => {
-    getPetName(post);
-  }, [post]); //added post to dependencies now petName updates after a delete
+    getPetName();
+  }); //added post to dependencies now petName updates after a delete
 
   return (
     <div className={classes.root}>

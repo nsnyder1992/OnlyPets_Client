@@ -10,6 +10,8 @@ import "../styles/Layouts.css";
 
 const NewPet = () => {
   const history = useHistory();
+
+  //submit new pet to backend and return home!
   const handleSubmit = () => {
     console.log("submited");
     history.push("/");

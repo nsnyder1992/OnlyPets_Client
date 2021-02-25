@@ -1,4 +1,4 @@
-import { Grid, IconButton } from "@material-ui/core";
+import { Grid, IconButton, Typography } from "@material-ui/core";
 import PetsOutlinedIcon from "@material-ui/icons/PetsOutlined";
 import SubjectOutlinedIcon from "@material-ui/icons/SubjectOutlined";
 
@@ -7,12 +7,16 @@ import SubjectOutlinedIcon from "@material-ui/icons/SubjectOutlined";
 //css
 import "./styles/AddNewHeader.css";
 
-const HomeHeader = ({ type, setType, toggleView, viewPosts }) => {
+const HomeHeader = ({ toggleView, viewPosts }) => {
+  //handles toggling between NewPost or NewPet
   return (
     <div className="header-div">
       <header className="header">
         <Grid container spacing={2}>
-          <Grid item xs={3} />
+          <Grid item xs={1}>
+            <Typography variant="h5">Add</Typography>
+          </Grid>
+          <Grid item xs={2} />
           <Grid item xs={3}>
             <IconButton
               className="button"

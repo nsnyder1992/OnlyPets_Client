@@ -15,7 +15,7 @@ nav {
   width: 100%;
   min-width: 100px;
   max-width: 1250px;
-  background-color: white;
+  /* background-color: white; */
 }
 
 a {

@@ -21,11 +21,12 @@ import "./Navbar.css";
 
 // Function name matches file name
 const Navbar = ({ sessionToken, clearToken }) => {
-  const [route, setRoute] = useState("/");
-  const [drawerState, setDrawerState] = useState({ right: false });
+  //states
+  const [route, setRoute] = useState("/"); //where are we in relation to "/"
+  const [drawerState, setDrawerState] = useState({ right: false }); //is profilePanel displayed
+  const [userName, setUsername] = useState(); //whose the user?
 
-  const [userName, setUsername] = useState();
-
+  //on change in sessionToken update userName state above
   useEffect(() => {
     if (sessionToken) {
       fetch(`http://localhost:3001/user/self`, {
@@ -36,13 +37,13 @@ const Navbar = ({ sessionToken, clearToken }) => {
       })
         .then((res) => res.json())
         .then((user) => {
-          console.log(user);
           setUsername(user.username);
         })
         .catch((err) => console.log(err));
     }
-  }, []);
+  }, [sessionToken]);
 
+  //open in close profilePanel
   const toggleDrawer = (open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -50,7 +51,6 @@ const Navbar = ({ sessionToken, clearToken }) => {
     ) {
       return;
     }
-
     setDrawerState({ ...drawerState, right: open });
   };
 

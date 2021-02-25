@@ -5,6 +5,7 @@ import ImageOutlinedIcon from "@material-ui/icons/ImageOutlined";
 import "./styles/ImgDisplay.css";
 
 const ImgDisplay = ({ fileUrl }) => {
+  //displays img where src ==> props.fileUrl
   return (
     <Paper elevation={3} className="paper">
       {fileUrl ? (

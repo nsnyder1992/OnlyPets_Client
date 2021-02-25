@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 // adding css to jsx is that easy
 import "./App.css"; // This pattern is preferred where css for this component has a matching .css filename
@@ -17,13 +17,14 @@ function App() {
   //set temporary tokens here until we get a working login!!!!
   const [sessionToken, setSessionToken] = useState();
 
-  // uncomment for login, siginup and authorization, wants we get a working login
+  //everytime the app rerenders check for token in local storage
   useEffect(() => {
     if (localStorage.getItem("token")) {
       setSessionToken(localStorage.getItem("token"));
     }
   }, []);
 
+  //updates token in local storage and in the state sessionToken
   const updateToken = (newToken, userId) => {
     localStorage.setItem("token", newToken);
     localStorage.setItem("userId", parseInt(userId));
@@ -31,6 +32,7 @@ function App() {
     console.log(sessionToken);
   };
 
+  //deletes all local storage... used mainly for logout
   const clearToken = () => {
     localStorage.clear();
     setSessionToken("");
@@ -41,6 +43,11 @@ function App() {
     <div className="App">
       {/* Parent Element. Also we can't use the word class, so we use className in jsx*/}
       {/* Navbar is our imported component*/}
+
+      {/* 
+        if no sessionToken only display login/siginup 
+        else display main application
+      */}
       {!sessionToken ? (
         <Auth updateToken={updateToken} />
       ) : (

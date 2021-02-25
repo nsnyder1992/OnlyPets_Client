@@ -1,4 +1,4 @@
-import { Grid, Typography, IconButton, Link, Button } from "@material-ui/core";
+import { Grid, Typography, IconButton, Button } from "@material-ui/core";
 import ExploreOutlinedIcon from "@material-ui/icons/ExploreOutlined";
 import PetsOutlinedIcon from "@material-ui/icons/PetsOutlined";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -10,28 +10,31 @@ import Categories from "./Categories";
 import "./styles/HomeHeader.css";
 
 const HomeHeader = ({ type, setType, toggleView, viewPosts, setPage }) => {
+  //prevent page refresh
   const preventDefault = (event) => event.preventDefault();
   return (
     <div>
       <header className="header">
         <Grid container spacing={2}>
           <Grid item xs={1}>
-            <Button
-              onClick={(e) => setPage(e, "subscribed")}
-              disableUnderline
-              color="inherit"
-            >
+            {/* Home button == subscribed pet's posts */}
+            <Button onClick={(e) => setPage(e, "subscribed")} color="inherit">
               <Typography variant="h5">Home</Typography>
             </Button>
           </Grid>
           <Grid item xs={1} />
           <Grid item xs={2}>
-            <IconButton className="button" onClick={(e) => setPage(e, "all")}>
+            {/* Compass button == all pet's posts */}
+            <IconButton
+              className="button"
+              onClick={(e) => setPage(e, "byPetType")}
+            >
               <ExploreOutlinedIcon />
             </IconButton>
           </Grid>
           <Grid item xs={1} />
           <Grid item xs={2}>
+            {/* Pet button == explore pets */}
             <IconButton
               className="button"
               onClick={viewPosts ? toggleView : preventDefault}
@@ -41,6 +44,7 @@ const HomeHeader = ({ type, setType, toggleView, viewPosts, setPage }) => {
           </Grid>
           <Grid item xs={1} />
           <Grid item xs={2}>
+            {/* Heart button == users liked posts */}
             <IconButton className="button" onClick={(e) => setPage(e, "liked")}>
               <FavoriteIcon />
             </IconButton>

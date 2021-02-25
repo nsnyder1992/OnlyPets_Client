@@ -4,6 +4,7 @@ import { Grid, Button, Typography } from "@material-ui/core";
 import "./styles/PetHeader.css";
 
 const PostHeader = ({ handleSubmit }) => {
+  // handles enable/disable of button and submitting PetBody form
   return (
     <header>
       <Grid container spacing={3}>

@@ -6,6 +6,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import "./styles/EditHeader.css";
 
 const EditHeader = ({ route, petId, fileUrl, handleSubmit }) => {
+  // this header handles back button to route, setting the post button disabled and submitting the form
   return (
     <header>
       <Grid container spacing={3}>

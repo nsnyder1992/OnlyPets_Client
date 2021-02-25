@@ -9,6 +9,7 @@ import PetTypes from "./PetTypes";
 import "./styles/PetBody.css";
 
 const PetBody = () => {
+  //states to store name, description and type
   const [name, setName] = useState();
   const [description, setDescription] = useState();
   const [type, setType] = useState("dog");

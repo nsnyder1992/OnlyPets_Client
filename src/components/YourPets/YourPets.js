@@ -10,7 +10,7 @@ import {
 const YourPets = ({ setRoute, sessionToken }) => {
   useEffect(() => {
     setRoute("/pet");
-  }, []);
+  });
 
   const postReducer = (state, action) => {
     switch (action.type) {

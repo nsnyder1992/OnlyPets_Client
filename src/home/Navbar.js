@@ -37,7 +37,6 @@ const Navbar = ({ sessionToken, clearToken }) => {
       })
         .then((res) => res.json())
         .then((user) => {
-          console.log(user);
           setUsername(user.username);
         })
         .catch((err) => console.log(err));

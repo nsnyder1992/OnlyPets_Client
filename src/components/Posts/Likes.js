@@ -79,7 +79,7 @@ const Likes = ({ id, sessionToken }) => {
   //on id change update number and if user likes this post
   useEffect(() => {
     getLikes();
-  });
+  }, [getLikes]);
 
   return (
     // toggle likes using button

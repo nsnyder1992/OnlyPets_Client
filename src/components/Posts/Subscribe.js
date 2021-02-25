@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import { IconButton } from "@material-ui/core";
 import SubscriptionsOutlinedIcon from "@material-ui/icons/SubscriptionsOutlined";
 
 const Subscribe = ({ id, sessionToken }) => {
   //states
-  const [numSubs, setNumSubs] = useState();
   const [isSubed, setIsSubed] = useState(false);
 
   //toggle isSubscribed and update number of subscribers
@@ -19,7 +18,7 @@ const Subscribe = ({ id, sessionToken }) => {
   };
 
   //get number of subscribers and if user has subscribed
-  const getSubs = (id) => {
+  const getSubs = useCallback(() => {
     fetch(`http://localhost:3001/subscribe/num/${id}`, {
       method: "GET",
       headers: new Headers({
@@ -29,11 +28,10 @@ const Subscribe = ({ id, sessionToken }) => {
     })
       .then((res) => res.json())
       .then((json) => {
-        setNumSubs(json.numSub);
         setIsSubed(json.userSub);
       })
       .catch((err) => console.error(err));
-  };
+  }, [sessionToken, id]);
 
   //subscribe to pet
   const subPet = (id) => {
@@ -46,7 +44,6 @@ const Subscribe = ({ id, sessionToken }) => {
     })
       .then((res) => res.json())
       .then((json) => {
-        setNumSubs(json.numSub);
         setIsSubed(json.userSub);
       })
       .catch((err) => console.error(err));
@@ -63,8 +60,6 @@ const Subscribe = ({ id, sessionToken }) => {
     })
       .then((res) => res.json())
       .then((json) => {
-        let numSub = json.numSub ? json.numSub : 0;
-        setNumSubs(numSub);
         setIsSubed(json.userSub);
       })
       .catch((err) => console.error(err));
@@ -72,8 +67,8 @@ const Subscribe = ({ id, sessionToken }) => {
 
   //on change in id token update card
   useEffect(() => {
-    getSubs(id);
-  }, [id]);
+    getSubs();
+  }, [getSubs]);
 
   return (
     <IconButton aria-label="add to favorites" onClick={handleSubscribe}>

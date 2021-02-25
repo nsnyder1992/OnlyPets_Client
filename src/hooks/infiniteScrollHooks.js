@@ -2,7 +2,7 @@ import { useEffect, useCallback, useRef, useState } from "react";
 
 // make API calls and pass the returned data via dispatch
 export const useFetch = (
-  array,
+  posts,
   postType,
   petType,
   pager,
@@ -36,10 +36,10 @@ export const useFetch = (
       //end this useEffect the above changes to dispatch and pager will initiate another useEffect cycle
       return;
     }
-    console.log(array.length, totalPosts);
+    console.log(posts.length, totalPosts);
 
     // this stops the fetch if the last post is ever reached
-    if (array.length >= totalPosts) return;
+    if (posts.length >= totalPosts) return;
 
     //Get posts and store them using the Dispatches!!!
     dispatch({ type: "FETCHING_IMAGES", fetching: true });

@@ -86,7 +86,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
   //on change in [post] update petName
   useEffect(() => {
     getPetName();
-  }); //added post to dependencies now petName updates after a delete
+  }, [getPetName]); //added post to dependencies now petName updates after a delete
 
   return (
     <div className={classes.root}>

@@ -24,6 +24,7 @@ const PostCardOptions = ({ post, deletePost }) => {
   //update url to after cloudinary upload to update image
   const getEditUrl = (post) => {
     let url = post.photoUrl.split("upload")[1];
+    console.log(url);
     setUrlArray(url.split("/"));
   };
 
@@ -62,7 +63,10 @@ const PostCardOptions = ({ post, deletePost }) => {
             <Box p={2} className={classes.popover}>
               {/* edit post url with queries */}
               <Link
-                to={`/editPost/${post.id}/${post.petId}/${post.description}/${urlArray}`}
+                // empty post.description causes a problem here
+                to={`/editPost/${post.id}/${post.petId}/${
+                  post.description ? post.description : " "
+                }/${urlArray}`}
                 style={{ textDecoration: "none" }}
               >
                 <Button>Edit</Button>

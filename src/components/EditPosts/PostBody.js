@@ -27,7 +27,7 @@ const PostBody = ({
       <input
         id="description-textarea"
         placeholder="Add a Description..."
-        value={description ? description : null}
+        value={description !== " " && description ? description : null}
         onChange={(e) => setDescription(e.target.value)}
       />
 

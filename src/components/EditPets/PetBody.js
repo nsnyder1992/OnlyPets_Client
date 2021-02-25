@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { TextField } from "@material-ui/core";
 
@@ -8,9 +8,9 @@ import PetTypes from "./PetTypes";
 //css
 import "./styles/PetBody.css";
 
-const PetBody = () => {
+const PetBody = ({ setName, name }) => {
   //states to store name, description and type
-  const [name, setName] = useState();
+
   const [description, setDescription] = useState();
   const [type, setType] = useState("dog");
 

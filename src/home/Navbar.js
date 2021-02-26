@@ -15,6 +15,7 @@ import EditPost from "../components/EditPosts/EditPost";
 import YourPets from "../components/YourPets/YourPets";
 import Profile from "../components/Profile/Profile";
 import ProfilePanel from "./ProfilePanel";
+import AddCreditCard from "./AddCreditCard";
 
 //css
 import "./Navbar.css";
@@ -25,6 +26,27 @@ const Navbar = ({ sessionToken, clearToken }) => {
   const [route, setRoute] = useState("/"); //where are we in relation to "/"
   const [drawerState, setDrawerState] = useState({ right: false }); //is profilePanel displayed
   const [userName, setUsername] = useState(); //whose the user?
+  const [openModal, setOpenModal] = useState(false); //open modal
+
+  //open in close profilePanel
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setDrawerState({ ...drawerState, right: open });
+  };
+
+  //Add Credit Card Modal open/close
+  const handleOpen = () => {
+    setOpenModal(true);
+  };
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
 
   //on change in sessionToken update userName state above
   useEffect(() => {
@@ -43,17 +65,6 @@ const Navbar = ({ sessionToken, clearToken }) => {
     }
   }, [sessionToken]);
 
-  //open in close profilePanel
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setDrawerState({ ...drawerState, right: open });
-  };
-
   // return must have one parent element
   return (
     <header>
@@ -62,7 +73,9 @@ const Navbar = ({ sessionToken, clearToken }) => {
         clearToken={clearToken}
         toggleDrawer={toggleDrawer}
         state={drawerState}
+        handleOpen={handleOpen}
       />
+      <AddCreditCard open={openModal} handleClose={handleClose} />
       <div className="navbar">
         <nav>
           <Link to="/">
@@ -74,12 +87,6 @@ const Navbar = ({ sessionToken, clearToken }) => {
           <Link to="/post">
             <IconButton>
               <AddBoxOutlinedIcon style={{ fontSize: 30 }} />
-            </IconButton>
-          </Link>
-
-          <Link to="/pet">
-            <IconButton>
-              <PetsOutlinedIcon style={{ fontSize: 30 }} />
             </IconButton>
           </Link>
 

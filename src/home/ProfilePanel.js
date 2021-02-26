@@ -1,13 +1,23 @@
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+
 //material components
-import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
-
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import { Avatar, Typography, Button } from "@material-ui/core";
+import PetsOutlinedIcon from "@material-ui/icons/PetsOutlined";
+import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
+import {
+  Avatar,
+  Typography,
+  Button,
+  ListItemAvatar,
+  ListItemText,
+  ListItemIcon,
+} from "@material-ui/core";
 
 const useStyles = makeStyles({
   list: {
@@ -18,8 +28,21 @@ const useStyles = makeStyles({
   },
 });
 
-const ProfilePanel = ({ userName, clearToken, toggleDrawer, state }) => {
+const ProfilePanel = ({
+  userName,
+  clearToken,
+  toggleDrawer,
+  state,
+  handleOpen,
+}) => {
   const classes = useStyles();
+
+  //use history to set route
+  const history = useHistory();
+
+  const handleYourPets = () => {
+    history.push("/pet");
+  };
 
   return (
     <Drawer
@@ -41,8 +64,25 @@ const ProfilePanel = ({ userName, clearToken, toggleDrawer, state }) => {
             <Typography>{userName}</Typography>
           </ListItem>
           <Divider />
+          <ListItem button onClick={handleYourPets}>
+            <ListItemIcon>
+              <PetsOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText>Your Pets</ListItemText>
+          </ListItem>
+          <Divider />
           <ListItem>
-            <Button onClick={clearToken}>Logout</Button>
+            <ListItemText>Your Cards</ListItemText>
+          </ListItem>
+          <ListItem button onClick={handleOpen}>
+            <ListItemIcon>
+              <AddOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText>Credit Card</ListItemText>
+          </ListItem>
+          <Divider />
+          <ListItem button onClick={clearToken}>
+            <ListItemText>Logout</ListItemText>
           </ListItem>
         </List>
       </div>

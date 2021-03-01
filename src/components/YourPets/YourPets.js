@@ -7,6 +7,8 @@ import {
   useInfiniteScroll
 } from "../../hooks/infiniteScrollHooks";
 
+import PetCard from '../Pets/PetCard';
+
 const YourPets = ({ setRoute, sessionToken }) => {
   useEffect(() => {
     setRoute("/pet");
@@ -53,8 +55,17 @@ const YourPets = ({ setRoute, sessionToken }) => {
 
 
   return (
-    <div>
-      <Typography variant="h5">Your Pets</Typography>
+    <div className="posts">
+      <Typography variant="h5">Explore Pets</Typography>
+      {postData?.posts.map((index) => {
+        return (
+          <PetCard
+            key={index}
+            sessionToken={sessionToken}
+          />
+        );
+      })}
+      <div id="page-bottom-boundary" ref={bottomBoundaryRef}></div>
     </div>
   );
 };

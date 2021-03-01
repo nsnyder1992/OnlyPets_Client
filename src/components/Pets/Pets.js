@@ -7,7 +7,7 @@ import {
   useInfiniteScroll
 } from "../../hooks/infiniteScrollHooks";
 
-import PostCard from "../Posts/PostCard"
+import PetCard from "../Pets/PetCard"
 
 import "../Posts/styles/Posts.css";
 
@@ -56,7 +56,7 @@ const Pets = ({ sessionToken }) => {
       <Typography variant="h5">Explore Pets</Typography>
       {postData?.posts.map((index) => {
         return (
-          <PostCard
+          <PetCard
             key={index}
             sessionToken={sessionToken}
           />

@@ -14,11 +14,11 @@ import AddNew from "../components/AddNew/AddNew";
 import EditPost from "../components/EditPosts/EditPost";
 import YourPets from "../components/YourPets/YourPets";
 import Profile from "../components/Profile/Profile";
+import AddCreditCard from "../components/AddCreditCard/AddCreditCard";
 import ProfilePanel from "./ProfilePanel";
-import AddCreditCard from "./AddCreditCard";
 
 //css
-import "./Navbar.css";
+import "./styles/Navbar.css";
 
 // Function name matches file name
 const Navbar = ({ sessionToken, clearToken }) => {
@@ -69,13 +69,13 @@ const Navbar = ({ sessionToken, clearToken }) => {
   return (
     <header>
       <ProfilePanel
+        sessionToken={sessionToken}
         userName={userName}
         clearToken={clearToken}
         toggleDrawer={toggleDrawer}
         state={drawerState}
         handleOpen={handleOpen}
       />
-      <AddCreditCard open={openModal} handleClose={handleClose} />
       <div className="navbar">
         <nav>
           <Link to="/">
@@ -139,6 +139,13 @@ const Navbar = ({ sessionToken, clearToken }) => {
           </Route>
           <Route exact path="/profile">
             <Profile
+              route={route}
+              setRoute={setRoute}
+              sessionToken={sessionToken}
+            />
+          </Route>
+          <Route exact path="/addCard">
+            <AddCreditCard
               route={route}
               setRoute={setRoute}
               sessionToken={sessionToken}

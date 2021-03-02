@@ -14,10 +14,11 @@ import AddNew from "../components/AddNew/AddNew";
 import EditPost from "../components/EditPosts/EditPost";
 import YourPets from "../components/YourPets/YourPets";
 import Profile from "../components/Profile/Profile";
+import AddCreditCard from "../components/AddCreditCard/AddCreditCard";
 import ProfilePanel from "./ProfilePanel";
 
 //css
-import "./Navbar.css";
+import "./styles/Navbar.css";
 
 // Function name matches file name
 const Navbar = ({ sessionToken, clearToken }) => {
@@ -25,6 +26,27 @@ const Navbar = ({ sessionToken, clearToken }) => {
   const [route, setRoute] = useState("/"); //where are we in relation to "/"
   const [drawerState, setDrawerState] = useState({ right: false }); //is profilePanel displayed
   const [userName, setUsername] = useState(); //whose the user?
+  const [openModal, setOpenModal] = useState(false); //open modal
+
+  //open in close profilePanel
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setDrawerState({ ...drawerState, right: open });
+  };
+
+  //Add Credit Card Modal open/close
+  const handleOpen = () => {
+    setOpenModal(true);
+  };
+
+  const handleClose = () => {
+    setOpenModal(false);
+  };
 
   //on change in sessionToken update userName state above
   useEffect(() => {
@@ -43,25 +65,16 @@ const Navbar = ({ sessionToken, clearToken }) => {
     }
   }, [sessionToken]);
 
-  //open in close profilePanel
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-    setDrawerState({ ...drawerState, right: open });
-  };
-
   // return must have one parent element
   return (
     <header>
       <ProfilePanel
+        sessionToken={sessionToken}
         userName={userName}
         clearToken={clearToken}
         toggleDrawer={toggleDrawer}
         state={drawerState}
+        handleOpen={handleOpen}
       />
       <div className="navbar">
         <nav>
@@ -74,12 +87,6 @@ const Navbar = ({ sessionToken, clearToken }) => {
           <Link to="/post">
             <IconButton>
               <AddBoxOutlinedIcon style={{ fontSize: 30 }} />
-            </IconButton>
-          </Link>
-
-          <Link to="/pet">
-            <IconButton>
-              <PetsOutlinedIcon style={{ fontSize: 30 }} />
             </IconButton>
           </Link>
 
@@ -132,6 +139,13 @@ const Navbar = ({ sessionToken, clearToken }) => {
           </Route>
           <Route exact path="/profile">
             <Profile
+              route={route}
+              setRoute={setRoute}
+              sessionToken={sessionToken}
+            />
+          </Route>
+          <Route exact path="/addCard">
+            <AddCreditCard
               route={route}
               setRoute={setRoute}
               sessionToken={sessionToken}

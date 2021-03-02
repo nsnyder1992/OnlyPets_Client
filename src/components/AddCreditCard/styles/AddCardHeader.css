@@ -1,0 +1,18 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  /* height: 50px;
+  margin: 12px 0px 3px; */
+}
+
+.MuiButton-root {
+  height: 35px;
+}
+hr {
+  width: 100%;
+}
+
+.button {
+  position: relative;
+  top: -7px;
+}

@@ -1,13 +1,28 @@
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+
 //material components
-import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
-
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
-import { Avatar, Typography, Button } from "@material-ui/core";
+import Hidden from "@material-ui/core/Hidden";
+import PetsOutlinedIcon from "@material-ui/icons/PetsOutlined";
+import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
+import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
+import AccountBalanceOutlinedIcon from "@material-ui/icons/AccountBalanceOutlined";
+import CreditCardOutlinedIcon from "@material-ui/icons/CreditCardOutlined";
+import {
+  Avatar,
+  Typography,
+  ListItemText,
+  ListItemIcon,
+} from "@material-ui/core";
+
+//components
+import CreditCards from "./CreditCards";
 
 const useStyles = makeStyles({
   list: {
@@ -18,8 +33,35 @@ const useStyles = makeStyles({
   },
 });
 
-const ProfilePanel = ({ userName, clearToken, toggleDrawer, state }) => {
+const ProfilePanel = ({
+  sessionToken,
+  userName,
+  clearToken,
+  toggleDrawer,
+  state,
+}) => {
   const classes = useStyles();
+
+  //use history to set route
+  const history = useHistory();
+
+  const handleYourPets = () => {
+    history.push("/pet");
+  };
+
+  const handleAddCard = () => {
+    history.push("/addCard");
+  };
+
+  const handleOnboarding = () => {
+    fetch("http://localhost:3001/stripe/account/onboard", {
+      method: "POST",
+      headers: new Headers({
+        "content-type": "application/json",
+        authorization: sessionToken,
+      }),
+    });
+  };
 
   return (
     <Drawer
@@ -41,8 +83,42 @@ const ProfilePanel = ({ userName, clearToken, toggleDrawer, state }) => {
             <Typography>{userName}</Typography>
           </ListItem>
           <Divider />
+          <ListItem button onClick={handleYourPets}>
+            <ListItemIcon>
+              <PetsOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText>Your Pets</ListItemText>
+          </ListItem>
+          <Divider />
           <ListItem>
-            <Button onClick={clearToken}>Logout</Button>
+            <ListItemIcon>
+              <CreditCardOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText>Your Cards</ListItemText>
+          </ListItem>
+          <CreditCards sessionToken={sessionToken} />
+          <ListItem button onClick={handleAddCard}>
+            <ListItemIcon>
+              <AddOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText>Credit Card</ListItemText>
+          </ListItem>
+          <Divider />
+          <Hidden only={["xs", "sm", "md", "lg", "xl"]}>
+            <ListItem button onClick={handleOnboarding}>
+              <ListItemIcon>
+                <AccountBalanceOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText>Add Account</ListItemText>
+            </ListItem>
+            <Divider />
+          </Hidden>
+
+          <ListItem button onClick={clearToken}>
+            <ListItemIcon>
+              <ExitToAppOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText>Logout</ListItemText>
           </ListItem>
         </List>
       </div>

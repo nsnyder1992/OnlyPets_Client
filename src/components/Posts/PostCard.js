@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "right",
   },
   actionsRight: {
+    display: "flex",
     justifyItems: "right",
   },
   actionsLeft: {
@@ -109,7 +110,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
           <Likes id={post.id} likes={post.likes} sessionToken={sessionToken} />
         </div>
         <div className={classes.actionsRight}>
-          <Tips />
+          <Tips post={post} sessionToken={sessionToken} />
           <Subscribe id={post.petId} sessionToken={sessionToken} />
         </div>
       </CardActions>

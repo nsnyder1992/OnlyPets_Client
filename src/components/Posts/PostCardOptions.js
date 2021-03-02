@@ -24,7 +24,6 @@ const PostCardOptions = ({ post, deletePost }) => {
   //update url to after cloudinary upload to update image
   const getEditUrl = (post) => {
     let url = post.photoUrl.split("upload")[1];
-    console.log(url);
     setUrlArray(url.split("/"));
   };
 

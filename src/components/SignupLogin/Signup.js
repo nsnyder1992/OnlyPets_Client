@@ -32,7 +32,7 @@ const Signup = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        props.updateToken(data.sessionToken, data.user.id);
+        props.updateToken(data.sessionToken);
       });
   };
 

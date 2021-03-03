@@ -71,11 +71,13 @@ const Pets = ({ sessionToken, petType, type }) => {
       <Typography variant="h5">Explore Pets</Typography>
       {postData?.posts.map((index) => {
         return (
-          // <h1>I'm functioning!</h1>
-          <PetCard
-            key={index}
-            sessionToken={sessionToken}
-          />
+          <div>
+
+            <PetCard
+              key={index}
+              sessionToken={sessionToken}
+            />
+          </div>
         );
       })}
       <div id="page-bottom-boundary" ref={bottomBoundaryRef}></div>

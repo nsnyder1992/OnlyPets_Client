@@ -50,9 +50,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const BASEURL = "http://localhost:3001/pet";
+const BASEURL = "http://localhost:3001";
 
-const PetCard = ({ pet, sessionToken }) => {
+const PetCard = ({ id, pet, sessionToken }) => {
     //styles
     const classes = useStyles();
 
@@ -62,7 +62,7 @@ const PetCard = ({ pet, sessionToken }) => {
     //get pet name give post.petId
     //using useCallback as suggested by rule react-hooks/exhaustive-deps
     const getPetName = useCallback(() => {
-        fetch(`${BASEURL}/${pet.petId}`, {
+        fetch(`${BASEURL}/${id}`, {
             method: "GET",
             headers: new Headers({
                 authorization: sessionToken,
@@ -91,7 +91,7 @@ const PetCard = ({ pet, sessionToken }) => {
                     </Avatar>
                 }
             />
-            <CardMedia className={classes.media} image={pet.photoUrl} />
+            {/* <CardMedia className={classes.media} image={pet.photoUrl} /> */}
         </div>
     );
 };

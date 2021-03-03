@@ -1,0 +1,23 @@
+.apps {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  width: 100%;
+  min-width: 100px;
+  max-width: 1250px;
+  /* background-color: white; */
+}
+
+a {
+  color: black;
+}

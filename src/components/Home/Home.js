@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 //components
 import HomeHeader from "./HomeHeader";
 import Posts from "../Posts/Posts";
-import Pets from "../Pets/Pets.js";
+import Pets from "../Pets/Pets";
 
 //css
 import "../styles/Layouts.css";
@@ -54,8 +54,8 @@ const Home = ({ setRoute, sessionToken }) => {
           postType={postType}
         />
       ) : (
-        <Pets sessionToken={sessionToken} setRoute={setRoute} petType={type} />
-      )}
+          <Pets sessionToken={sessionToken} setRoute={setRoute} type={type} petType={type} />
+        )}
     </div>
   );
 };

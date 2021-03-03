@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
 
 const BASEURL = "http://localhost:3001/pet";
 
-const PostCard = ({ post, sessionToken }) => {
+const PetCard = ({ pet, sessionToken }) => {
     //styles
     const classes = useStyles();
 
@@ -62,7 +62,7 @@ const PostCard = ({ post, sessionToken }) => {
     //get pet name give post.petId
     //using useCallback as suggested by rule react-hooks/exhaustive-deps
     const getPetName = useCallback(() => {
-        fetch(`${BASEURL}/${post.petId}`, {
+        fetch(`${BASEURL}/${pet.petId}`, {
             method: "GET",
             headers: new Headers({
                 authorization: sessionToken,
@@ -73,7 +73,7 @@ const PostCard = ({ post, sessionToken }) => {
                 setPetName(json.pet.name);
             })
             .catch((err) => console.log(err));
-    }, [post, sessionToken]);
+    }, [pet, sessionToken]);
 
     //on change in [post] update petName
     useEffect(() => {
@@ -91,9 +91,9 @@ const PostCard = ({ post, sessionToken }) => {
                     </Avatar>
                 }
             />
-            <CardMedia className={classes.media} image={post.photoUrl} />
+            <CardMedia className={classes.media} image={pet.photoUrl} />
         </div>
     );
 };
 
-export default PostCard;
+export default PetCard;

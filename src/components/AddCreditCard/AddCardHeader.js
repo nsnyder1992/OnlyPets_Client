@@ -9,7 +9,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 //css
 import "./styles/AddCardHeader.css";
 
-const AddCardHeader = ({ sessionToken }) => {
+const AddCardHeader = ({ sessionToken, setLoading, openAlert }) => {
   const history = useHistory();
   const stripe = useStripe();
   const elements = useElements();
@@ -34,6 +34,7 @@ const AddCardHeader = ({ sessionToken }) => {
       console.log(`[PaymentMethod]`, paymentMethod);
       try {
         const { id } = paymentMethod;
+        setLoading(true);
         const response = await fetch(
           "http://localhost:3001/stripe/customer/addCard",
           {
@@ -49,9 +50,11 @@ const AddCardHeader = ({ sessionToken }) => {
           }
         );
 
+        setLoading(false);
         const json = await response.json();
         console.log(json);
 
+        setLoading(true);
         stripe
           .confirmCardPayment(json.client_secret, {
             payment_method: {
@@ -59,13 +62,19 @@ const AddCardHeader = ({ sessionToken }) => {
             },
           })
           .then((res) => {
+            setLoading(false);
             console.log(res);
+            openAlert("success");
             history.push("/");
           });
       } catch (error) {
+        openAlert("error");
+        setLoading(false);
         console.log(`[error]`, error);
       }
     } else {
+      openAlert("error");
+      setLoading(false);
       console.log(`[error]`, error);
     }
   };

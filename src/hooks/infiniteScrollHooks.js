@@ -9,7 +9,8 @@ export const useFetch = (
   dispatch,
   pagerDispatch,
   fetchUrl,
-  sessionToken
+  sessionToken,
+  setLoading
 ) => {
   //get/set total posts to stop render after getting to last post
   const [totalPosts, setTotalPosts] = useState();
@@ -43,6 +44,7 @@ export const useFetch = (
 
     //Get posts and store them using the Dispatches!!!
     dispatch({ type: "FETCHING_IMAGES", fetching: true });
+    setLoading(true);
     fetch(fetchUrl, {
       method: "GET",
       headers: new Headers({
@@ -60,8 +62,10 @@ export const useFetch = (
         //send to dispatch
         dispatch({ type: "STACK_IMAGES", posts });
         dispatch({ type: "FETCHING_IMAGES", fetching: false });
+        setLoading(false);
       })
       .catch((e) => {
+        setLoading(false);
         dispatch({ type: "FETCHING_IMAGES", fetching: false });
         return e;
       });

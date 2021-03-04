@@ -7,7 +7,7 @@ import AddNewHeader from "./AddNewHeader";
 import NewPost from "./NewPost";
 import NewPet from "./NewPet";
 
-const AddNew = ({ route, setRoute, sessionToken }) => {
+const AddNew = ({ route, setRoute, sessionToken, openAlert }) => {
   const [viewPosts, setViewPosts] = useState(true); //true NewPost, false NewPet
 
   //toggle between adding a new post or pet
@@ -28,12 +28,14 @@ const AddNew = ({ route, setRoute, sessionToken }) => {
                 route={route}
                 setRoute={setRoute}
                 sessionToken={sessionToken}
+                openAlert={openAlert}
               />
             ) : (
               <NewPet
                 route={route}
                 setRoute={setRoute}
                 sessionToken={sessionToken}
+                openAlert={openAlert}
               />
             )}
           </Grid>

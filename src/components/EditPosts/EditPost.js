@@ -1,6 +1,9 @@
 import { useState, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
+//material components
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 //components
 import EditHeader from "./EditHeader";
 import PostBody from "./PostBody";
@@ -34,6 +37,9 @@ const EditPost = (props) => {
   const [petId, setPetId] = useState(id);
   const [description, setDescription] = useState(desc);
 
+  //loading state
+  const [loading, setLoading] = useState(false);
+
   //create a ref to be used by the file-upload input
   const fileUpload = useRef(null);
 
@@ -41,22 +47,43 @@ const EditPost = (props) => {
   const handleSubmit = async (e) => {
     //get file from input id "file-upload"
     const file = fileUpload.current.files[0];
+    try {
+      setLoading(true);
 
-    //if file upload send to cloudinary if not just update backend
-    if (file) {
-      //get cloudinary signature from backend and send to cloudinary
-      const cloudinaryJson = await uploadEditedImg(
-        signatureUrl,
-        cloudinaryUrl,
-        file,
-        props.sessionToken
-      );
+      //if file upload send to cloudinary if not just update backend
+      if (file) {
+        //get cloudinary signature from backend and send to cloudinary
+        const cloudinaryJson = await uploadEditedImg(
+          signatureUrl,
+          cloudinaryUrl,
+          file,
+          props.sessionToken
+        );
+        //update post
+        await fetch(`http://localhost:3001/post/${postId}`, {
+          method: "PUT",
+          body: JSON.stringify({
+            photoUrl: cloudinaryJson.url,
+            description: description,
+            petId: petId,
+            petType: petType,
+          }),
+          headers: new Headers({
+            "Content-Type": "application/json",
+            authorization: props.sessionToken,
+          }),
+        });
+        props.openAlert("success");
+        setLoading(false);
+        history.push("/");
+        return;
+      }
 
-      //update post
+      //update post but not cloudinary
       await fetch(`http://localhost:3001/post/${postId}`, {
         method: "PUT",
         body: JSON.stringify({
-          photoUrl: cloudinaryJson.url,
+          photoUrl: fileUrl,
           description: description,
           petId: petId,
           petType: petType,
@@ -66,26 +93,12 @@ const EditPost = (props) => {
           authorization: props.sessionToken,
         }),
       });
-
-      history.push("/");
-      return;
+      setLoading(false);
+      props.openAlert("success");
+    } catch (err) {
+      setLoading(false);
+      props.openAlert("error");
     }
-
-    //update post but not cloudinary
-    await fetch(`http://localhost:3001/post/${postId}`, {
-      method: "PUT",
-      body: JSON.stringify({
-        photoUrl: fileUrl,
-        description: description,
-        petId: petId,
-        petType: petType,
-      }),
-      headers: new Headers({
-        "Content-Type": "application/json",
-        authorization: props.sessionToken,
-      }),
-    });
-
     //push route back to home
     history.push("/");
   };
@@ -110,6 +123,7 @@ const EditPost = (props) => {
         petId={petId}
         setPetId={setPetId}
       />
+      {loading ? <CircularProgress /> : null}
     </div>
   );
 };

@@ -2,12 +2,9 @@ import { useEffect, useReducer, useRef } from "react";
 
 import { Typography } from "@material-ui/core";
 
-import {
-  useFetch,
-  useInfiniteScroll
-} from "../../hooks/infiniteScrollHooks";
+import { useFetch, useInfiniteScroll } from "../../hooks/infiniteScrollHooks";
 
-import PetCard from '../Pets/PetCard';
+import PetCard from "../Pets/PetCard";
 
 const YourPets = ({ setRoute, sessionToken }) => {
   useEffect(() => {
@@ -46,24 +43,18 @@ const YourPets = ({ setRoute, sessionToken }) => {
     postData.posts,
     pager,
     postDispatch,
-    `http://localhost:3001/post/${pager.page}/${4}`,
+    `http://localhost:3001/pet/owned/${pager.page}/${4}`,
     sessionToken
   );
 
   let bottomBoundaryRef = useRef(null);
   useInfiniteScroll(bottomBoundaryRef, pagerDispatch);
 
-
   return (
     <div className="posts">
       <Typography variant="h5">Explore Pets</Typography>
       {postData?.posts.map((index) => {
-        return (
-          <PetCard
-            key={index}
-            sessionToken={sessionToken}
-          />
-        );
+        return <PetCard key={index} sessionToken={sessionToken} />;
       })}
       <div id="page-bottom-boundary" ref={bottomBoundaryRef}></div>
     </div>

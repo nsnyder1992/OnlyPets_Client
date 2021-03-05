@@ -4,7 +4,7 @@ import { Typography } from "@material-ui/core";
 
 import { useFetch, useInfiniteScroll } from "../../hooks/infiniteScrollHooks";
 
-import PetCard from "../Pets/PetCard";
+// import PetCard from "../Pets/PetCard";
 
 const YourPets = ({ setRoute, sessionToken }) => {
   useEffect(() => {
@@ -54,7 +54,8 @@ const YourPets = ({ setRoute, sessionToken }) => {
     <div className="posts">
       <Typography variant="h5">Explore Pets</Typography>
       {postData?.posts.map((index) => {
-        return <PetCard key={index} sessionToken={sessionToken} />;
+        // return <PetCard key={index} sessionToken={sessionToken} />;
+        return <></>;
       })}
       <div id="page-bottom-boundary" ref={bottomBoundaryRef}></div>
     </div>

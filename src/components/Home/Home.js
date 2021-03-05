@@ -34,9 +34,7 @@ const Home = ({ setRoute, sessionToken, openAlert }) => {
   };
 
   //route the app is on
-  useEffect(() => {
-    setRoute("/");
-  });
+  setRoute("/");
 
   return (
     <div className="home">
@@ -52,7 +50,6 @@ const Home = ({ setRoute, sessionToken, openAlert }) => {
       {viewPosts ? (
         <Posts
           sessionToken={sessionToken}
-          setRoute={setRoute}
           petType={type}
           postType={postType}
           openAlert={openAlert}
@@ -60,7 +57,6 @@ const Home = ({ setRoute, sessionToken, openAlert }) => {
       ) : (
         <Pets
           sessionToken={sessionToken}
-          setRoute={setRoute}
           petType={type}
           openAlert={openAlert}
         />

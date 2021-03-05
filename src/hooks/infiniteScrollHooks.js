@@ -19,6 +19,7 @@ export const useFetch = (
   const [lastPetType, setLastPetType] = useState();
   const [lastPostType, setLastPostType] = useState();
 
+  // console.log("useFetch");
   const fetchData = async () => {
     if (sessionToken === undefined) return; //if no sessionToken stop process
 
@@ -57,7 +58,8 @@ export const useFetch = (
         setTotalPosts(json.total ? json.total : json.count); //some endpoints use total some use count...
 
         //abstract posts from json.posts
-        const posts = json.posts;
+        console.log(json);
+        const posts = json.posts ? json.posts : json.pets;
 
         //send to dispatch
         dispatch({ type: "STACK_IMAGES", posts });

@@ -13,10 +13,7 @@ const HomeHeader = ({ toggleView, viewPosts }) => {
     <div className="header-div">
       <header className="header">
         <Grid container spacing={2}>
-          <Grid item xs={1}>
-            <Typography variant="h5">Add</Typography>
-          </Grid>
-          <Grid item xs={2} />
+          <Grid item xs={3} />
           <Grid item xs={3}>
             <IconButton
               className="button"

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Link, Switch } from "react-router-dom";
 
 //material components
@@ -11,8 +11,8 @@ import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import Home from "../components/Home/Home";
 import AddNew from "../components/AddNew/AddNew";
 import EditPost from "../components/EditPosts/EditPost";
+import EditPet from "../components/EditPets/EditPet";
 import YourPets from "../components/YourPets/YourPets";
-import Profile from "../components/Profile/Profile";
 import AddCreditCard from "../components/AddCreditCard/AddCreditCard";
 import ProfilePanel from "./ProfilePanel";
 import Alert from "./Alert";
@@ -145,6 +145,14 @@ const Navbar = ({ sessionToken, clearToken }) => {
               openAlert={openAlert}
             />
           </Route>
+          <Route path="/editPet/:id/:name/:desc/:type">
+            <EditPet
+              route={route}
+              setRoute={setRoute}
+              sessionToken={sessionToken}
+              openAlert={openAlert}
+            />
+          </Route>
           <Route exact path="/pet">
             <YourPets
               route={route}
@@ -158,13 +166,6 @@ const Navbar = ({ sessionToken, clearToken }) => {
               setRoute={setRoute}
               sessionToken={sessionToken}
               openAlert={openAlert}
-            />
-          </Route>
-          <Route exact path="/profile">
-            <Profile
-              route={route}
-              setRoute={setRoute}
-              sessionToken={sessionToken}
             />
           </Route>
           <Route exact path="/addCard">

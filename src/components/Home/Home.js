@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+//material components
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 //components
 import HomeHeader from "./HomeHeader";
 import Posts from "../Posts/Posts";
@@ -8,7 +11,7 @@ import Pets from "../Pets/Pets";
 //css
 import "../styles/Layouts.css";
 
-const Home = ({ setRoute, sessionToken }) => {
+const Home = ({ setRoute, sessionToken, openAlert }) => {
   //pet type is initialized from local storage or set to 'all'
   const [type, setType] = useState(
     localStorage.getItem("petType") ? localStorage.getItem("petType") : "all"
@@ -31,9 +34,7 @@ const Home = ({ setRoute, sessionToken }) => {
   };
 
   //route the app is on
-  useEffect(() => {
-    setRoute("/");
-  });
+  setRoute("/");
 
   return (
     <div className="home">
@@ -45,17 +46,23 @@ const Home = ({ setRoute, sessionToken }) => {
         viewPosts={viewPosts}
         setPage={postToggle}
       />
-      {/* Toggle Posts or Pets */}
+      {/* Toggle Posts or Pets*/}
       {viewPosts ? (
         <Posts
           sessionToken={sessionToken}
-          setRoute={setRoute}
           petType={type}
           postType={postType}
+          openAlert={openAlert}
         />
       ) : (
-          <Pets sessionToken={sessionToken} setRoute={setRoute} type={type} petType={type} />
-        )}
+        <Pets
+          sessionToken={sessionToken}
+          type={type}
+          petType={type}
+          petType={type}
+          openAlert={openAlert}
+        />
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Grid, Button, Typography, Divider } from "@material-ui/core";
+import { Grid, Button, Typography } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 //css
@@ -12,14 +12,14 @@ const EditHeader = ({ route, petId, fileUrl, handleSubmit }) => {
       <Grid container spacing={3}>
         <Grid item xs={1} />
         <Grid item xs={4} className="back-group">
-          <Link to={route} id="back" className="link">
+          <Link to={route} id="back" className="Link">
             <ArrowBackIcon />
           </Link>
-          <Typography variant="h5">Edit Post</Typography>
+          <Typography variant="h5">Edit Pet</Typography>
         </Grid>
         <Grid item xs={2} />
         <Grid item xs={4}>
-          <Link to={route} className="link">
+          <Link to={route} className="Link">
             <Button>Cancel</Button>
           </Link>
           <Button

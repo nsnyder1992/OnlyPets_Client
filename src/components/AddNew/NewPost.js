@@ -1,9 +1,13 @@
 import { useState, useRef, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 
+//material components
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 //components
 import PostHeader from "../EditPosts/PostHeader";
 import PostBody from "../EditPosts/PostBody";
+import Alert from "../../home/Alert";
 
 //hooks
 import { uploadImg } from "../../hooks/cloudinaryHooks";
@@ -11,7 +15,7 @@ import { uploadImg } from "../../hooks/cloudinaryHooks";
 //css
 import "../styles/Layouts.css";
 
-const NewPost = ({ sessionToken }) => {
+const NewPost = ({ sessionToken, openAlert }) => {
   // history
   const history = useHistory();
 
@@ -23,6 +27,9 @@ const NewPost = ({ sessionToken }) => {
   const [petId, setPetId] = useState("");
   const [description, setDescription] = useState("");
 
+  //loading state
+  const [loading, setLoading] = useState(false);
+
   //create a ref to be used by the file-upload input
   const fileUpload = useRef(null);
 
@@ -32,6 +39,8 @@ const NewPost = ({ sessionToken }) => {
     const cloudinaryUrl =
       "https://api.cloudinary.com/v1_1/nsnyder1992/image/upload";
     const file = fileUpload.current.files[0];
+
+    setLoading(true);
 
     //upload to cloudinary
     const cloudinaryJson = await uploadImg(
@@ -56,8 +65,16 @@ const NewPost = ({ sessionToken }) => {
       }),
     })
       .then((res) => res.json())
-      .then((json) => console.log(json))
-      .catch((err) => console.log(err));
+      .then((json) => {
+        openAlert("success");
+        setLoading(false);
+        console.log(json);
+      })
+      .catch((err) => {
+        openAlert("error");
+        console.log(err);
+        setLoading(false);
+      });
 
     history.push("/");
   };
@@ -76,6 +93,7 @@ const NewPost = ({ sessionToken }) => {
         petId={petId}
         setPetId={setPetId}
       />
+      {loading ? <CircularProgress /> : null}
     </div>
   );
 };

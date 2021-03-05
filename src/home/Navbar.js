@@ -6,16 +6,19 @@ import { IconButton } from "@material-ui/core";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-import PetsOutlinedIcon from "@material-ui/icons/PetsOutlined";
 
 //components
 import Home from "../components/Home/Home";
 import AddNew from "../components/AddNew/AddNew";
 import EditPost from "../components/EditPosts/EditPost";
+import EditPet from "../components/EditPets/EditPet";
 import YourPets from "../components/YourPets/YourPets";
-import Profile from "../components/Profile/Profile";
 import AddCreditCard from "../components/AddCreditCard/AddCreditCard";
 import ProfilePanel from "./ProfilePanel";
+import Alert from "./Alert";
+
+//context
+import { AlertContext, alerts } from "../context/alert-context";
 
 //css
 import "./styles/Navbar.css";
@@ -24,9 +27,10 @@ import "./styles/Navbar.css";
 const Navbar = ({ sessionToken, clearToken }) => {
   //states
   const [route, setRoute] = useState("/"); //where are we in relation to "/"
+
+  //profile panel states
   const [drawerState, setDrawerState] = useState({ right: false }); //is profilePanel displayed
   const [userName, setUsername] = useState(); //whose the user?
-  const [openModal, setOpenModal] = useState(false); //open modal
 
   //open in close profilePanel
   const toggleDrawer = (open) => (event) => {
@@ -39,13 +43,25 @@ const Navbar = ({ sessionToken, clearToken }) => {
     setDrawerState({ ...drawerState, right: open });
   };
 
-  //Add Credit Card Modal open/close
-  const handleOpen = () => {
-    setOpenModal(true);
+  //const handle open/close of alerts
+  const [alert, setAlert] = useState(alerts.close);
+
+  const closeAlert = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setAlert(alerts.close);
   };
 
-  const handleClose = () => {
-    setOpenModal(false);
+  const openAlert = (alertType) => {
+    let alertObj = alerts.close;
+
+    if (alertType === "error") alertObj = alerts.error;
+    if (alertType === "success") alertObj = alerts.success;
+
+    alertObj.closeAlert = closeAlert;
+    setAlert(alertObj);
   };
 
   //on change in sessionToken update userName state above
@@ -74,8 +90,11 @@ const Navbar = ({ sessionToken, clearToken }) => {
         clearToken={clearToken}
         toggleDrawer={toggleDrawer}
         state={drawerState}
-        handleOpen={handleOpen}
       />
+      <AlertContext.Provider value={alert}>
+        <Alert />
+      </AlertContext.Provider>
+
       <div className="navbar">
         <nav>
           <Link to="/">
@@ -107,6 +126,7 @@ const Navbar = ({ sessionToken, clearToken }) => {
               route={route}
               setRoute={setRoute}
               sessionToken={sessionToken}
+              openAlert={openAlert}
             />
           </Route>
           <Route exact path="/post">
@@ -114,6 +134,7 @@ const Navbar = ({ sessionToken, clearToken }) => {
               route={route}
               setRoute={setRoute}
               sessionToken={sessionToken}
+              openAlert={openAlert}
             />
           </Route>
           <Route path="/editPost/:postId/:id/:desc/:file">
@@ -121,6 +142,15 @@ const Navbar = ({ sessionToken, clearToken }) => {
               route={route}
               setRoute={setRoute}
               sessionToken={sessionToken}
+              openAlert={openAlert}
+            />
+          </Route>
+          <Route path="/editPet/:id/:name/:desc/:type">
+            <EditPet
+              route={route}
+              setRoute={setRoute}
+              sessionToken={sessionToken}
+              openAlert={openAlert}
             />
           </Route>
           <Route exact path="/pet">
@@ -131,17 +161,11 @@ const Navbar = ({ sessionToken, clearToken }) => {
             />
           </Route>
           <Route exact path="/editPet">
-            <YourPets
+            <EditPet
               route={route}
               setRoute={setRoute}
               sessionToken={sessionToken}
-            />
-          </Route>
-          <Route exact path="/profile">
-            <Profile
-              route={route}
-              setRoute={setRoute}
-              sessionToken={sessionToken}
+              openAlert={openAlert}
             />
           </Route>
           <Route exact path="/addCard">
@@ -149,6 +173,7 @@ const Navbar = ({ sessionToken, clearToken }) => {
               route={route}
               setRoute={setRoute}
               sessionToken={sessionToken}
+              openAlert={openAlert}
             />
           </Route>
         </Switch>

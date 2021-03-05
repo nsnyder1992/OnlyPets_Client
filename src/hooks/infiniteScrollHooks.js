@@ -9,7 +9,8 @@ export const useFetch = (
   dispatch,
   pagerDispatch,
   fetchUrl,
-  sessionToken
+  sessionToken,
+  setLoading
 ) => {
   //get/set total posts to stop render after getting to last post
   const [totalPosts, setTotalPosts] = useState();
@@ -18,6 +19,7 @@ export const useFetch = (
   const [lastPetType, setLastPetType] = useState();
   const [lastPostType, setLastPostType] = useState();
 
+  // console.log("useFetch");
   const fetchData = async () => {
     if (sessionToken === undefined) return; //if no sessionToken stop process
 
@@ -43,6 +45,7 @@ export const useFetch = (
 
     //Get posts and store them using the Dispatches!!!
     dispatch({ type: "FETCHING_IMAGES", fetching: true });
+    setLoading(true);
     fetch(fetchUrl, {
       method: "GET",
       headers: new Headers({
@@ -55,13 +58,18 @@ export const useFetch = (
         setTotalPosts(json.total ? json.total : json.count); //some endpoints use total some use count...
 
         //abstract posts from json.posts
-        const posts = json.posts ? json.posts : json.pets
+
+        console.log(json);
+        const posts = json.posts ? json.posts : json.pets;
+
 
         //send to dispatch
         dispatch({ type: "STACK_IMAGES", posts });
         dispatch({ type: "FETCHING_IMAGES", fetching: false });
+        setLoading(false);
       })
       .catch((e) => {
+        setLoading(false);
         dispatch({ type: "FETCHING_IMAGES", fetching: false });
         return e;
       });

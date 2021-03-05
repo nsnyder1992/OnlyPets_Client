@@ -1,5 +1,8 @@
 import { useReducer, useRef, useState } from "react";
 
+//material components
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 //import components
 import PostCard from "./PostCard";
 
@@ -14,7 +17,7 @@ import {
 import "./styles/Posts.css";
 import { Typography } from "@material-ui/core";
 
-const Posts = ({ sessionToken, petType, postType }) => {
+const Posts = ({ sessionToken, petType, postType, openAlert }) => {
   /*************************************************** 
   
   To implement the infinite scroll feature that follows
@@ -31,6 +34,9 @@ const Posts = ({ sessionToken, petType, postType }) => {
   See ../../hooks/infiniteScrollHooks for more details
 
   ****************************************************/
+
+  //loading set
+  const [loading, setLoading] = useState(false);
 
   //reducers (preform som action on states)
   //This handles the state of posts and how to keep them
@@ -87,7 +93,8 @@ const Posts = ({ sessionToken, petType, postType }) => {
     postDispatch,
     pagerDispatch,
     fetchUrl,
-    sessionToken
+    sessionToken,
+    setLoading
   );
 
   //cloudinary urls... NOT WORKING AT THE MOMENT
@@ -98,14 +105,19 @@ const Posts = ({ sessionToken, petType, postType }) => {
   //delete post from postData and the server/DB
   const deletePost = (postId, post) => {
     const deleteUrl = `http://localhost:3001/post/${postId}`;
-    deleteFromDispatch(
-      post,
-      postDispatch,
-      deleteUrl,
-      backend,
-      cloudinaryUrl,
-      sessionToken
-    );
+    try {
+      deleteFromDispatch(
+        post,
+        postDispatch,
+        deleteUrl,
+        backend,
+        cloudinaryUrl,
+        sessionToken
+      );
+      openAlert("success");
+    } catch (err) {
+      openAlert("error");
+    }
   };
 
   //create Reference point and send it to useInfiniteScroll hook
@@ -135,6 +147,7 @@ const Posts = ({ sessionToken, petType, postType }) => {
             : null}
         </Typography>
       )}
+      {loading ? <CircularProgress /> : null}
       <div id="page-bottom-boundary" ref={bottomBoundaryRef}></div>
     </div>
   );

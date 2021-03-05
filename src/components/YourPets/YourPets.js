@@ -2,12 +2,9 @@ import { useEffect, useReducer, useRef } from "react";
 
 import { Typography } from "@material-ui/core";
 
-import {
-  useFetch,
-  useInfiniteScroll
-} from "../../hooks/infiniteScrollHooks";
+import { useFetch, useInfiniteScroll } from "../../hooks/infiniteScrollHooks";
 
-import PetCard from '../Pets/PetCard';
+// import PetCard from "../Pets/PetCard";
 
 const YourPets = ({ setRoute, sessionToken, petType, type }) => {
   useEffect(() => {
@@ -52,8 +49,8 @@ const YourPets = ({ setRoute, sessionToken, petType, type }) => {
   const [pager, pagerDispatch] = useReducer(pageReducer, { page: 1 });
 
   const limit = 4;
-  let baseUrl = `http://localhost:3001/pet/${type}`;
-  const fetchUrl = `${baseUrl}/${petType}/${pager.page}/${limit}`;
+  let baseUrl = `http://localhost:3001/pet/owned`;
+  const fetchUrl = `${baseUrl}/${pager.page}/${limit}`;
 
   useFetch(
     postData.posts,
@@ -69,17 +66,12 @@ const YourPets = ({ setRoute, sessionToken, petType, type }) => {
   let bottomBoundaryRef = useRef(null);
   useInfiniteScroll(bottomBoundaryRef, pagerDispatch);
 
-
   return (
     <div className="posts">
       <Typography variant="h5">Your Pets</Typography>
       {postData?.posts.map((index) => {
-        return (
-          <PetCard
-            key={index}
-            sessionToken={sessionToken}
-          />
-        );
+        // return <PetCard key={index} sessionToken={sessionToken} />;
+        return <></>;
       })}
       <div id="page-bottom-boundary" ref={bottomBoundaryRef}></div>
     </div>

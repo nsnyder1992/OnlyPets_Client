@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 //material components
@@ -13,19 +13,38 @@ import "../styles/Layouts.css";
 
 const EditPet = ({ route, openAlert, sessionToken }) => {
   //get params from url
-  let { id, name, desc, type } = useParams();
+  let { id } = useParams();
+
+  //model states
+  const [petType, setPetType] = useState();
+  const [petName, setPetName] = useState();
+  const [description, setDescription] = useState();
+
+  //get data for pet
+  useEffect(() => {
+    fetch(`http://localhost:3001/pet/${id}`, {
+      method: "GET",
+      headers: new Headers({
+        authorization: sessionToken,
+      }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        setPetName(json.pet.name);
+        setPetType(json.pet.type);
+        setDescription(json.pet.description);
+      })
+      .catch((err) => console.log(err));
+  });
 
   //react router history used to redirect to route
   const history = useHistory();
 
-  //model states
-  const [petType, setPetType] = useState(type);
-  const [petName, setPetName] = useState(name);
-  const [description, setDescription] = useState(desc);
-
   //loading state
   const [loading, setLoading] = useState(false);
 
+  //update info
   //send image to cloudinary if image is new and post data to backend server
   const handleSubmit = async (e) => {
     setLoading(true);
@@ -33,7 +52,7 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
     fetch(`http://localhost:3001/pet/${id}`, {
       method: "PUT",
       body: JSON.stringify({
-        name: name,
+        name: petName,
         type: petType,
         description: description,
       }),
@@ -60,12 +79,19 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
       <EditHeader
         route={route}
         id={id}
-        name={name}
-        desc={desc}
+        name={petName}
+        desc={description}
         handleSubmit={handleSubmit}
       />
 
-      <PetBody petName={petName} petType={petType} description={description} />
+      <PetBody
+        name={petName}
+        type={petType}
+        description={description}
+        setName={setPetName}
+        setType={setPetType}
+        setDescription={setDescription}
+      />
 
       {loading ? <CircularProgress /> : null}
     </div>

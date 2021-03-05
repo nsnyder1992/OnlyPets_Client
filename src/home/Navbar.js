@@ -145,7 +145,7 @@ const Navbar = ({ sessionToken, clearToken }) => {
               openAlert={openAlert}
             />
           </Route>
-          <Route path="/editPet/:id/:name/:desc/:type">
+          <Route path="/editPet/:id">
             <EditPet
               route={route}
               setRoute={setRoute}
@@ -158,14 +158,6 @@ const Navbar = ({ sessionToken, clearToken }) => {
               route={route}
               setRoute={setRoute}
               sessionToken={sessionToken}
-            />
-          </Route>
-          <Route exact path="/editPet">
-            <EditPet
-              route={route}
-              setRoute={setRoute}
-              sessionToken={sessionToken}
-              openAlert={openAlert}
             />
           </Route>
           <Route exact path="/addCard">

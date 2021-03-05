@@ -132,7 +132,7 @@ const Pets = ({ sessionToken, petType, openAlert }) => {
       {postData?.posts.map((post, index) => {
         console.log(post);
         return (
-          <div></div>
+          <div>{post.name}</div>
           // <PetCard
           //   pet={post}
           //   deletePet={deletePost}

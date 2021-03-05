@@ -11,89 +11,89 @@ import { indigo } from "@material-ui/core/colors";
 import "./styles/PetCard.css";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        maxWidth: 650,
-        width: "90%",
-        minWidth: 200,
-        margin: 0,
-    },
-    media: {
-        height: 0,
-        paddingTop: "56.25%", // 16:9
-    },
-    avatar: {
-        backgroundColor: indigo[500],
-    },
-    actions: {
-        display: "flex",
-        justifyContent: "space-between",
-        marginBottom: 0,
-    },
-    content: {
-        paddingLeft: 16,
-        marginTop: 3,
-    },
-    header: {
-        display: "flex",
-        justifyContent: "right",
-    },
-    actionsRight: {
-        justifyItems: "right",
-    },
-    actionsLeft: {
-        display: "flex",
-        alignItems: "center",
-    },
-    timeAgo: {
-        paddingLeft: 16,
-        paddingTop: 12,
-    },
+  root: {
+    maxWidth: 650,
+    width: "90%",
+    minWidth: 200,
+    margin: 0,
+  },
+  media: {
+    height: 0,
+    paddingTop: "56.25%", // 16:9
+  },
+  avatar: {
+    backgroundColor: indigo[500],
+  },
+  actions: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: 0,
+  },
+  content: {
+    paddingLeft: 16,
+    marginTop: 3,
+  },
+  header: {
+    display: "flex",
+    justifyContent: "right",
+  },
+  actionsRight: {
+    justifyItems: "right",
+  },
+  actionsLeft: {
+    display: "flex",
+    alignItems: "center",
+  },
+  timeAgo: {
+    paddingLeft: 16,
+    paddingTop: 12,
+  },
 }));
 
 const BASEURL = "http://localhost:3001/pet";
 
 const PetCard = ({ pet, sessionToken }) => {
-    //styles
-    const classes = useStyles();
+  //styles
+  const classes = useStyles();
 
-    //states
-    const [petName, setPetName] = useState();
+  //states
+  const [petName, setPetName] = useState();
 
-    //get pet name give post.petId
-    //using useCallback as suggested by rule react-hooks/exhaustive-deps
-    const getPetName = useCallback(() => {
-        fetch(`${BASEURL}/${pet.petId}`, {
-            method: "GET",
-            headers: new Headers({
-                authorization: sessionToken,
-            }),
-        })
-            .then((res) => res.json())
-            .then((json) => {
-                setPetName(json.pet.name);
-            })
-            .catch((err) => console.log(err));
-    }, [pet, sessionToken]);
+  //get pet name give post.petId
+  //using useCallback as suggested by rule react-hooks/exhaustive-deps
+  const getPetName = useCallback(() => {
+    fetch(`${BASEURL}/${pet.petId}`, {
+      method: "GET",
+      headers: new Headers({
+        authorization: sessionToken,
+      }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        setPetName(json.pet.name);
+      })
+      .catch((err) => console.log(err));
+  }, [pet, sessionToken]);
 
-    //on change in [post] update petName
-    useEffect(() => {
-        getPetName();
-    }, [getPetName]); //added post to dependencies now petName updates after a delete
+  //on change in [post] update petName
+  useEffect(() => {
+    getPetName();
+  }, [getPetName]); //added post to dependencies now petName updates after a delete
 
-    return (
-        <div className={classes.root}>
-            <Typography variant="h5">Look at these pets!</Typography>
-            <CardHeader
-                className={classes.header}
-                avatar={
-                    <Avatar aria-label="Pet" className={classes.avatar}>
-                        {petName ? petName[0].toUpperCase() : null}
-                    </Avatar>
-                }
-            />
-            <CardMedia className={classes.media} image={pet.photoUrl} />
-        </div>
-    );
+  return (
+    <div className={classes.root}>
+      <Typography variant="h5">Look at these pets!</Typography>
+      <CardHeader
+        className={classes.header}
+        avatar={
+          <Avatar aria-label="Pet" className={classes.avatar}>
+            {pet ? pet.name.toUpperCase() : null}
+          </Avatar>
+        }
+      />
+      <CardMedia className={classes.media} image={pet.photoUrl} />
+    </div>
+  );
 };
 
 export default PetCard;

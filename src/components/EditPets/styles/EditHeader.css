@@ -1,0 +1,14 @@
+.back-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#back {
+  margin-right: 10px;
+}
+
+.link {
+  text-decoration: none;
+  margin-right: 7px;
+}

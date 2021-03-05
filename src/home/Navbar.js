@@ -161,7 +161,7 @@ const Navbar = ({ sessionToken, clearToken }) => {
             />
           </Route>
           <Route exact path="/editPet">
-            <YourPets
+            <EditPet
               route={route}
               setRoute={setRoute}
               sessionToken={sessionToken}

@@ -6,7 +6,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 //components
 import HomeHeader from "./HomeHeader";
 import Posts from "../Posts/Posts";
-import Pets from "../Pets/Pets.js";
+import Pets from "../Pets/Pets";
 
 //css
 import "../styles/Layouts.css";
@@ -55,12 +55,17 @@ const Home = ({ setRoute, sessionToken, openAlert }) => {
           openAlert={openAlert}
         />
       ) : (
+<<<<<<< HEAD
         <Pets
           sessionToken={sessionToken}
           petType={type}
           openAlert={openAlert}
         />
       )}
+=======
+          <Pets sessionToken={sessionToken} setRoute={setRoute} type={type} petType={type} />
+        )}
+>>>>>>> 20e67c24aa733051beaef5231f8a29aa4c76c68d
     </div>
   );
 };

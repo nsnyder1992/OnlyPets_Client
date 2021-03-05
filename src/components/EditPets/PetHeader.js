@@ -16,7 +16,6 @@ const PostHeader = ({ handleSubmit }) => {
           <Button
             variant="contained"
             color="primary"
-            disabled
             onClick={handleSubmit}
           >
             Post

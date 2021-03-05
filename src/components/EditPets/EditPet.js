@@ -86,6 +86,7 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
         id={id}
         name={petName}
         desc={description}
+        type={petType}
         handleSubmit={handleSubmit}
       />
 

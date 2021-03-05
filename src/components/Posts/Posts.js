@@ -138,6 +138,7 @@ const Posts = ({ sessionToken, petType, postType, openAlert }) => {
               deletePost={deletePost}
               key={index}
               sessionToken={sessionToken}
+              openAlert={openAlert}
             />
           );
         })

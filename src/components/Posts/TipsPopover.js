@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TipsPopover = ({ petId, popupState, sessionToken }) => {
+const TipsPopover = ({ petId, popupState, sessionToken, openAlert }) => {
   //styles
   const classes = useStyles();
 
@@ -89,6 +89,8 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
       .then((res) => {
         console.log(res);
       });
+
+    openAlert("success");
     //   .catch((err) => console.log(err));
   };
 

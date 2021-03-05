@@ -12,7 +12,7 @@ const stripePromise = loadStripe(
   "pk_test_51IOBbVCpTGapbgrnj8ac2TSDEIGgx6hSzCZ57QLkOZDlnJdlAgA5yenVLH27V2WffpJFOyj4ORnM5LqBZNb63JtG00MAg1Cd2i"
 );
 
-const Tips = ({ post, sessionToken }) => {
+const Tips = ({ post, sessionToken, openAlert }) => {
   return (
     <PopupState variant="popover" popupId="demo-popup-popover">
       {(popupState) => (
@@ -32,6 +32,7 @@ const Tips = ({ post, sessionToken }) => {
               petId={post.petId}
               popupState={popupState}
               sessionToken={sessionToken}
+              openAlert={openAlert}
             />
           </Elements>
         </div>

@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PostCard = ({ post, deletePost, sessionToken }) => {
+const PostCard = ({ post, deletePost, sessionToken, openAlert }) => {
   //styles
   const classes = useStyles();
 
@@ -111,7 +111,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
           <Likes id={post.id} likes={post.likes} sessionToken={sessionToken} />
         </div>
         <div className={classes.actionsRight}>
-          <Tips post={post} sessionToken={sessionToken} />
+          <Tips post={post} sessionToken={sessionToken} openAlert={openAlert} />
           <Subscribe id={post.petId} sessionToken={sessionToken} />
         </div>
       </CardActions>

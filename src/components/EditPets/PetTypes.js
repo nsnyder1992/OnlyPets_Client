@@ -5,13 +5,14 @@ import "./styles/PetTypes.css";
 
 const PetTypes = ({ type, setType }) => {
   // handles selection logic for petType
+  console.log(type);
   return (
     <FormControl id="type-select-form">
       <Select
         labelId="type-label"
         id="type-select"
         disableUnderline
-        value={type}
+        value={type ? type : ""}
         onChange={(e) => setType(e.target.value)}
       >
         {/*hardcoded the below but will need to map over pet types unique in the

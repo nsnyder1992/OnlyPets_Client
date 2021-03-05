@@ -23,6 +23,7 @@ form {
 
 hr {
   width: 100%;
+  max-width: 1250px;
   margin-top: 5px;
 }
 

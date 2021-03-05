@@ -1,4 +1,4 @@
-import { TextField } from "@material-ui/core";
+import { Grid, TextField } from "@material-ui/core";
 
 //components
 import PetTypes from "./PetTypes";
@@ -25,7 +25,7 @@ const PetBody = ({
             id="name"
             label="Pet Name"
             fullWidth
-            value={name ? name : null}
+            value={name ? name : ""}
             onChange={(e) => setName(e.target.value)}
             variant="outlined"
           />
@@ -38,7 +38,7 @@ const PetBody = ({
             rows={2}
             label="Description"
             fullWidth
-            value={description ? description : null}
+            value={description ? description : ""}
             onChange={(e) => setDescription(e.target.value)}
             variant="outlined"
           />

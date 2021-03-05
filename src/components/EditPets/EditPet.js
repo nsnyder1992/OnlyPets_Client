@@ -8,6 +8,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import EditHeader from "./EditHeader";
 import PetBody from "./PetBody";
 
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
+
 //css
 import "../styles/Layouts.css";
 
@@ -22,7 +25,7 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
 
   //get data for pet
   useEffect(() => {
-    fetch(`http://localhost:3001/pet/${id}`, {
+    fetch(`${BASEURL}/pet/${id}`, {
       method: "GET",
       headers: new Headers({
         authorization: sessionToken,
@@ -49,7 +52,7 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
   const handleSubmit = async (e) => {
     setLoading(true);
 
-    fetch(`http://localhost:3001/pet/${id}`, {
+    fetch(`${BASEURL}/pet/${id}`, {
       method: "PUT",
       body: JSON.stringify({
         name: petName,
@@ -65,10 +68,12 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
       .then((json) => {
         setLoading(false);
         openAlert("success");
+        console.log(json);
       })
       .catch((err) => {
         setLoading(false);
         openAlert("error");
+        console.log(err);
       });
 
     history.push("/");

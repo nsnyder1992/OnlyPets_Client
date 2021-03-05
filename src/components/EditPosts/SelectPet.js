@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
+
+//styles
 import "./styles/SelectPet.css";
 
 const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
@@ -23,7 +27,7 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
 
   //on rendering of component get all current users pets
   useEffect(() => {
-    fetch(`http://localhost:3001/pet/owned`, {
+    fetch(`${BASEURL}/pet/owned`, {
       method: "GET",
       headers: new Headers({
         authorization: sessionToken,

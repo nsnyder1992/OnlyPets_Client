@@ -7,10 +7,12 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 //components
 import PostHeader from "../EditPosts/PostHeader";
 import PostBody from "../EditPosts/PostBody";
-import Alert from "../../home/Alert";
 
 //hooks
 import { uploadImg } from "../../hooks/cloudinaryHooks";
+
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
 
 //css
 import "../styles/Layouts.css";
@@ -35,7 +37,7 @@ const NewPost = ({ sessionToken, openAlert }) => {
 
   //send image to cloudinary and post data to backend server
   const handleSubmit = async () => {
-    const signatureUrl = "http://localhost:3001/post/cloudinary";
+    const signatureUrl = `${BASEURL}/post/cloudinary`;
     const cloudinaryUrl =
       "https://api.cloudinary.com/v1_1/nsnyder1992/image/upload";
     const file = fileUpload.current.files[0];
@@ -51,7 +53,7 @@ const NewPost = ({ sessionToken, openAlert }) => {
     );
 
     //post to backend
-    await fetch("http://localhost:3001/post/", {
+    await fetch(`${BASEURL}/post/`, {
       method: "Post",
       body: JSON.stringify({
         photoUrl: cloudinaryJson.url,

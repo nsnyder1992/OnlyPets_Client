@@ -6,6 +6,9 @@ import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 //init stripe
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
+
 //css
 import "./styles/AddCardHeader.css";
 
@@ -35,20 +38,17 @@ const AddCardHeader = ({ sessionToken, setLoading, openAlert }) => {
       try {
         const { id } = paymentMethod;
         setLoading(true);
-        const response = await fetch(
-          "http://localhost:3001/stripe/customer/addCard",
-          {
-            method: "POST",
-            body: JSON.stringify({
-              amount: amount,
-              id: id,
-            }),
-            headers: new Headers({
-              "content-type": "application/json",
-              authorization: sessionToken,
-            }),
-          }
-        );
+        const response = await fetch(BASEURL + "/stripe/customer/addCard", {
+          method: "POST",
+          body: JSON.stringify({
+            amount: amount,
+            id: id,
+          }),
+          headers: new Headers({
+            "content-type": "application/json",
+            authorization: sessionToken,
+          }),
+        });
 
         setLoading(false);
         const json = await response.json();

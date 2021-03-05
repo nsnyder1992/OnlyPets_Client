@@ -5,6 +5,9 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
@@ -22,7 +25,7 @@ const Login = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch("http://localhost:3001/user/login", {
+    fetch(`${BASEURL}/user/login`, {
       method: "POST",
       body: JSON.stringify({
         user: { username: username, password: password },

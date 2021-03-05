@@ -1,10 +1,5 @@
 //material ui components
-import {
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Switch,
-} from "@material-ui/core";
+import { ListItem, ListItemText, ListItemIcon } from "@material-ui/core";
 
 //images
 import visa from "./img/visa.PNG";

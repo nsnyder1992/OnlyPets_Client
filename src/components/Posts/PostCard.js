@@ -16,6 +16,9 @@ import Subscribe from "./Subscribe";
 import TimeAgo from "./TimeAgo";
 import PostCardOptions from "./PostCardOptions";
 
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
+
 import "./styles/PostCard.css";
 
 const useStyles = makeStyles((theme) => ({
@@ -59,8 +62,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BASEURL = "http://localhost:3001/pet";
-
 const PostCard = ({ post, deletePost, sessionToken }) => {
   //styles
   const classes = useStyles();
@@ -71,7 +72,7 @@ const PostCard = ({ post, deletePost, sessionToken }) => {
   //get pet name give post.petId
   //using useCallback as suggested by rule react-hooks/exhaustive-deps
   const getPetName = useCallback(() => {
-    fetch(`${BASEURL}/${post.petId}`, {
+    fetch(`${BASEURL}/pet/${post.petId}`, {
       method: "GET",
       headers: new Headers({
         authorization: sessionToken,

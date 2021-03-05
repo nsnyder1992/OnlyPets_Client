@@ -17,6 +17,9 @@ import {
 } from "@material-ui/core";
 import { bindPopover } from "material-ui-popup-state";
 
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
+
 //images
 import visa from "./img/visa.PNG";
 import mastercard from "./img/mastercard.svg";
@@ -64,21 +67,18 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
   const handleTip = async () => {
     if (!stripe) return;
 
-    const response = await fetch(
-      `http://localhost:3001/stripe/customer/tip/${petId}`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          amount: amount * 100,
-          payment_method: payment.id,
-          off_session: true,
-        }),
-        headers: new Headers({
-          "content-type": "application/json",
-          authorization: sessionToken,
-        }),
-      }
-    );
+    const response = await fetch(`${BASEURL}/stripe/customer/tip/${petId}`, {
+      method: "POST",
+      body: JSON.stringify({
+        amount: amount * 100,
+        payment_method: payment.id,
+        off_session: true,
+      }),
+      headers: new Headers({
+        "content-type": "application/json",
+        authorization: sessionToken,
+      }),
+    });
 
     const intent = await response.json();
     console.log(intent);
@@ -98,7 +98,7 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:3001/stripe/customer/payment/methods", {
+    fetch(`${BASEURL}/stripe/customer/payment/methods`, {
       method: "GET",
       headers: new Headers({
         authorization: sessionToken,
@@ -109,7 +109,6 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
         setHasCard(json.hasCard);
         setPaymentMethods(json.paymentMethods?.data);
         setPayment(json.paymentMethods?.data[0]);
-
       });
   }, []);
 
@@ -190,8 +189,8 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
             </FormControl>
           </>
         ) : (
-            <Typography>Add a Card!</Typography>
-          )}
+          <Typography>Add a Card!</Typography>
+        )}
       </Box>
     </Popover>
   );

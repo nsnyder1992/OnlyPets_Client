@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 
 import { Typography } from "@material-ui/core";
 
@@ -7,6 +7,8 @@ import { useFetch, useInfiniteScroll } from "../../hooks/infiniteScrollHooks";
 // import PetCard from "../Pets/PetCard";
 
 const YourPets = ({ setRoute, sessionToken, petType, type }) => {
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     setRoute("/pet");
   });
@@ -60,7 +62,8 @@ const YourPets = ({ setRoute, sessionToken, petType, type }) => {
     postDispatch,
     pagerDispatch,
     fetchUrl,
-    sessionToken
+    sessionToken,
+    setLoading
   );
 
   let bottomBoundaryRef = useRef(null);

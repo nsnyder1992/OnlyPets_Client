@@ -14,6 +14,9 @@ import {
   deleteFromDispatch,
 } from "../../hooks/infiniteScrollHooks";
 
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
+
 //css
 import "./styles/Pets.css";
 
@@ -81,9 +84,7 @@ const Pets = ({ sessionToken, petType, openAlert }) => {
 
   //fetch constants to use to get posts
   const limit = 4;
-  let baseUrl = `http://localhost:3001/pet/type`;
-  // const fetchUrl = `${baseUrl}/${petType}/${pager.page}/${limit}`;
-  const fetchUrl = `http://localhost:3001/pet/type/${petType}/${pager.page}/4`;
+  const fetchUrl = `${BASEURL}/pet/type/${petType}/${pager.page}/4`;
 
   //Fetch hook to handle getting/updating posts based on [postDispatch, pager, postType, petType]
   useFetch(

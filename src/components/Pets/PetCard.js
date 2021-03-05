@@ -3,7 +3,6 @@ import { useCallback, useEffect, useState } from "react";
 //material components
 import { makeStyles } from "@material-ui/core/styles";
 import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { indigo } from "@material-ui/core/colors";

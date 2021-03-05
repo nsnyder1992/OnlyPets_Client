@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import { TextField } from "@material-ui/core";
 
 //components
@@ -8,9 +6,15 @@ import PetTypes from "./PetTypes";
 //css
 import "./styles/PetBody.css";
 
-const PetBody = ({ setName, name, setDescription, setType, type, description, }) => {
+const PetBody = ({
+  setName,
+  name,
+  setDescription,
+  setType,
+  type,
+  description,
+}) => {
   //states to store name, description and type
-
 
   return (
     <div className="container">

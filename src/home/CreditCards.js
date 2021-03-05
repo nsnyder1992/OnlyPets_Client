@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 
 import CreditCard from "./CreditCard";
 
+//get base url of backend
+import { BASEURL } from "../context/base-url-context";
+
 const CreditCards = ({ sessionToken }) => {
   const [cards, setCards] = useState();
 
   useEffect(() => {
-    fetch("http://localhost:3001/stripe/customer/payment/methods", {
+    fetch(`${BASEURL}/stripe/customer/payment/methods`, {
       method: "GET",
       headers: new Headers({
         authorization: sessionToken,

@@ -107,8 +107,9 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
       .then((res) => res.json())
       .then((json) => {
         setHasCard(json.hasCard);
-        setPaymentMethods(json?.paymentMethods?.data);
-        setPayment(json?.paymentMethods?.data[0]);
+        setPaymentMethods(json.paymentMethods?.data);
+        setPayment(json.paymentMethods?.data[0]);
+
       });
   }, []);
 
@@ -158,8 +159,8 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
                 id="payment-select"
                 value={payment}
                 onChange={(e) => setPayment(e.target.value)}
-                renderValue={(method) => (
-                  <MenuItem value={method}>
+                renderValue={(method, key) => (
+                  <MenuItem value={method} key={key}>
                     {method.card.brand === "visa" ? (
                       <img src={visa} style={{ width: 40 }} />
                     ) : null}

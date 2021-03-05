@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const classes = useStyles();
 
   const handleSubmit = (event) => {
@@ -32,9 +33,12 @@ const Login = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        if (data.error) return setError(data.error);
         props.updateToken(data?.sessionToken, data.user.id);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -51,6 +55,7 @@ const Login = (props) => {
             onChange={(e) => setUsername(e.target.value)}
             value={username}
           />
+
           <TextField
             id="outlined-password-input"
             label="Password"
@@ -64,6 +69,7 @@ const Login = (props) => {
             Login
           </Button>
         </form>
+        {error ? <Typography color="secondary">{error}</Typography> : null}
       </Container>
     </div>
   );

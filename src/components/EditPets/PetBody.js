@@ -8,11 +8,9 @@ import PetTypes from "./PetTypes";
 //css
 import "./styles/PetBody.css";
 
-const PetBody = ({ setName, name }) => {
+const PetBody = ({ setName, name, setDescription, setType, type, description, }) => {
   //states to store name, description and type
 
-  const [description, setDescription] = useState();
-  const [type, setType] = useState("dog");
 
   return (
     <div className="container">

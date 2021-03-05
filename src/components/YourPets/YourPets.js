@@ -2,12 +2,9 @@ import { useEffect, useReducer, useRef } from "react";
 
 import { Typography } from "@material-ui/core";
 
-import {
-  useFetch,
-  useInfiniteScroll
-} from "../../hooks/infiniteScrollHooks";
+import { useFetch, useInfiniteScroll } from "../../hooks/infiniteScrollHooks";
 
-import PetCard from '../Pets/PetCard';
+import PetCard from "../Pets/PetCard";
 
 const YourPets = ({ setRoute, sessionToken, petType }) => {
   useEffect(() => {
@@ -63,12 +60,12 @@ const YourPets = ({ setRoute, sessionToken, petType }) => {
     postDispatch,
     pagerDispatch,
     fetchUrl,
-    sessionToken
+    sessionToken,
+    null
   );
 
   let bottomBoundaryRef = useRef(null);
   useInfiniteScroll(bottomBoundaryRef, pagerDispatch);
-
 
   return (
     <div className="posts">

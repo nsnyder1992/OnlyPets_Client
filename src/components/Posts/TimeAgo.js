@@ -22,10 +22,10 @@ const TimeAgo = ({ dateString }) => {
 
     //set the text to least time unit
     if (secondsAgo < secToMth)
-      tempTimeAgo = Math.floor(secondsAgo / secToWks) + "weeks ago";
+      tempTimeAgo = Math.floor(secondsAgo / secToWks) + " weeks ago";
 
     if (secondsAgo < secToWks)
-      tempTimeAgo = Math.floor(secondsAgo / secToDay) + "days ago";
+      tempTimeAgo = Math.floor(secondsAgo / secToDay) + " days ago";
 
     if (secondsAgo < secToDay)
       tempTimeAgo = Math.floor(secondsAgo / secToHrs) + "hrs ago";

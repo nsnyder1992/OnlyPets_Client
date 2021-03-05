@@ -15,14 +15,17 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
   //if change to select set petId and petType
   const handleChange = (e) => {
     let petId = e.target.value;
-    setPetId(petId);
 
-    let petType;
-    pets.forEach((pet) => {
-      if (pet.id === petId) petType = pet.type;
-    });
+    if (petId !== "") {
+      setPetId(petId);
 
-    setPetType(petType);
+      let petType;
+      pets.forEach((pet) => {
+        if (pet.id === petId) petType = pet.type;
+      });
+
+      setPetType(petType);
+    }
   };
 
   //on rendering of component get all current users pets
@@ -51,7 +54,7 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
           labelId="pet-label"
           id="pet-select"
           disableUnderline
-          value={petId ? petId : null}
+          value={petId ? petId : ""}
           onChange={handleChange}
         >
           {/*Map over pets displaying them and setting their id to value */}

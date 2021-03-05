@@ -174,9 +174,9 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
                   </MenuItem>
                 )}
               >
-                {paymentMethods?.map((method) => {
+                {paymentMethods?.map((method, key) => {
                   return (
-                    <MenuItem value={method}>
+                    <MenuItem value={method} key={key}>
                       {method.card.brand === "visa" ? (
                         <img src={visa} style={{ width: 40 }} alt="visa" />
                       ) : null}

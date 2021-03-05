@@ -10,7 +10,6 @@ import {
   Typography,
   Select,
   MenuItem,
-  ListItemIcon,
   FormControl,
   InputLabel,
   Divider,
@@ -110,7 +109,7 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
         setPaymentMethods(json.paymentMethods?.data);
         setPayment(json.paymentMethods?.data[0]);
       });
-  }, []);
+  }, [sessionToken]);
 
   return (
     <Popover
@@ -161,10 +160,14 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
                 renderValue={(method, key) => (
                   <MenuItem value={method} key={key}>
                     {method.card.brand === "visa" ? (
-                      <img src={visa} style={{ width: 40 }} />
+                      <img src={visa} style={{ width: 40 }} alt="visa" />
                     ) : null}
                     {method.card.brand === "mastercard" ? (
-                      <img src={mastercard} style={{ width: 40 }} />
+                      <img
+                        src={mastercard}
+                        style={{ width: 40 }}
+                        alt="mastercard"
+                      />
                     ) : null}
 
                     <ListItemText>#{method.card.last4}</ListItemText>
@@ -175,10 +178,14 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
                   return (
                     <MenuItem value={method}>
                       {method.card.brand === "visa" ? (
-                        <img src={visa} style={{ width: 40 }} />
+                        <img src={visa} style={{ width: 40 }} alt="visa" />
                       ) : null}
                       {method.card.brand === "mastercard" ? (
-                        <img src={mastercard} style={{ width: 40 }} />
+                        <img
+                          src={mastercard}
+                          style={{ width: 40 }}
+                          alt="mastercard"
+                        />
                       ) : null}
 
                       <ListItemText>#{method.card.last4}</ListItemText>

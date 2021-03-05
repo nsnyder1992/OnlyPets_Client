@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 
 import { Typography } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { useFetch, useInfiniteScroll } from "../../hooks/infiniteScrollHooks";
 
@@ -76,6 +77,7 @@ const YourPets = ({ setRoute, sessionToken, petType, type }) => {
         // return <PetCard key={index} sessionToken={sessionToken} />;
         return <></>;
       })}
+      {loading ? <CircularProgress /> : null}
       <div id="page-bottom-boundary" ref={bottomBoundaryRef}></div>
     </div>
   );

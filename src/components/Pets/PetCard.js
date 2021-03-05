@@ -1,5 +1,3 @@
-import { useCallback, useEffect, useState } from "react";
-
 //material components
 import { makeStyles } from "@material-ui/core/styles";
 import CardHeader from "@material-ui/core/CardHeader";
@@ -49,8 +47,6 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: 12,
   },
 }));
-
-const BASEURL = "http://localhost:3001/pet";
 
 const PetCard = ({ pet, sessionToken }) => {
   //styles

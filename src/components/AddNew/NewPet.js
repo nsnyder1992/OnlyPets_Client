@@ -28,6 +28,7 @@ const NewPet = ({ sessionToken, openAlert }) => {
   //submit new pet to backend and return home!
 
   const handleSubmit = async () => {
+    setLoading(true);
     await fetch(`${BASEURL}/pet/create`, {
       method: "Post",
       body: JSON.stringify({
@@ -39,9 +40,16 @@ const NewPet = ({ sessionToken, openAlert }) => {
       }),
     })
       .then((res) => res.json())
-      .then((json) => console.log(json))
-      .catch((err) => console.log(err));
+      .then((json) => {
+        openAlert("success");
+        console.log(json);
+      })
+      .catch((err) => {
+        openAlert("error");
+        console.log(err);
+      });
 
+    setLoading(false);
     history.push("/");
   };
 
@@ -60,9 +68,6 @@ const NewPet = ({ sessionToken, openAlert }) => {
       {loading ? <CircularProgress /> : null}
     </div>
   );
-
-  // console.log("submited");
-  history.push("/"); //redirects back to home component
 };
 
 export default NewPet;

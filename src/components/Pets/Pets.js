@@ -84,7 +84,7 @@ const Pets = ({ sessionToken, petType, openAlert }) => {
 
   //fetch constants to use to get posts
   const limit = 4;
-  const fetchUrl = `${BASEURL}/pet/type/${petType}/${pager.page}/4`;
+  const fetchUrl = `${BASEURL}/pet/type/${petType}/${pager.page}/${limit}`;
 
   //Fetch hook to handle getting/updating posts based on [postDispatch, pager, postType, petType]
   useFetch(
@@ -132,7 +132,12 @@ const Pets = ({ sessionToken, petType, openAlert }) => {
       {postData?.posts.map((pet, index) => {
         return (
           <div>
-            <PetCard key={index} pet={pet} sessionToken={sessionToken} />
+            <PetCard
+              key={index}
+              pet={pet}
+              sessionToken={sessionToken}
+              deletePet={deletePost}
+            />
           </div>
         );
       })}

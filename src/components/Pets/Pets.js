@@ -78,9 +78,6 @@ const Pets = ({ sessionToken, petType, openAlert }) => {
     fetching: true,
   });
   const [pager, pagerDispatch] = useReducer(pageReducer, { page: 1 });
-  const limit = 4;
-  let baseUrl = `http://localhost:3001/pet/type`;
-  const fetchUrl = `${baseUrl}/${petType}/${pager.page}/${limit}`;
 
   //fetch constants to use to get posts
   const limit = 4;

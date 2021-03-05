@@ -109,6 +109,7 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
         setHasCard(json.hasCard);
         setPaymentMethods(json.paymentMethods?.data);
         setPayment(json.paymentMethods?.data[0]);
+
       });
   }, []);
 
@@ -189,8 +190,8 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
             </FormControl>
           </>
         ) : (
-          <Typography>Add a Card!</Typography>
-        )}
+            <Typography>Add a Card!</Typography>
+          )}
       </Box>
     </Popover>
   );

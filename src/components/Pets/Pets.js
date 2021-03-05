@@ -5,7 +5,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { Typography } from "@material-ui/core";
 
 //import components
-// import PetCard from "./PetCard";
+import PetCard from "./PetCard";
 
 //import hooks
 import {
@@ -127,18 +127,12 @@ const Pets = ({ sessionToken, petType, openAlert }) => {
 
   return (
     <div className="posts">
-      {/* if posts not empty display posts else display a custom message */}
-      <Typography variant="h5">Look at these pets!</Typography>
-      {postData?.posts.map((post, index) => {
-        console.log(post);
+      <Typography variant="h5">Explore Pets</Typography>
+      {postData?.posts.map((pet, index) => {
         return (
-          <div>{post.name}</div>
-          // <PetCard
-          //   pet={post}
-          //   deletePet={deletePost}
-          //   key={index}
-          //   sessionToken={sessionToken}
-          // />
+          <div>
+            <PetCard key={index} pet={pet} sessionToken={sessionToken} />
+          </div>
         );
       })}
       {loading ? <CircularProgress /> : null}

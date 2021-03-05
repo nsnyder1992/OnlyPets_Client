@@ -11,7 +11,7 @@ import PetCard from "../Pets/PetCard"
 
 import "../Posts/styles/Posts.css";
 
-const Pets = ({ sessionToken, petType, type }) => {
+const Pets = ({ sessionToken, petType }) => {
   const postReducer = (state, action) => {
     switch (action.type) {
       case "STACK_IMAGES":

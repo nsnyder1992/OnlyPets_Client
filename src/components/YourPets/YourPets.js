@@ -9,7 +9,7 @@ import {
 
 import PetCard from '../Pets/PetCard';
 
-const YourPets = ({ setRoute, sessionToken, petType, type }) => {
+const YourPets = ({ setRoute, sessionToken, petType }) => {
   useEffect(() => {
     setRoute("/pet");
   });
@@ -52,13 +52,13 @@ const YourPets = ({ setRoute, sessionToken, petType, type }) => {
   const [pager, pagerDispatch] = useReducer(pageReducer, { page: 1 });
 
   const limit = 4;
-  let baseUrl = `http://localhost:3001/pet/${type}`;
-  const fetchUrl = `${baseUrl}/${petType}/${pager.page}/${limit}`;
+  let baseUrl = `http://localhost:3001/pet/owned`;
+  const fetchUrl = `${baseUrl}/${pager.page}/${limit}`;
 
   useFetch(
     postData.posts,
     null,
-    petType,
+    null,
     pager,
     postDispatch,
     pagerDispatch,
@@ -73,12 +73,15 @@ const YourPets = ({ setRoute, sessionToken, petType, type }) => {
   return (
     <div className="posts">
       <Typography variant="h5">Your Pets</Typography>
-      {postData?.posts.map((index) => {
+      {postData?.posts.map((pet, index) => {
         return (
-          <PetCard
-            key={index}
-            sessionToken={sessionToken}
-          />
+          <div>
+            <PetCard
+              key={index}
+              pet={pet}
+              sessionToken={sessionToken}
+            />
+          </div>
         );
       })}
       <div id="page-bottom-boundary" ref={bottomBoundaryRef}></div>

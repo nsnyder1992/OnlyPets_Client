@@ -55,7 +55,7 @@ export const useFetch = (
         setTotalPosts(json.total ? json.total : json.count); //some endpoints use total some use count...
 
         //abstract posts from json.posts
-        const posts = json.posts;
+        const posts = json.posts ? json.posts : json.pets
 
         //send to dispatch
         dispatch({ type: "STACK_IMAGES", posts });

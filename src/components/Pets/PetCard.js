@@ -7,6 +7,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { indigo } from "@material-ui/core/colors";
+import { CardContent } from "@material-ui/core";
 
 import "./styles/PetCard.css";
 
@@ -50,48 +51,28 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const BASEURL = "http://localhost:3001";
+const BASEURL = "http://localhost:3001/pet";
 
-const PetCard = ({ id, pet, sessionToken }) => {
+const PetCard = ({ pet, sessionToken }) => {
     //styles
     const classes = useStyles();
 
-    //states
-    const [petName, setPetName] = useState();
-
-    //get pet name give post.petId
-    //using useCallback as suggested by rule react-hooks/exhaustive-deps
-    const getPetName = useCallback(() => {
-        fetch(`${BASEURL}/${id}`, {
-            method: "GET",
-            headers: new Headers({
-                authorization: sessionToken,
-            }),
-        })
-            .then((res) => res.json())
-            .then((json) => {
-                setPetName(json.pet.name);
-            })
-            .catch((err) => console.log(err));
-    }, [pet, sessionToken]);
-
-    //on change in [post] update petName
-    useEffect(() => {
-        getPetName();
-    }, [getPetName]); //added post to dependencies now petName updates after a delete
 
     return (
         <div className={classes.root}>
-            <Typography variant="h5">Look at these pets!</Typography>
             <CardHeader
                 className={classes.header}
                 avatar={
-                    <Avatar aria-label="Pet" className={classes.avatar}>
-                        {petName ? petName[0].toUpperCase() : null}
-                    </Avatar>
+                    <Avatar aria-label="Pet" className={classes.avatar} />
                 }
             />
+            <CardContent>
+                <Typography variant="h5">{pet.name}</Typography>
+                <Typography variant="body2">{pet.description}</Typography>
+            </CardContent>
             {/* <CardMedia className={classes.media} image={pet.photoUrl} /> */}
+
+
         </div>
     );
 };

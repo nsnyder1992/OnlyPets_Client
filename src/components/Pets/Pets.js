@@ -69,12 +69,13 @@ const Pets = ({ sessionToken, petType, type }) => {
   return (
     <div className="posts">
       <Typography variant="h5">Explore Pets</Typography>
-      {postData?.posts.map((index) => {
+      {postData?.posts.map((pet, index) => {
         return (
           <div>
 
             <PetCard
               key={index}
+              pet={pet}
               sessionToken={sessionToken}
             />
           </div>

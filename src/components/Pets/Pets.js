@@ -127,18 +127,20 @@ const Pets = ({ sessionToken, petType, openAlert }) => {
 
   return (
     <div className="posts">
-      {/* if posts not empty display posts else display a custom message */}
-      <Typography variant="h5">Look at these pets!</Typography>
-      {postData?.posts.map((post, index) => {
-        console.log(post);
+
+      <Typography variant="h5">Explore Pets</Typography>
+      {postData?.posts.map((pet, index) => {
         return (
-          <div></div>
-          // <PetCard
-          //   pet={post}
-          //   deletePet={deletePost}
-          //   key={index}
-          //   sessionToken={sessionToken}
-          // />
+          <div>
+
+            <PetCard
+              key={index}
+              pet={pet}
+              sessionToken={sessionToken}
+            />
+          </div>
+
+ 
         );
       })}
       {loading ? <CircularProgress /> : null}

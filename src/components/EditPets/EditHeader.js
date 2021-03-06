@@ -5,7 +5,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 //css
 import "./styles/EditHeader.css";
 
-const EditHeader = ({ route, petId, fileUrl, handleSubmit }) => {
+const EditHeader = ({ route, handleSubmit }) => {
   // this header handles back button to route, setting the post button disabled and submitting the form
   return (
     <header>
@@ -22,12 +22,7 @@ const EditHeader = ({ route, petId, fileUrl, handleSubmit }) => {
           <Link to={route} className="Link">
             <Button>Cancel</Button>
           </Link>
-          <Button
-            variant="contained"
-            color="primary"
-            disabled={petId && fileUrl ? false : true}
-            onClick={handleSubmit}
-          >
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
             Done
           </Button>
         </Grid>

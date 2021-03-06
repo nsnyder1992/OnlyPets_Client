@@ -19,8 +19,8 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
   let { id } = useParams();
 
   //model states
-  const [petType, setPetType] = useState();
-  const [petName, setPetName] = useState();
+  const [type, setType] = useState();
+  const [name, setName] = useState();
   const [description, setDescription] = useState();
 
   //get data for pet
@@ -34,11 +34,11 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
-        setPetName(json.pet.name);
-        setPetType(json.pet.type);
+        setName(json.pet.name);
+        setType(json.pet.type);
         setDescription(json.pet.description);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   });
 
   //react router history used to redirect to route
@@ -55,8 +55,8 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
     fetch(`${BASEURL}/pet/${id}`, {
       method: "PUT",
       body: JSON.stringify({
-        name: petName,
-        type: petType,
+        name: name,
+        type: type,
         description: description,
       }),
       headers: new Headers({
@@ -79,21 +79,14 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
 
   return (
     <div className="create-post">
-      <EditHeader
-        route={route}
-        id={id}
-        name={petName}
-        desc={description}
-        type={petType}
-        handleSubmit={handleSubmit}
-      />
+      <EditHeader route={route} handleSubmit={handleSubmit} />
 
       <PetBody
-        name={petName}
-        type={petType}
+        name={name}
+        type={type}
         description={description}
-        setName={setPetName}
-        setType={setPetType}
+        setName={setName}
+        setType={setType}
         setDescription={setDescription}
       />
 

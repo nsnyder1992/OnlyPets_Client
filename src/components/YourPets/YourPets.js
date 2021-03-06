@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 
 import { Typography } from "@material-ui/core";
 
@@ -10,6 +10,8 @@ const YourPets = ({ setRoute, sessionToken, petType }) => {
   useEffect(() => {
     setRoute("/pet");
   });
+
+  const [loading, setLoading] = useState(false);
 
   const postReducer = (state, action) => {
     switch (action.type) {
@@ -61,7 +63,7 @@ const YourPets = ({ setRoute, sessionToken, petType }) => {
     pagerDispatch,
     fetchUrl,
     sessionToken,
-    null
+    setLoading
   );
 
   let bottomBoundaryRef = useRef(null);

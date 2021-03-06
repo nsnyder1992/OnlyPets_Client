@@ -72,11 +72,12 @@ const PetCard = ({ post, pet, sessionToken }) => {
         })
             .then((res) => res.json())
             .then((json) => {
-                setPhotoUrl(json);
+                console.log(json);
+                setPhotoUrl(json.posts[0].photoUrl);
                 console.log(photoUrl);
             })
             .catch((err) => console.log(err));
-    }, [post, sessionToken]);
+    }, [pet, post, sessionToken]);
 
     useEffect(() => {
         getPetPhoto();
@@ -92,8 +93,7 @@ const PetCard = ({ post, pet, sessionToken }) => {
                     }
                     title={<Typography>{pet.name}</Typography>}
                 />
-                <CardMedia className={classes.media} image={photoUrl.posts[0].photoUrl
-                } />
+                <CardMedia className={classes.media} image={photoUrl} />
                 <CardContent>
                     <Typography variant="body2" component="p">{pet.description}</Typography>
                 </CardContent>

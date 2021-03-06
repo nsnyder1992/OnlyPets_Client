@@ -2,6 +2,7 @@ import { useReducer, useRef, useState } from "react";
 
 //material components
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { Typography } from "@material-ui/core";
 
 //import components
 import PostCard from "./PostCard";
@@ -13,9 +14,11 @@ import {
   deleteFromDispatch,
 } from "../../hooks/infiniteScrollHooks";
 
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
+
 //css
 import "./styles/Posts.css";
-import { Typography } from "@material-ui/core";
 
 const Posts = ({ sessionToken, petType, postType, openAlert }) => {
   /*************************************************** 
@@ -81,7 +84,7 @@ const Posts = ({ sessionToken, petType, postType, openAlert }) => {
 
   //fetch constants to use to get posts
   const limit = 4;
-  let baseUrl = `http://localhost:3001/post/${postType}`;
+  let baseUrl = `${BASEURL}/post/${postType}`;
   const fetchUrl = `${baseUrl}/${petType}/${pager.page}/${limit}`;
 
   //Fetch hook to handle getting/updating posts based on [postDispatch, pager, postType, petType]
@@ -98,13 +101,13 @@ const Posts = ({ sessionToken, petType, postType, openAlert }) => {
   );
 
   //cloudinary urls... NOT WORKING AT THE MOMENT
-  const backend = "http://localhost:3001/post/cloudinary/delete";
+  const backend = `${BASEURL}/post/cloudinary/delete`;
   const cloudinaryUrl =
     "https://api.cloudinary.com/v1_1/nsnyder1992/image/destroy";
 
   //delete post from postData and the server/DB
   const deletePost = (postId, post) => {
-    const deleteUrl = `http://localhost:3001/post/${postId}`;
+    const deleteUrl = `${BASEURL}/post/${postId}`;
     try {
       deleteFromDispatch(
         post,
@@ -135,6 +138,7 @@ const Posts = ({ sessionToken, petType, postType, openAlert }) => {
               deletePost={deletePost}
               key={index}
               sessionToken={sessionToken}
+              openAlert={openAlert}
             />
           );
         })

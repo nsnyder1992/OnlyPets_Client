@@ -1,7 +1,4 @@
-import { useEffect, useState } from "react";
-
-//material components
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { useState } from "react";
 
 //components
 import HomeHeader from "./HomeHeader";
@@ -24,7 +21,6 @@ const Home = ({ setRoute, sessionToken, openAlert }) => {
     e.preventDefault();
     if (postType !== type) setPostType(type);
     if (!viewPosts) setViewPosts(!viewPosts);
-    console.log(type);
   };
 
   //toggles to see explore pets
@@ -58,7 +54,6 @@ const Home = ({ setRoute, sessionToken, openAlert }) => {
         <Pets
           sessionToken={sessionToken}
           type={type}
-          petType={type}
           petType={type}
           openAlert={openAlert}
         />

@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
+
+//styles
 import "./styles/SelectPet.css";
 
 const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
@@ -11,19 +15,22 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
   //if change to select set petId and petType
   const handleChange = (e) => {
     let petId = e.target.value;
-    setPetId(petId);
 
-    let petType;
-    pets.forEach((pet) => {
-      if (pet.id === petId) petType = pet.type;
-    });
+    if (petId !== "") {
+      setPetId(petId);
 
-    setPetType(petType);
+      let petType;
+      pets.forEach((pet) => {
+        if (pet.id === petId) petType = pet.type;
+      });
+
+      setPetType(petType);
+    }
   };
 
   //on rendering of component get all current users pets
   useEffect(() => {
-    fetch(`http://localhost:3001/pet/owned`, {
+    fetch(`${BASEURL}/pet/owned`, {
       method: "GET",
       headers: new Headers({
         authorization: sessionToken,
@@ -31,7 +38,6 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
     })
       .then((res) => res.json())
       .then((pets) => {
-        console.log(pets);
         setPets(pets.pets);
         setPetId(pets.pets[0].id);
         setPetType(pets.pets[0].type);
@@ -47,7 +53,7 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
           labelId="pet-label"
           id="pet-select"
           disableUnderline
-          value={petId ? petId : null}
+          value={petId ? petId : ""}
           onChange={handleChange}
         >
           {/*Map over pets displaying them and setting their id to value */}

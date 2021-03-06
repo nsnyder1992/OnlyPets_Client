@@ -19,6 +19,7 @@ import Alert from "./Alert";
 
 //context
 import { AlertContext, alerts } from "../context/alert-context";
+import { BASEURL } from "../context/base-url-context";
 
 //css
 import "./styles/Navbar.css";
@@ -67,7 +68,7 @@ const Navbar = ({ sessionToken, clearToken }) => {
   //on change in sessionToken update userName state above
   useEffect(() => {
     if (sessionToken) {
-      fetch(`http://localhost:3001/user/self`, {
+      fetch(`${BASEURL}/user/self`, {
         method: "GET",
         headers: new Headers({
           authorization: sessionToken,
@@ -77,7 +78,7 @@ const Navbar = ({ sessionToken, clearToken }) => {
         .then((user) => {
           setUsername(user.username);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {});
     }
   }, [sessionToken]);
 
@@ -145,7 +146,7 @@ const Navbar = ({ sessionToken, clearToken }) => {
               openAlert={openAlert}
             />
           </Route>
-          <Route path="/editPet/:id/:name/:desc/:type">
+          <Route path="/editPet/:id">
             <EditPet
               route={route}
               setRoute={setRoute}
@@ -158,14 +159,6 @@ const Navbar = ({ sessionToken, clearToken }) => {
               route={route}
               setRoute={setRoute}
               sessionToken={sessionToken}
-            />
-          </Route>
-          <Route exact path="/editPet">
-            <EditPet
-              route={route}
-              setRoute={setRoute}
-              sessionToken={sessionToken}
-              openAlert={openAlert}
             />
           </Route>
           <Route exact path="/addCard">

@@ -11,7 +11,7 @@ const PetTypes = ({ type, setType }) => {
         labelId="type-label"
         id="type-select"
         disableUnderline
-        value={type}
+        value={type ? type : ""}
         onChange={(e) => setType(e.target.value)}
       >
         {/*hardcoded the below but will need to map over pet types unique in the

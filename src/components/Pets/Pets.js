@@ -14,6 +14,9 @@ import {
   // deleteFromDispatch,
 } from "../../hooks/infiniteScrollHooks";
 
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
+
 //css
 import "./styles/Pets.css";
 
@@ -81,9 +84,11 @@ const Pets = ({ sessionToken, petType, postType, openAlert }) => {
 
   //fetch constants to use to get posts
   const limit = 4;
+
   let baseUrl = `http://localhost:3001`;
   // const fetchUrl = `${baseUrl}/${petType}/${pager.page}/${limit}`;
   const fetchUrl = `${baseUrl}/pet/type/${petType}/${pager.page}/4`;
+
 
 
   //Fetch hook to handle getting/updating posts based on [postDispatch, pager, postType, petType]
@@ -128,21 +133,18 @@ const Pets = ({ sessionToken, petType, postType, openAlert }) => {
 
   return (
     <div className="posts">
-
       <Typography variant="h5">Explore Pets</Typography>
       {postData?.posts.map((pet, post, index) => {
         return (
           <div>
-
             <PetCard
               key={index}
               post={post}
               pet={pet}
               sessionToken={sessionToken}
+              deletePet={deletePost}
             />
           </div>
-
-
         );
       })}
       {loading ? <CircularProgress /> : null}

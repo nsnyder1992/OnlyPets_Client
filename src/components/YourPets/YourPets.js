@@ -15,8 +15,6 @@ const YourPets = ({ setRoute, sessionToken, petType }) => {
     setRoute("/pet");
   });
 
-  const [loading, setLoading] = useState(false);
-
   const postReducer = (state, action) => {
     switch (action.type) {
       case "STACK_IMAGES":

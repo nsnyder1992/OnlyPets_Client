@@ -1,8 +1,11 @@
+import { useState, useCallback, useEffect } from "react";
+
 //material components
 import { makeStyles } from "@material-ui/core/styles";
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardHeader from "@material-ui/core/CardHeader";
+import CardMedia from "@material-ui/core/CardMedia";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { indigo } from "@material-ui/core/colors";
@@ -12,43 +15,43 @@ import "./styles/PetCard.css";
 import Subscribe from "./Subscribe";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    maxWidth: 650,
-    width: "90%",
-    minWidth: 200,
-    margin: 0,
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
-  },
-  avatar: {
-    backgroundColor: indigo[500],
-  },
-  actions: {
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: 0,
-  },
-  content: {
-    paddingLeft: 16,
-    marginTop: 3,
-  },
-  header: {
-    display: "flex",
-    justifyContent: "right",
-  },
-  actionsRight: {
-    justifyItems: "right",
-  },
-  actionsLeft: {
-    display: "flex",
-    alignItems: "center",
-  },
-  timeAgo: {
-    paddingLeft: 16,
-    paddingTop: 12,
-  },
+    root: {
+        maxWidth: 650,
+        width: "90%",
+        minWidth: 200,
+        margin: 0,
+    },
+    media: {
+        height: 0,
+        paddingTop: "56.25%", // 16:9
+    },
+    avatar: {
+        backgroundColor: indigo[500],
+    },
+    actions: {
+        display: "flex",
+        justifyContent: "space-between",
+        marginBottom: 0,
+    },
+    content: {
+        paddingLeft: 16,
+        marginTop: 3,
+    },
+    header: {
+        display: "flex",
+        justifyContent: "right",
+    },
+    actionsRight: {
+        justifyItems: "right",
+    },
+    actionsLeft: {
+        display: "flex",
+        alignItems: "center",
+    },
+    timeAgo: {
+        paddingLeft: 16,
+        paddingTop: 12,
+    },
 }));
 
 const BASEURL = "http://localhost:3001";

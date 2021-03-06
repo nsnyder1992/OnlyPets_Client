@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 
 //material components
 import { makeStyles } from "@material-ui/core/styles";
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import Avatar from "@material-ui/core/Avatar";
@@ -10,6 +12,7 @@ import { indigo } from "@material-ui/core/colors";
 import { CardContent } from "@material-ui/core";
 
 import "./styles/PetCard.css";
+import Subscribe from "./Subscribe";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,29 +54,53 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const BASEURL = "http://localhost:3001/pet";
+const BASEURL = "http://localhost:3001";
 
-const PetCard = ({ pet, sessionToken }) => {
+
+const PetCard = ({ post, pet, sessionToken }) => {
     //styles
     const classes = useStyles();
 
+    const [photoUrl, setPhotoUrl] = useState();
+
+    const getPetPhoto = useCallback(() => {
+        fetch(`${BASEURL}/post/byPet/${pet.id}/1/1`, {
+            method: "GET",
+            headers: new Headers({
+                authorization: sessionToken,
+            }),
+        })
+            .then((res) => res.json())
+            .then((json) => {
+                setPhotoUrl(json);
+                console.log(photoUrl);
+            })
+            .catch((err) => console.log(err));
+    }, [post, sessionToken]);
+
+    useEffect(() => {
+        getPetPhoto();
+    }, [getPetPhoto]);
 
     return (
-        <div className={classes.root}>
-            <CardHeader
-                className={classes.header}
-                avatar={
-                    <Avatar aria-label="Pet" className={classes.avatar} />
-                }
-            />
-            <CardContent>
-                <Typography variant="h5">{pet.name}</Typography>
-                <Typography variant="body2">{pet.description}</Typography>
-            </CardContent>
-            {/* <CardMedia className={classes.media} image={pet.photoUrl} /> */}
+        <Card className={classes.root}>
+            <CardActionArea>
+                <CardHeader
+                    className={classes.header}
+                    avatar={
+                        <Avatar aria-label="Pet" className={classes.avatar}>{pet.name ? pet.name[0].toUpperCase() : null}</Avatar>
+                    }
+                    title={<Typography>{pet.name}</Typography>}
+                />
+                <CardMedia className={classes.media} image={photoUrl.posts[0].photoUrl
+                } />
+                <CardContent>
+                    <Typography variant="body2" component="p">{pet.description}</Typography>
+                </CardContent>
+                <Subscribe id={pet.petId} sessionToken={sessionToken} />
 
-
-        </div>
+            </CardActionArea>
+        </Card>
     );
 };
 

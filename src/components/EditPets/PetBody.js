@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import { TextField } from "@material-ui/core";
 
 //components
@@ -8,10 +6,15 @@ import PetTypes from "./PetTypes";
 //css
 import "./styles/PetBody.css";
 
-const PetBody = ({ setName, name, setDescription, setType, type, description, }) => {
+const PetBody = ({
+  setName,
+  name,
+  setDescription,
+  setType,
+  type,
+  description,
+}) => {
   //states to store name, description and type
-
-
   return (
     <div className="container">
       <form id="pet-form">
@@ -21,7 +24,7 @@ const PetBody = ({ setName, name, setDescription, setType, type, description, })
             id="name"
             label="Pet Name"
             fullWidth
-            value={name ? name : null}
+            value={name ? name : ""}
             onChange={(e) => setName(e.target.value)}
             variant="outlined"
           />
@@ -34,7 +37,7 @@ const PetBody = ({ setName, name, setDescription, setType, type, description, })
             rows={2}
             label="Description"
             fullWidth
-            value={description ? description : null}
+            value={description ? description : ""}
             onChange={(e) => setDescription(e.target.value)}
             variant="outlined"
           />

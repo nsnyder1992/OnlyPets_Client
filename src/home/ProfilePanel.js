@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 
 //material components
@@ -23,6 +23,9 @@ import {
 
 //components
 import CreditCards from "./CreditCards";
+
+//get base url of backend
+import { BASEURL } from "../context/base-url-context";
 
 const useStyles = makeStyles({
   list: {
@@ -54,7 +57,7 @@ const ProfilePanel = ({
   };
 
   const handleOnboarding = () => {
-    fetch("http://localhost:3001/stripe/account/onboard", {
+    fetch(`${BASEURL}/stripe/account/onboard`, {
       method: "POST",
       headers: new Headers({
         "content-type": "application/json",

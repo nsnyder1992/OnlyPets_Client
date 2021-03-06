@@ -1,12 +1,16 @@
 import { useEffect, useReducer, useRef, useState } from "react";
 
 import { Typography } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { useFetch, useInfiniteScroll } from "../../hooks/infiniteScrollHooks";
 
 import PetCard from "../Pets/PetCard";
 
+
 const YourPets = ({ setRoute, sessionToken, petType }) => {
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     setRoute("/pet");
   });
@@ -83,6 +87,7 @@ const YourPets = ({ setRoute, sessionToken, petType }) => {
           </div>
         );
       })}
+      {loading ? <CircularProgress /> : null}
       <div id="page-bottom-boundary" ref={bottomBoundaryRef}></div>
     </div>
   );

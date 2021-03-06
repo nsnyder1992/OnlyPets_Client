@@ -1,4 +1,4 @@
-import { Grid, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 
 //components
 import PetTypes from "./PetTypes";
@@ -15,7 +15,6 @@ const PetBody = ({
   description,
 }) => {
   //states to store name, description and type
-
   return (
     <div className="container">
       <form id="pet-form">

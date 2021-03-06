@@ -11,7 +11,7 @@ import PetCard from "./PetCard";
 import {
   useFetch,
   useInfiniteScroll,
-  deleteFromDispatch,
+  // deleteFromDispatch,
 } from "../../hooks/infiniteScrollHooks";
 
 //get base url of backend
@@ -20,7 +20,7 @@ import { BASEURL } from "../../context/base-url-context";
 //css
 import "./styles/Pets.css";
 
-const Pets = ({ sessionToken, petType, openAlert }) => {
+const Pets = ({ sessionToken, petType, postType, openAlert }) => {
   /*************************************************** 
   
   To implement the infinite scroll feature that follows
@@ -84,12 +84,17 @@ const Pets = ({ sessionToken, petType, openAlert }) => {
 
   //fetch constants to use to get posts
   const limit = 4;
-  const fetchUrl = `${BASEURL}/pet/type/${petType}/${pager.page}/${limit}`;
+
+  let baseUrl = `http://localhost:3001`;
+  // const fetchUrl = `${baseUrl}/${petType}/${pager.page}/${limit}`;
+  const fetchUrl = `${baseUrl}/pet/type/${petType}/${pager.page}/4`;
+
+
 
   //Fetch hook to handle getting/updating posts based on [postDispatch, pager, postType, petType]
   useFetch(
     postData.posts,
-    null,
+    postType,
     petType,
     pager,
     postDispatch,
@@ -105,22 +110,22 @@ const Pets = ({ sessionToken, petType, openAlert }) => {
     "https://api.cloudinary.com/v1_1/nsnyder1992/image/destroy";
 
   //delete post from postData and the server/DB
-  const deletePost = (postId, post) => {
-    const deleteUrl = `http://localhost:3001/pet/${postId}`;
-    try {
-      deleteFromDispatch(
-        post,
-        postDispatch,
-        deleteUrl,
-        backend,
-        cloudinaryUrl,
-        sessionToken
-      );
-      openAlert("success");
-    } catch (err) {
-      openAlert("error");
-    }
-  };
+  // const deletePost = (postId, post) => {
+  //   const deleteUrl = `http://localhost:3001/pet/${postId}`;
+  //   try {
+  //     deleteFromDispatch(
+  //       post,
+  //       postDispatch,
+  //       deleteUrl,
+  //       backend,
+  //       cloudinaryUrl,
+  //       sessionToken
+  //     );
+  //     openAlert("success");
+  //   } catch (err) {
+  //     openAlert("error");
+  //   }
+  // };
 
   //create Reference point and send it to useInfiniteScroll hook
   let bottomBoundaryRef = useRef(null);
@@ -129,14 +134,15 @@ const Pets = ({ sessionToken, petType, openAlert }) => {
   return (
     <div className="posts">
       <Typography variant="h5">Explore Pets</Typography>
-      {postData?.posts.map((pet, index) => {
+      {postData?.posts.map((pet, post, index) => {
         return (
           <div>
             <PetCard
               key={index}
+              post={post}
               pet={pet}
               sessionToken={sessionToken}
-              deletePet={deletePost}
+
             />
           </div>
         );

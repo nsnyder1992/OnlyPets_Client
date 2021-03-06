@@ -21,7 +21,6 @@ const Home = ({ setRoute, sessionToken, openAlert }) => {
     e.preventDefault();
     if (postType !== type) setPostType(type);
     if (!viewPosts) setViewPosts(!viewPosts);
-    console.log(type);
   };
 
   //toggles to see explore pets

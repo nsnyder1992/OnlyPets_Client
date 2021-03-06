@@ -82,7 +82,7 @@ const PostCard = ({ post, deletePost, sessionToken, openAlert }) => {
       .then((json) => {
         setPetName(json.pet.name);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }, [post, sessionToken]);
 
   //on change in [post] update petName

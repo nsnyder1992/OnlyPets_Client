@@ -28,7 +28,6 @@ function App() {
     localStorage.setItem("token", newToken);
     localStorage.setItem("userId", parseInt(userId));
     setSessionToken(newToken);
-    console.log(sessionToken);
   };
 
   //deletes all local storage... used mainly for logout

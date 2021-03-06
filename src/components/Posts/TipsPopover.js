@@ -80,18 +80,14 @@ const TipsPopover = ({ petId, popupState, sessionToken, openAlert }) => {
     });
 
     const intent = await response.json();
-    console.log(intent);
 
     stripe
       .confirmCardPayment(intent.client_secret, {
         payment_method: intent.payment_method,
       })
-      .then((res) => {
-        console.log(res);
-      });
+      .then((res) => {});
 
     openAlert("success");
-    //   .catch((err) => console.log(err));
   };
 
   const handleClose = () => {

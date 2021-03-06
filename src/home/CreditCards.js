@@ -17,13 +17,12 @@ const CreditCards = ({ sessionToken }) => {
     })
       .then((res) => res.json())
       .then((json) => setCards(json.paymentMethods.data))
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }, [sessionToken]);
 
   return (
     <div>
       {cards?.map((card) => {
-        console.log(card);
         return <CreditCard card={card} sessionToken={sessionToken} />;
       })}
     </div>

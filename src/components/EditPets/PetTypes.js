@@ -5,7 +5,6 @@ import "./styles/PetTypes.css";
 
 const PetTypes = ({ type, setType }) => {
   // handles selection logic for petType
-  console.log(type);
   return (
     <FormControl id="type-select-form">
       <Select

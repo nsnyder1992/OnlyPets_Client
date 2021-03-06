@@ -38,7 +38,6 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
     })
       .then((res) => res.json())
       .then((pets) => {
-        console.log(pets);
         setPets(pets.pets);
         setPetId(pets.pets[0].id);
         setPetType(pets.pets[0].type);

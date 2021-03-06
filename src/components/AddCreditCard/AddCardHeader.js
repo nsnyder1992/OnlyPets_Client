@@ -34,7 +34,6 @@ const AddCardHeader = ({ sessionToken, setLoading, openAlert }) => {
     });
 
     if (!error) {
-      console.log(`[PaymentMethod]`, paymentMethod);
       try {
         const { id } = paymentMethod;
         setLoading(true);
@@ -52,7 +51,6 @@ const AddCardHeader = ({ sessionToken, setLoading, openAlert }) => {
 
         setLoading(false);
         const json = await response.json();
-        console.log(json);
 
         setLoading(true);
         stripe
@@ -63,19 +61,16 @@ const AddCardHeader = ({ sessionToken, setLoading, openAlert }) => {
           })
           .then((res) => {
             setLoading(false);
-            console.log(res);
             openAlert("success");
             history.push("/");
           });
       } catch (error) {
         openAlert("error");
         setLoading(false);
-        console.log(`[error]`, error);
       }
     } else {
       openAlert("error");
       setLoading(false);
-      console.log(`[error]`, error);
     }
   };
 

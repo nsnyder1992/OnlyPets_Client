@@ -69,7 +69,6 @@ const Likes = ({ id, sessionToken }) => {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         let likes = json.numLikes ? json.numLikes : 0;
         setNumLikes(likes);
         setLiked(json.userLiked);

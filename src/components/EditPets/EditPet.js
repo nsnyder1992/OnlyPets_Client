@@ -68,12 +68,10 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
       .then((json) => {
         setLoading(false);
         openAlert("success");
-        console.log(json);
       })
       .catch((err) => {
         setLoading(false);
         openAlert("error");
-        console.log(err);
       });
 
     history.push("/");

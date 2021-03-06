@@ -70,11 +70,9 @@ const NewPost = ({ sessionToken, openAlert }) => {
       .then((json) => {
         openAlert("success");
         setLoading(false);
-        console.log(json);
       })
       .catch((err) => {
         openAlert("error");
-        console.log(err);
         setLoading(false);
       });
 

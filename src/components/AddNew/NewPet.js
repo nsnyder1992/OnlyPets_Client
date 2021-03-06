@@ -42,11 +42,9 @@ const NewPet = ({ sessionToken, openAlert }) => {
       .then((res) => res.json())
       .then((json) => {
         openAlert("success");
-        console.log(json);
       })
       .catch((err) => {
         openAlert("error");
-        console.log(err);
       });
 
     setLoading(false);

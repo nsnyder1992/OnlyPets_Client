@@ -39,9 +39,7 @@ const Login = (props) => {
         if (data.error) return setError(data.error);
         props.updateToken(data?.sessionToken, data.user.id);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
 
   return (

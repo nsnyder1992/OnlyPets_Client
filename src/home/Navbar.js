@@ -78,7 +78,7 @@ const Navbar = ({ sessionToken, clearToken }) => {
         .then((user) => {
           setUsername(user.username);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {});
     }
   }, [sessionToken]);
 

@@ -19,7 +19,6 @@ export const useFetch = (
   const [lastPetType, setLastPetType] = useState();
   const [lastPostType, setLastPostType] = useState();
 
-  // console.log("useFetch");
   const fetchData = async () => {
     if (sessionToken === undefined) return; //if no sessionToken stop process
 
@@ -38,7 +37,6 @@ export const useFetch = (
       //end this useEffect the above changes to dispatch and pager will initiate another useEffect cycle
       return;
     }
-    console.log(posts.length, totalPosts);
 
     // this stops the fetch if the last post is ever reached
     if (posts.length >= totalPosts) return;
@@ -59,9 +57,7 @@ export const useFetch = (
 
         //abstract posts from json.posts
 
-        console.log(json);
         const posts = json.posts ? json.posts : json.pets;
-
 
         //send to dispatch
         dispatch({ type: "STACK_IMAGES", posts });
@@ -119,7 +115,7 @@ export const deleteFromDispatch = async (
   // console.log(cloudinaryJson);
 
   //delete posts and update the posts
-  const postRes = await fetch(fetchUrl, {
+  await fetch(fetchUrl, {
     method: "DELETE",
     headers: new Headers({
       "Content-Type": "application/json",
@@ -129,10 +125,6 @@ export const deleteFromDispatch = async (
 
   //this finds the index of post in postData.posts and deletes and updates it
   await dispatch({ type: "DELETE_IMAGE", post: post });
-
-  //check if deleted
-  const postJson = await postRes.json();
-  console.log(postJson);
 };
 
 // infinite scrolling with intersection observer
@@ -156,7 +148,6 @@ export const useInfiniteScroll = (scrollRef, dispatch) => {
   );
 
   useEffect(() => {
-    console.log("useInfiniteScroll");
     if (scrollRef.current) {
       scrollObserver(scrollRef.current);
     }

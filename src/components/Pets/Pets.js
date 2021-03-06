@@ -142,7 +142,7 @@ const Pets = ({ sessionToken, petType, postType, openAlert }) => {
               post={post}
               pet={pet}
               sessionToken={sessionToken}
-              deletePet={deletePost}
+
             />
           </div>
         );

@@ -3,13 +3,12 @@ import { useState, useCallback, useEffect } from "react";
 //material components
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { indigo } from "@material-ui/core/colors";
-import { CardContent } from "@material-ui/core";
+import { CardContent, CardActions, Grid } from "@material-ui/core";
 
 import "./styles/PetCard.css";
 import Subscribe from "./Subscribe";
@@ -21,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 650,
     width: "90%",
     minWidth: 200,
-    margin: 0,
+    margin: 5,
   },
   media: {
     height: 0,
@@ -37,6 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     paddingLeft: 16,
+    paddingBottom: 10,
     marginTop: 3,
   },
   header: {
@@ -82,25 +82,51 @@ const PetCard = ({ pet, deletePost, sessionToken }) => {
 
   return (
     <Card className={classes.root}>
-      <CardActionArea>
-        <CardHeader
-          className={classes.header}
-          avatar={
-            <Avatar aria-label="Pet" className={classes.avatar}>
-              {pet.name ? pet.name[0].toUpperCase() : null}
-            </Avatar>
-          }
-          action={<PetCardOptions pet={pet} deletePost={deletePost} />}
-          title={<Typography>{pet.name}</Typography>}
-        />
-        <CardMedia className={classes.media} image={photoUrl} />
-        <CardContent>
-          <Typography variant="body2" component="p">
-            {pet.description}
-          </Typography>
-        </CardContent>
+      <CardHeader
+        className={classes.header}
+        avatar={
+          <Avatar aria-label="Pet" className={classes.avatar}>
+            {pet.name ? pet.name[0].toUpperCase() : null}
+          </Avatar>
+        }
+        action={<PetCardOptions pet={pet} deletePost={deletePost} />}
+        title={<Typography>{pet.name}</Typography>}
+      />
+
+      <CardMedia className={classes.media} image={photoUrl} />
+
+      <CardActions disableSpacing className={classes.actions}>
         <Subscribe id={pet.id} sessionToken={sessionToken} />
-      </CardActionArea>
+        <div className={classes.actionsRight}>
+          {!photoUrl ? (
+            <Typography variant="body2" component="p" color="secondary">
+              No posts
+            </Typography>
+          ) : (
+            <div></div>
+          )}
+        </div>
+      </CardActions>
+
+      <CardContent>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant="body2" component="p" align="left">
+              {pet.description}
+            </Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="body2" component="p" align="left">
+              <strong>Owner:</strong> {pet.user.username}
+            </Typography>
+          </Grid>
+          <Grid item xs={4}>
+            <Typography variant="body2" component="p" align="left">
+              <strong>Type:</strong> {pet.type}
+            </Typography>
+          </Grid>
+        </Grid>
+      </CardContent>
     </Card>
   );
 };

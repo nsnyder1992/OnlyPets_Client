@@ -133,14 +133,12 @@ const Pets = ({ sessionToken, petType, postType, openAlert }) => {
       <Typography variant="h5">Explore Pets</Typography>
       {postData?.posts.map((pet, index) => {
         return (
-          <div>
-            <PetCard
-              key={index}
-              pet={pet}
-              deletePost={deletePost}
-              sessionToken={sessionToken}
-            />
-          </div>
+          <PetCard
+            key={index}
+            pet={pet}
+            deletePost={deletePost}
+            sessionToken={sessionToken}
+          />
         );
       })}
       {loading ? <CircularProgress /> : null}

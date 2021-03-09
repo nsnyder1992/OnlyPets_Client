@@ -20,13 +20,14 @@ import PostCardOptions from "./PostCardOptions";
 import { BASEURL } from "../../context/base-url-context";
 
 import "./styles/PostCard.css";
+import { Card } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 650,
     width: "90%",
     minWidth: 200,
-    margin: 0,
+    margin: 5,
   },
   media: {
     height: 0,
@@ -59,6 +60,7 @@ const useStyles = makeStyles((theme) => ({
   timeAgo: {
     paddingLeft: 16,
     paddingTop: 12,
+    paddingBottom: 10,
   },
 }));
 
@@ -82,7 +84,7 @@ const PostCard = ({ post, deletePost, sessionToken, openAlert }) => {
       .then((json) => {
         setPetName(json.pet.name);
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }, [post, sessionToken]);
 
   //on change in [post] update petName
@@ -91,7 +93,7 @@ const PostCard = ({ post, deletePost, sessionToken, openAlert }) => {
   }, [getPetName]); //added post to dependencies now petName updates after a delete
 
   return (
-    <div className={classes.root}>
+    <Card className={classes.root}>
       <CardHeader
         className={classes.header}
         avatar={
@@ -130,7 +132,7 @@ const PostCard = ({ post, deletePost, sessionToken, openAlert }) => {
       <div className={classes.timeAgo}>
         <TimeAgo dateString={post.createdAt} />
       </div>
-    </div>
+    </Card>
   );
 };
 

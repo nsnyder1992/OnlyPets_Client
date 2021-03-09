@@ -6,6 +6,10 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { BASEURL } from "../../context/base-url-context";
 import PetCard from "../Pets/PetCard";
 
+//styles
+import "../styles/Layouts.css";
+import "./styles/YourPets.css";
+
 const YourPets = ({ setRoute, sessionToken, openAlert }) => {
   const [loading, setLoading] = useState(false);
 
@@ -56,21 +60,21 @@ const YourPets = ({ setRoute, sessionToken, openAlert }) => {
   }, [getYourPets]);
 
   return (
-    <div className="posts">
+    <div className="home">
       <Typography variant="h5">Your Pets</Typography>
-      {yourPets?.map((pet, index) => {
-        return (
-          <div>
+      <div className="posts">
+        {yourPets?.map((pet, index) => {
+          return (
             <PetCard
               key={index}
               pet={pet}
               sessionToken={sessionToken}
               deletePost={deletePet}
             />
-          </div>
-        );
-      })}
-      {loading ? <CircularProgress /> : null}
+          );
+        })}
+        {loading ? <CircularProgress /> : null}
+      </div>
     </div>
   );
 };

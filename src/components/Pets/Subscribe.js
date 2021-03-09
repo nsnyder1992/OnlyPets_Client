@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 
-import { IconButton } from "@material-ui/core";
+import { IconButton, Typography } from "@material-ui/core";
 import SubscriptionsOutlinedIcon from "@material-ui/icons/SubscriptionsOutlined";
 
 import { BASEURL } from "../../context/base-url-context";
@@ -8,6 +8,7 @@ import { BASEURL } from "../../context/base-url-context";
 const Subscribe = ({ id, sessionToken }) => {
   //states
   const [isSubed, setIsSubed] = useState(false);
+  const [numSubs, setNumSubs] = useState();
 
   //toggle isSubscribed and update number of subscribers
   const handleSubscribe = () => {
@@ -31,6 +32,7 @@ const Subscribe = ({ id, sessionToken }) => {
       .then((res) => res.json())
       .then((json) => {
         setIsSubed(json.userSub);
+        setNumSubs(json.numSub);
       })
       .catch((err) => console.error(err));
   }, [sessionToken, id]);
@@ -47,6 +49,7 @@ const Subscribe = ({ id, sessionToken }) => {
       .then((res) => res.json())
       .then((json) => {
         setIsSubed(json.userSub);
+        setNumSubs(json.numSub);
       })
       .catch((err) => console.error(err));
   };
@@ -63,6 +66,7 @@ const Subscribe = ({ id, sessionToken }) => {
       .then((res) => res.json())
       .then((json) => {
         setIsSubed(json.userSub);
+        setNumSubs(json.numSub);
       })
       .catch((err) => console.error(err));
   };
@@ -75,6 +79,7 @@ const Subscribe = ({ id, sessionToken }) => {
   return (
     <IconButton aria-label="add to favorites" onClick={handleSubscribe}>
       <SubscriptionsOutlinedIcon color={isSubed ? "primary" : "inherit"} />
+      <Typography>{numSubs}</Typography>
     </IconButton>
   );
 };

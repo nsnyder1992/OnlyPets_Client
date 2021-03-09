@@ -21,17 +21,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const PetCardOptions = ({ pet, post, photoUrl, deletePost }) => {
+const PetCardOptions = ({ pet, deletePost }) => {
     const classes = useStyles();
     //states to set petName and edit url data
     const [urlArray, setUrlArray] = useState(); //this helps with querying edit url
     const [open, setOpen] = useState(false);
-
-    //update url to after cloudinary upload to update image
-    const getEditUrl = (photoUrl) => {
-        let url = photoUrl.split("upload")[1];
-        setUrlArray(url.split("/"));
-    };
 
     //open/close are you sure
     const handleOpen = () => {
@@ -47,9 +41,7 @@ const PetCardOptions = ({ pet, post, photoUrl, deletePost }) => {
     };
 
     //on change in [post] update urlArray states
-    useEffect(() => {
-        getEditUrl(pet);
-    }, [pet]); //added post to dependencies now urlArray updates after a delete
+    //added post to dependencies now urlArray updates after a delete
 
     return (
         <div>

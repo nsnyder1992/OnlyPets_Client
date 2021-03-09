@@ -20,23 +20,7 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
   const [petName, setPetName] = useState();
   const [description, setDescription] = useState();
 
-  //get data for pet
-  useEffect(() => {
-    fetch(`http://localhost:3001/pet/${id}`, {
-      method: "GET",
-      headers: new Headers({
-        authorization: sessionToken,
-      }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-        setPetName(json.pet.name);
-        setPetType(json.pet.type);
-        setDescription(json.pet.description);
-      })
-      .catch((err) => console.log(err));
-  });
+
 
   //react router history used to redirect to route
   const history = useHistory();

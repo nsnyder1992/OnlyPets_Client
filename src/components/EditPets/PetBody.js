@@ -37,7 +37,6 @@ const PetBody = ({
       })
         .then((res) => res.json())
         .then((json) => {
-          console.log(json);
           setName(json.pet.name);
           setType(json.pet.type);
           setDescription(json.pet.description);

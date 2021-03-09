@@ -45,7 +45,6 @@ const YourPets = ({ setRoute, sessionToken, openAlert }) => {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         setLoading(false);
         setYourPets(json.pets);
       })

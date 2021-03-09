@@ -4,7 +4,7 @@ import { Typography } from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { useFetch, useInfiniteScroll } from "../../hooks/infiniteScrollHooks";
-
+import { BASEURL } from "../../context/base-url-context";
 import PetCard from "../Pets/PetCard";
 
 
@@ -53,8 +53,8 @@ const YourPets = ({ setRoute, sessionToken, petType }) => {
   const [pager, pagerDispatch] = useReducer(pageReducer, { page: 1 });
 
   const limit = 4;
-  let baseUrl = `http://localhost:3001/pet/owned`;
-  const fetchUrl = `${baseUrl}/${pager.page}/${limit}`;
+
+  const fetchUrl = `${BASEURL}/pet/owned/${pager.page}/${limit}`;
 
   useFetch(
     postData.posts,

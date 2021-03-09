@@ -11,7 +11,7 @@ import PetCard from "./PetCard";
 import {
   useFetch,
   useInfiniteScroll,
-  // deleteFromDispatch,
+  deleteFromDispatch,
 } from "../../hooks/infiniteScrollHooks";
 
 //get base url of backend
@@ -85,9 +85,9 @@ const Pets = ({ sessionToken, petType, postType, openAlert }) => {
   //fetch constants to use to get posts
   const limit = 4;
 
-  let baseUrl = `http://localhost:3001`;
+
   // const fetchUrl = `${baseUrl}/${petType}/${pager.page}/${limit}`;
-  const fetchUrl = `${baseUrl}/pet/type/${petType}/${pager.page}/4`;
+  const fetchUrl = `${BASEURL}/pet/type/${petType}/${pager.page}/4`;
 
 
 
@@ -109,23 +109,23 @@ const Pets = ({ sessionToken, petType, postType, openAlert }) => {
   const cloudinaryUrl =
     "https://api.cloudinary.com/v1_1/nsnyder1992/image/destroy";
 
-  //delete post from postData and the server/DB
-  // const deletePost = (postId, post) => {
-  //   const deleteUrl = `http://localhost:3001/pet/${postId}`;
-  //   try {
-  //     deleteFromDispatch(
-  //       post,
-  //       postDispatch,
-  //       deleteUrl,
-  //       backend,
-  //       cloudinaryUrl,
-  //       sessionToken
-  //     );
-  //     openAlert("success");
-  //   } catch (err) {
-  //     openAlert("error");
-  //   }
-  // };
+  // delete post from postData and the server / DB
+  const deletePost = (postId, post) => {
+    const deleteUrl = `http://localhost:3001/pet/${postId}`;
+    try {
+      deleteFromDispatch(
+        post,
+        postDispatch,
+        deleteUrl,
+        backend,
+        cloudinaryUrl,
+        sessionToken
+      );
+      openAlert("success");
+    } catch (err) {
+      openAlert("error");
+    }
+  };
 
   //create Reference point and send it to useInfiniteScroll hook
   let bottomBoundaryRef = useRef(null);

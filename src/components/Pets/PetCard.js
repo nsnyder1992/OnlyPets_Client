@@ -13,6 +13,7 @@ import { CardContent } from "@material-ui/core";
 
 import "./styles/PetCard.css";
 import Subscribe from "./Subscribe";
+import { BASEURL } from "../../context/base-url-context";
 // import PetCardOptions from "./PetCardOptions";
 
 const useStyles = makeStyles((theme) => ({
@@ -55,8 +56,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const BASEURL = "http://localhost:3001";
-
 
 const PetCard = ({ post, pet, deletePost, sessionToken }) => {
     //styles
@@ -83,6 +82,8 @@ const PetCard = ({ post, pet, deletePost, sessionToken }) => {
     useEffect(() => {
         getPetPhoto();
     }, [getPetPhoto]);
+
+    console.log(pet)
 
     return (
         <Card className={classes.root}>

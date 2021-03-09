@@ -8,6 +8,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import PetHeader from "../EditPets/PetHeader";
 import PetBody from "../EditPets/PetBody";
 
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
+
 //css
 import "../styles/Layouts.css";
 
@@ -25,7 +28,8 @@ const NewPet = ({ sessionToken, openAlert }) => {
   //submit new pet to backend and return home!
 
   const handleSubmit = async () => {
-    await fetch("http://localhost:3001/pet/create", {
+    setLoading(true);
+    await fetch(`${BASEURL}/pet/create`, {
       method: "Post",
       body: JSON.stringify({
         pet: { name: name, type: type, description: description },
@@ -36,9 +40,14 @@ const NewPet = ({ sessionToken, openAlert }) => {
       }),
     })
       .then((res) => res.json())
-      .then((json) => console.log(json))
-      .catch((err) => console.log(err));
+      .then((json) => {
+        openAlert("success");
+      })
+      .catch((err) => {
+        openAlert("error");
+      });
 
+    setLoading(false);
     history.push("/");
   };
 
@@ -57,9 +66,6 @@ const NewPet = ({ sessionToken, openAlert }) => {
       {loading ? <CircularProgress /> : null}
     </div>
   );
-
-  // console.log("submited");
-  history.push("/"); //redirects back to home component
 };
 
 export default NewPet;

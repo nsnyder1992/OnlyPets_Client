@@ -10,12 +10,14 @@ import {
   Typography,
   Select,
   MenuItem,
-  ListItemIcon,
   FormControl,
   InputLabel,
   Divider,
 } from "@material-ui/core";
 import { bindPopover } from "material-ui-popup-state";
+
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
 
 //images
 import visa from "./img/visa.PNG";
@@ -41,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TipsPopover = ({ petId, popupState, sessionToken }) => {
+const TipsPopover = ({ petId, popupState, sessionToken, openAlert }) => {
   //styles
   const classes = useStyles();
 
@@ -64,33 +66,28 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
   const handleTip = async () => {
     if (!stripe) return;
 
-    const response = await fetch(
-      `http://localhost:3001/stripe/customer/tip/${petId}`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          amount: amount * 100,
-          payment_method: payment.id,
-          off_session: true,
-        }),
-        headers: new Headers({
-          "content-type": "application/json",
-          authorization: sessionToken,
-        }),
-      }
-    );
+    const response = await fetch(`${BASEURL}/stripe/customer/tip/${petId}`, {
+      method: "POST",
+      body: JSON.stringify({
+        amount: amount * 100,
+        payment_method: payment.id,
+        off_session: true,
+      }),
+      headers: new Headers({
+        "content-type": "application/json",
+        authorization: sessionToken,
+      }),
+    });
 
     const intent = await response.json();
-    console.log(intent);
 
     stripe
       .confirmCardPayment(intent.client_secret, {
         payment_method: intent.payment_method,
       })
-      .then((res) => {
-        console.log(res);
-      });
-    //   .catch((err) => console.log(err));
+      .then((res) => {});
+
+    openAlert("success");
   };
 
   const handleClose = () => {
@@ -98,7 +95,7 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:3001/stripe/customer/payment/methods", {
+    fetch(`${BASEURL}/stripe/customer/payment/methods`, {
       method: "GET",
       headers: new Headers({
         authorization: sessionToken,
@@ -109,9 +106,8 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
         setHasCard(json.hasCard);
         setPaymentMethods(json.paymentMethods?.data);
         setPayment(json.paymentMethods?.data[0]);
-
       });
-  }, []);
+  }, [sessionToken]);
 
   return (
     <Popover
@@ -162,24 +158,32 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
                 renderValue={(method, key) => (
                   <MenuItem value={method} key={key}>
                     {method.card.brand === "visa" ? (
-                      <img src={visa} style={{ width: 40 }} />
+                      <img src={visa} style={{ width: 40 }} alt="visa" />
                     ) : null}
                     {method.card.brand === "mastercard" ? (
-                      <img src={mastercard} style={{ width: 40 }} />
+                      <img
+                        src={mastercard}
+                        style={{ width: 40 }}
+                        alt="mastercard"
+                      />
                     ) : null}
 
                     <ListItemText>#{method.card.last4}</ListItemText>
                   </MenuItem>
                 )}
               >
-                {paymentMethods?.map((method) => {
+                {paymentMethods?.map((method, key) => {
                   return (
-                    <MenuItem value={method}>
+                    <MenuItem value={method} key={key}>
                       {method.card.brand === "visa" ? (
-                        <img src={visa} style={{ width: 40 }} />
+                        <img src={visa} style={{ width: 40 }} alt="visa" />
                       ) : null}
                       {method.card.brand === "mastercard" ? (
-                        <img src={mastercard} style={{ width: 40 }} />
+                        <img
+                          src={mastercard}
+                          style={{ width: 40 }}
+                          alt="mastercard"
+                        />
                       ) : null}
 
                       <ListItemText>#{method.card.last4}</ListItemText>
@@ -190,8 +194,8 @@ const TipsPopover = ({ petId, popupState, sessionToken }) => {
             </FormControl>
           </>
         ) : (
-            <Typography>Add a Card!</Typography>
-          )}
+          <Typography>Add a Card!</Typography>
+        )}
       </Box>
     </Popover>
   );

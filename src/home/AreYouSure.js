@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   Dialog,
   DialogTitle,
@@ -5,6 +7,7 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  CircularProgress,
 } from "@material-ui/core";
 
 const AreYouSure = ({
@@ -18,8 +21,12 @@ const AreYouSure = ({
   cancelColor,
   confirmColor,
 }) => {
+  const [loading, setLoading] = useState(false);
+
   const handleAction = async () => {
+    setLoading(true);
     await action();
+    setLoading(false);
     handleClose();
   };
 
@@ -46,7 +53,11 @@ const AreYouSure = ({
           color={confirmColor}
           autoFocus
         >
-          {confirmText}
+          {loading ? (
+            <CircularProgress size={25} color="inherit" />
+          ) : (
+            confirmText
+          )}
         </Button>
       </DialogActions>
     </Dialog>

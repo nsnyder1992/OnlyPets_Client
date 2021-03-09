@@ -11,6 +11,9 @@ import PostBody from "./PostBody";
 //hooks
 import { uploadEditedImg } from "../../hooks/cloudinaryHooks";
 
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
+
 //css
 import "../styles/Layouts.css";
 
@@ -22,7 +25,7 @@ const EditPost = (props) => {
   const history = useHistory();
 
   //urls
-  const signatureUrl = "http://localhost:3001/post/cloudinary";
+  const signatureUrl = `${BASEURL}/post/cloudinary`;
   const cloudinaryUrl =
     "https://api.cloudinary.com/v1_1/nsnyder1992/image/upload";
   const initFileUrl =
@@ -60,7 +63,7 @@ const EditPost = (props) => {
           props.sessionToken
         );
         //update post
-        await fetch(`http://localhost:3001/post/${postId}`, {
+        await fetch(`${BASEURL}/post/${postId}`, {
           method: "PUT",
           body: JSON.stringify({
             photoUrl: cloudinaryJson.url,
@@ -80,7 +83,7 @@ const EditPost = (props) => {
       }
 
       //update post but not cloudinary
-      await fetch(`http://localhost:3001/post/${postId}`, {
+      await fetch(`${BASEURL}/post/${postId}`, {
         method: "PUT",
         body: JSON.stringify({
           photoUrl: fileUrl,

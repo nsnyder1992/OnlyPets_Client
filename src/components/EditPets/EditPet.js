@@ -8,6 +8,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import EditHeader from "./EditHeader";
 import PetBody from "./PetBody";
 
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
+
 //css
 import "../styles/Layouts.css";
 
@@ -16,11 +19,27 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
   let { id } = useParams();
 
   //model states
-  const [petType, setPetType] = useState();
-  const [petName, setPetName] = useState();
+  const [type, setType] = useState();
+  const [name, setName] = useState();
   const [description, setDescription] = useState();
 
-
+  //get data for pet
+  useEffect(() => {
+    fetch(`${BASEURL}/pet/${id}`, {
+      method: "GET",
+      headers: new Headers({
+        authorization: sessionToken,
+      }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        setName(json.pet.name);
+        setType(json.pet.type);
+        setDescription(json.pet.description);
+      })
+      .catch((err) => {});
+  });
 
   //react router history used to redirect to route
   const history = useHistory();
@@ -33,11 +52,11 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
   const handleSubmit = async (e) => {
     setLoading(true);
 
-    fetch(`http://localhost:3001/pet/${id}`, {
+    fetch(`${BASEURL}/pet/${id}`, {
       method: "PUT",
       body: JSON.stringify({
-        name: petName,
-        type: petType,
+        name: name,
+        type: type,
         description: description,
       }),
       headers: new Headers({
@@ -60,20 +79,14 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
 
   return (
     <div className="create-post">
-      <EditHeader
-        route={route}
-        id={id}
-        name={petName}
-        desc={description}
-        handleSubmit={handleSubmit}
-      />
+      <EditHeader route={route} handleSubmit={handleSubmit} />
 
       <PetBody
-        name={petName}
-        type={petType}
+        name={name}
+        type={type}
         description={description}
-        setName={setPetName}
-        setType={setPetType}
+        setName={setName}
+        setType={setType}
         setDescription={setDescription}
       />
 

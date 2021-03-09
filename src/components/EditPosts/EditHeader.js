@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Grid, Button, Typography, Divider } from "@material-ui/core";
+import { Grid, Button, Typography } from "@material-ui/core";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 //css

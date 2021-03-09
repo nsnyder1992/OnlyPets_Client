@@ -46,8 +46,6 @@ const PetBody = ({ setName, name, setType, type, sessionToken,/* setDescription 
   
   
   //states to store name, description and type
-
-
   return (
     <div className="container">
       <form id="pet-form">
@@ -57,7 +55,7 @@ const PetBody = ({ setName, name, setType, type, sessionToken,/* setDescription 
             id="name"
             label="Pet Name"
             fullWidth
-            value={name ? name : null}
+            value={name ? name : ""}
             onChange={(e) => setName(e.target.value)}
             variant="outlined"
           />
@@ -70,7 +68,7 @@ const PetBody = ({ setName, name, setType, type, sessionToken,/* setDescription 
             rows={2}
             label="Description"
             fullWidth
-            value={description ? description : null}
+            value={description ? description : ""}
             onChange={(e) => setDescription(e.target.value)}
             variant="outlined"
           />

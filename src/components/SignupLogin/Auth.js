@@ -10,7 +10,7 @@ import "./styles/Auth.css";
 
 const Auth = (props) => {
   const [authComp, setAuthComp] = useState(false);
-  const onClick = () => setAuthComp(!false);
+  const onClick = () => setAuthComp(!authComp);
 
   return (
     <div className="auth-container">

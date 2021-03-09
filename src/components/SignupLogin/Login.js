@@ -3,7 +3,10 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+import { CircularProgress, Typography } from "@material-ui/core";
+
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,12 +20,14 @@ const useStyles = makeStyles((theme) => ({
 const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const classes = useStyles();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch("http://localhost:3001/user/login", {
+    setLoading(true);
+    fetch(`${BASEURL}/user/login`, {
       method: "POST",
       body: JSON.stringify({
         user: { username: username, password: password },
@@ -33,12 +38,11 @@ const Login = (props) => {
     })
       .then((response) => response.json())
       .then((data) => {
+        setLoading(false);
         if (data.error) return setError(data.error);
         props.updateToken(data?.sessionToken, data.user.id);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => setLoading(false));
   };
 
   return (
@@ -66,7 +70,7 @@ const Login = (props) => {
             value={password}
           />
           <Button variant="contained" color="primary" type="submit">
-            Login
+            {loading ? <CircularProgress size={25} color="inherit" /> : "Login"}
           </Button>
         </form>
         {error ? <Typography color="secondary">{error}</Typography> : null}

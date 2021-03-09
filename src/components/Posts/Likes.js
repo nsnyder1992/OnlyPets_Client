@@ -3,7 +3,8 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 
-const BASEURL = "http://localhost:3001/like";
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
 
 const Likes = ({ id, sessionToken }) => {
   //states
@@ -25,7 +26,7 @@ const Likes = ({ id, sessionToken }) => {
   //get number of likes and init if liked by user
   //using useCallback as suggested by rule react-hooks/exhaustive-deps
   const getLikes = useCallback(() => {
-    fetch(`${BASEURL}/${id}`, {
+    fetch(`${BASEURL}/like/${id}`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -42,7 +43,7 @@ const Likes = ({ id, sessionToken }) => {
 
   //send a req to server to like post
   const likePost = (postId) => {
-    fetch(`${BASEURL}/${postId}`, {
+    fetch(`${BASEURL}/like/${postId}`, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -59,7 +60,7 @@ const Likes = ({ id, sessionToken }) => {
 
   ///send a req to server to unlike post
   const unlikePost = (postId) => {
-    fetch(`${BASEURL}/${postId}`, {
+    fetch(`${BASEURL}/like/${postId}`, {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -68,7 +69,6 @@ const Likes = ({ id, sessionToken }) => {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
         let likes = json.numLikes ? json.numLikes : 0;
         setNumLikes(likes);
         setLiked(json.userLiked);

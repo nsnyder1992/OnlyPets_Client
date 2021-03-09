@@ -19,7 +19,6 @@ export const useFetch = (
   const [lastPetType, setLastPetType] = useState();
   const [lastPostType, setLastPostType] = useState();
 
-  // console.log("useFetch");
   const fetchData = async () => {
     if (sessionToken === undefined) return; //if no sessionToken stop process
 
@@ -38,7 +37,6 @@ export const useFetch = (
       //end this useEffect the above changes to dispatch and pager will initiate another useEffect cycle
       return;
     }
-    console.log(posts.length, totalPosts);
 
     // this stops the fetch if the last post is ever reached
     if (posts.length >= totalPosts) return;
@@ -59,9 +57,7 @@ export const useFetch = (
 
         //abstract posts from json.posts
 
-        console.log(json);
         const posts = json.posts ? json.posts : json.pets;
-
 
         //send to dispatch
         dispatch({ type: "STACK_IMAGES", posts });
@@ -89,37 +85,8 @@ export const deleteFromDispatch = async (
   cloudinaryUrl,
   sessionToken
 ) => {
-  // let folder = post?.photoUrl.split("/")[7];
-  // let public_id = post?.photoUrl.split("/")[8];
-
-  // //get cloudinary security from backend
-  // const res = await fetch(`${sigUrl}/${folder}/${public_id}`, {
-  //   method: "GET",
-  //   headers: new Headers({
-  //     authorization: sessionToken,
-  //   }),
-  // });
-  // const json = await res.json();
-
-  // //set form data
-  // let formData = new FormData();
-  // formData.append("api_key", json.key);
-  // formData.append("timestamp", json.timestamp);
-  // // formData.append("folder", json.folder);
-  // formData.append("public_id", json.public_id);
-  // formData.append("invalidate", json.invalidate);
-  // formData.append("signature", json.signature);
-
-  // //post to cloudinary and get url for storage
-  // const cloudinaryRes = await fetch(cloudinaryUrl, {
-  //   method: "POST",
-  //   body: formData,
-  // });
-  // const cloudinaryJson = await cloudinaryRes.json();
-  // console.log(cloudinaryJson);
-
   //delete posts and update the posts
-  const postRes = await fetch(fetchUrl, {
+  await fetch(fetchUrl, {
     method: "DELETE",
     headers: new Headers({
       "Content-Type": "application/json",
@@ -129,10 +96,6 @@ export const deleteFromDispatch = async (
 
   //this finds the index of post in postData.posts and deletes and updates it
   await dispatch({ type: "DELETE_IMAGE", post: post });
-
-  //check if deleted
-  const postJson = await postRes.json();
-  console.log(postJson);
 };
 
 // infinite scrolling with intersection observer
@@ -156,7 +119,6 @@ export const useInfiniteScroll = (scrollRef, dispatch) => {
   );
 
   useEffect(() => {
-    console.log("useInfiniteScroll");
     if (scrollRef.current) {
       scrollObserver(scrollRef.current);
     }

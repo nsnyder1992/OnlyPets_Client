@@ -1,12 +1,16 @@
-import { useEffect, useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 
 import { Typography } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { useFetch, useInfiniteScroll } from "../../hooks/infiniteScrollHooks";
 
-// import PetCard from "../Pets/PetCard";
+import PetCard from "../Pets/PetCard";
 
-const YourPets = ({ setRoute, sessionToken, petType, type }) => {
+
+const YourPets = ({ setRoute, sessionToken, petType }) => {
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     setRoute("/pet");
   });
@@ -55,12 +59,13 @@ const YourPets = ({ setRoute, sessionToken, petType, type }) => {
   useFetch(
     postData.posts,
     null,
-    petType,
+    null,
     pager,
     postDispatch,
     pagerDispatch,
     fetchUrl,
-    sessionToken
+    sessionToken,
+    setLoading
   );
 
   let bottomBoundaryRef = useRef(null);
@@ -69,10 +74,18 @@ const YourPets = ({ setRoute, sessionToken, petType, type }) => {
   return (
     <div className="posts">
       <Typography variant="h5">Your Pets</Typography>
-      {postData?.posts.map((index) => {
-        // return <PetCard key={index} sessionToken={sessionToken} />;
-        return <></>;
+      {postData?.posts.map((pet, index) => {
+        return (
+          <div>
+            <PetCard
+              key={index}
+              pet={pet}
+              sessionToken={sessionToken}
+            />
+          </div>
+        );
       })}
+      {loading ? <CircularProgress /> : null}
       <div id="page-bottom-boundary" ref={bottomBoundaryRef}></div>
     </div>
   );

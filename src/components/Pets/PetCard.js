@@ -2,8 +2,8 @@ import { useState, useCallback, useEffect } from "react";
 
 //material components
 import { makeStyles } from "@material-ui/core/styles";
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import Avatar from "@material-ui/core/Avatar";
@@ -17,94 +17,92 @@ import { BASEURL } from "../../context/base-url-context";
 import PetCardOptions from "./PetCardOptions";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        maxWidth: 650,
-        width: "90%",
-        minWidth: 200,
-        margin: 0,
-    },
-    media: {
-        height: 0,
-        paddingTop: "56.25%", // 16:9
-    },
-    avatar: {
-        backgroundColor: indigo[500],
-    },
-    actions: {
-        display: "flex",
-        justifyContent: "space-between",
-        marginBottom: 0,
-    },
-    content: {
-        paddingLeft: 16,
-        marginTop: 3,
-    },
-    header: {
-        display: "flex",
-        justifyContent: "right",
-    },
-    actionsRight: {
-        justifyItems: "right",
-    },
-    actionsLeft: {
-        display: "flex",
-        alignItems: "center",
-    },
-    timeAgo: {
-        paddingLeft: 16,
-        paddingTop: 12,
-    },
+  root: {
+    maxWidth: 650,
+    width: "90%",
+    minWidth: 200,
+    margin: 0,
+  },
+  media: {
+    height: 0,
+    paddingTop: "56.25%", // 16:9
+  },
+  avatar: {
+    backgroundColor: indigo[500],
+  },
+  actions: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginBottom: 0,
+  },
+  content: {
+    paddingLeft: 16,
+    marginTop: 3,
+  },
+  header: {
+    display: "flex",
+    justifyContent: "right",
+  },
+  actionsRight: {
+    justifyItems: "right",
+  },
+  actionsLeft: {
+    display: "flex",
+    alignItems: "center",
+  },
+  timeAgo: {
+    paddingLeft: 16,
+    paddingTop: 12,
+  },
 }));
 
+const PetCard = ({ pet, deletePost, sessionToken }) => {
+  //styles
+  const classes = useStyles();
 
-const PetCard = ({ post, pet, deletePost, sessionToken }) => {
-    //styles
-    const classes = useStyles();
+  const [photoUrl, setPhotoUrl] = useState();
 
-    const [photoUrl, setPhotoUrl] = useState();
+  const getPetPhoto = useCallback(() => {
+    fetch(`${BASEURL}/post/byPet/${pet.id}/1/1`, {
+      method: "GET",
+      headers: new Headers({
+        authorization: sessionToken,
+      }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        setPhotoUrl(json.posts[0]?.photoUrl);
+      })
+      .catch((err) => console.log(err));
+  }, [pet, sessionToken]);
 
-    const getPetPhoto = useCallback(() => {
-        fetch(`${BASEURL}/post/byPet/${pet.id}/1/1`, {
-            method: "GET",
-            headers: new Headers({
-                authorization: sessionToken,
-            }),
-        })
-            .then((res) => res.json())
-            .then((json) => {
-                console.log(json);
-                setPhotoUrl(json.posts[0].photoUrl);
-                console.log(photoUrl);
-            })
-            .catch((err) => console.log(err));
-    }, [pet, post, sessionToken]);
+  useEffect(() => {
+    getPetPhoto();
+  }, [getPetPhoto]);
 
-    useEffect(() => {
-        getPetPhoto();
-    }, [getPetPhoto]);
-
-    console.log(pet)
-
-    return (
-        <Card className={classes.root}>
-            <CardActionArea>
-                <CardHeader
-                    className={classes.header}
-                    avatar={
-                        <Avatar aria-label="Pet" className={classes.avatar}>{pet.name ? pet.name[0].toUpperCase() : null}</Avatar>
-                    }
-                    action={<PetCardOptions pet={pet} deletePost={deletePost} />}
-                    title={<Typography>{pet.name}</Typography>}
-                />
-                <CardMedia className={classes.media} image={photoUrl} />
-                <CardContent>
-                    <Typography variant="body2" component="p">{pet.description}</Typography>
-                </CardContent>
-                <Subscribe id={pet.petId} sessionToken={sessionToken} />
-
-            </CardActionArea>
-        </Card>
-    );
+  return (
+    <Card className={classes.root}>
+      <CardActionArea>
+        <CardHeader
+          className={classes.header}
+          avatar={
+            <Avatar aria-label="Pet" className={classes.avatar}>
+              {pet.name ? pet.name[0].toUpperCase() : null}
+            </Avatar>
+          }
+          action={<PetCardOptions pet={pet} deletePost={deletePost} />}
+          title={<Typography>{pet.name}</Typography>}
+        />
+        <CardMedia className={classes.media} image={photoUrl} />
+        <CardContent>
+          <Typography variant="body2" component="p">
+            {pet.description}
+          </Typography>
+        </CardContent>
+        <Subscribe id={pet.id} sessionToken={sessionToken} />
+      </CardActionArea>
+    </Card>
+  );
 };
 
 export default PetCard;

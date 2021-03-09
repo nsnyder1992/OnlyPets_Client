@@ -48,12 +48,12 @@ const NewPet = ({ sessionToken, openAlert }) => {
       });
 
     setLoading(false);
-    history.push("/");
+    history.push("/pet");
   };
 
   return (
     <div className="create-pet">
-      <PetHeader handleSubmit={handleSubmit} />
+      <PetHeader name={name} type={type} handleSubmit={handleSubmit} />
 
       <PetBody
         setName={setName}
@@ -62,6 +62,7 @@ const NewPet = ({ sessionToken, openAlert }) => {
         description={description}
         setType={setType}
         type={type}
+        isEdit={false}
       />
       {loading ? <CircularProgress /> : null}
     </div>

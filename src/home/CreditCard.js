@@ -5,7 +5,7 @@ import { ListItem, ListItemText, ListItemIcon } from "@material-ui/core";
 import visa from "./img/visa.PNG";
 import mastercard from "./img/mastercard.svg";
 
-const CreditCard = ({ sessionToken, card }) => {
+const CreditCard = ({ card }) => {
   return (
     <ListItem>
       <ListItemIcon>

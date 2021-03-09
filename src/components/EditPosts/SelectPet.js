@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
 
@@ -28,8 +28,7 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
     }
   };
 
-  //on rendering of component get all current users pets
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     fetch(`${BASEURL}/pet/owned`, {
       method: "GET",
       headers: new Headers({
@@ -43,7 +42,12 @@ const SelectPet = ({ sessionToken, setPetType, petId, setPetId }) => {
         setPetType(pets.pets[0].type);
       })
       .catch((err) => console.error(err));
-  }, [sessionToken]); //need the dep array here to allow the value below to be correct for some reason :/???
+  }, [sessionToken]);
+
+  //on rendering of component get all current users pets
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]); //need the dep array here to allow the value below to be correct for some reason :/???
 
   return (
     <div className="pet-select-div">

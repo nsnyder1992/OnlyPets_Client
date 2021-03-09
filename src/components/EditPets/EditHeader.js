@@ -12,14 +12,14 @@ const EditHeader = ({ route, handleSubmit }) => {
       <Grid container spacing={3}>
         <Grid item xs={1} />
         <Grid item xs={4} className="back-group">
-          <Link to={route} id="back" className="Link">
+          <Link to={route} id="back" className="link">
             <ArrowBackIcon />
           </Link>
           <Typography variant="h5">Edit Pet</Typography>
         </Grid>
         <Grid item xs={2} />
         <Grid item xs={4}>
-          <Link to={route} className="Link">
+          <Link to={route} className="link">
             <Button>Cancel</Button>
           </Link>
           <Button variant="contained" color="primary" onClick={handleSubmit}>

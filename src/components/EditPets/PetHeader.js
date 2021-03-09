@@ -3,7 +3,7 @@ import { Grid, Button, Typography } from "@material-ui/core";
 //css
 import "./styles/PetHeader.css";
 
-const PostHeader = ({ handleSubmit }) => {
+const PostHeader = ({ name, handleSubmit }) => {
   // handles enable/disable of button and submitting PetBody form
   return (
     <header>
@@ -16,6 +16,7 @@ const PostHeader = ({ handleSubmit }) => {
           <Button
             variant="contained"
             color="primary"
+            disabled={!name}
             onClick={handleSubmit}
           >
             Post

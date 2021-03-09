@@ -85,11 +85,8 @@ const Pets = ({ sessionToken, petType, postType, openAlert }) => {
   //fetch constants to use to get posts
   const limit = 4;
 
-
   // const fetchUrl = `${baseUrl}/${petType}/${pager.page}/${limit}`;
-  const fetchUrl = `${BASEURL}/pet/type/${petType}/${pager.page}/4`;
-
-
+  const fetchUrl = `${BASEURL}/pet/type/${petType}/${pager.page}/${limit}`;
 
   //Fetch hook to handle getting/updating posts based on [postDispatch, pager, postType, petType]
   useFetch(
@@ -105,13 +102,13 @@ const Pets = ({ sessionToken, petType, postType, openAlert }) => {
   );
 
   //cloudinary urls... NOT WORKING AT THE MOMENT
-  const backend = "http://localhost:3001/post/cloudinary/delete";
+  const backend = `${BASEURL}/post/cloudinary/delete`;
   const cloudinaryUrl =
     "https://api.cloudinary.com/v1_1/nsnyder1992/image/destroy";
 
   // delete post from postData and the server / DB
   const deletePost = (postId, post) => {
-    const deleteUrl = `http://localhost:3001/pet/${postId}`;
+    const deleteUrl = `${BASEURL}/pet/${postId}`;
     try {
       deleteFromDispatch(
         post,
@@ -134,15 +131,14 @@ const Pets = ({ sessionToken, petType, postType, openAlert }) => {
   return (
     <div className="posts">
       <Typography variant="h5">Explore Pets</Typography>
-      {postData?.posts.map((pet, post, index) => {
+      {postData?.posts.map((pet, index) => {
         return (
           <div>
             <PetCard
               key={index}
-              post={post}
               pet={pet}
+              deletePost={deletePost}
               sessionToken={sessionToken}
-
             />
           </div>
         );

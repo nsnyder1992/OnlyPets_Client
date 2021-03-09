@@ -56,7 +56,7 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
         openAlert("error");
       });
 
-    history.push("/");
+    history.push(route);
   };
 
   return (
@@ -72,6 +72,7 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
         setName={setName}
         setType={setType}
         setDescription={setDescription}
+        isEdit={true}
       />
 
       {loading ? <CircularProgress /> : null}

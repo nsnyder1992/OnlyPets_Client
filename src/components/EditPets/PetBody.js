@@ -20,6 +20,7 @@ const PetBody = ({
   setType,
   type,
   description,
+  isEdit,
 }) => {
   const handleDesc = (e) => {
     setDescription(e.target.value);
@@ -27,20 +28,22 @@ const PetBody = ({
 
   //get data for pet
   useEffect(() => {
-    fetch(`${BASEURL}/pet/${id}`, {
-      method: "GET",
-      headers: new Headers({
-        authorization: sessionToken,
-      }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-        setName(json.pet.name);
-        setType(json.pet.type);
-        setDescription(json.pet.description);
+    if (isEdit) {
+      fetch(`${BASEURL}/pet/${id}`, {
+        method: "GET",
+        headers: new Headers({
+          authorization: sessionToken,
+        }),
       })
-      .catch((err) => {});
+        .then((res) => res.json())
+        .then((json) => {
+          console.log(json);
+          setName(json.pet.name);
+          setType(json.pet.type);
+          setDescription(json.pet.description);
+        })
+        .catch((err) => {});
+    }
   }, [sessionToken]);
 
   //states to store name, description and type

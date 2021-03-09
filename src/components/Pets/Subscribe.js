@@ -3,6 +3,8 @@ import { useState, useEffect, useCallback } from "react";
 import { IconButton } from "@material-ui/core";
 import SubscriptionsOutlinedIcon from "@material-ui/icons/SubscriptionsOutlined";
 
+import { BASEURL } from "../../context/base-url-context";
+
 const Subscribe = ({ id, sessionToken }) => {
   //states
   const [isSubed, setIsSubed] = useState(false);
@@ -19,7 +21,7 @@ const Subscribe = ({ id, sessionToken }) => {
 
   //get number of subscribers and if user has subscribed
   const getSubs = useCallback(() => {
-    fetch(`http://localhost:3001/subscribe/num/${id}`, {
+    fetch(`${BASEURL}/subscribe/num/${id}`, {
       method: "GET",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -35,7 +37,7 @@ const Subscribe = ({ id, sessionToken }) => {
 
   //subscribe to pet
   const subPet = (id) => {
-    fetch(`http://localhost:3001/subscribe/${id}`, {
+    fetch(`${BASEURL}/subscribe/${id}`, {
       method: "POST",
       headers: new Headers({
         "Content-Type": "application/json",
@@ -51,7 +53,7 @@ const Subscribe = ({ id, sessionToken }) => {
 
   //unsubscribe to pet
   const unsubPet = (id) => {
-    fetch(`http://localhost:3001/subscribe/${id}`, {
+    fetch(`${BASEURL}/subscribe/${id}`, {
       method: "DELETE",
       headers: new Headers({
         "Content-Type": "application/json",

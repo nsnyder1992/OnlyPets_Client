@@ -159,6 +159,7 @@ const Navbar = ({ sessionToken, clearToken }) => {
               route={route}
               setRoute={setRoute}
               sessionToken={sessionToken}
+              openAlert={openAlert}
             />
           </Route>
           <Route exact path="/addCard">

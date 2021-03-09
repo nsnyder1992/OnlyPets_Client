@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
 //material components
@@ -22,24 +22,6 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
   const [type, setType] = useState();
   const [name, setName] = useState();
   const [description, setDescription] = useState();
-
-  //get data for pet
-  useEffect(() => {
-    fetch(`${BASEURL}/pet/${id}`, {
-      method: "GET",
-      headers: new Headers({
-        authorization: sessionToken,
-      }),
-    })
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-        setName(json.pet.name);
-        setType(json.pet.type);
-        setDescription(json.pet.description);
-      })
-      .catch((err) => {});
-  });
 
   //react router history used to redirect to route
   const history = useHistory();
@@ -82,6 +64,8 @@ const EditPet = ({ route, openAlert, sessionToken }) => {
       <EditHeader route={route} handleSubmit={handleSubmit} />
 
       <PetBody
+        id={id}
+        sessionToken={sessionToken}
         name={name}
         type={type}
         description={description}

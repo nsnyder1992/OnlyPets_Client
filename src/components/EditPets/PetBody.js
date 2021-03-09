@@ -1,12 +1,19 @@
+import { useEffect } from "react";
+
 import { TextField } from "@material-ui/core";
 
 //components
 import PetTypes from "./PetTypes";
 
+//get base url of backend
+import { BASEURL } from "../../context/base-url-context";
+
 //css
 import "./styles/PetBody.css";
 
 const PetBody = ({
+  id,
+  sessionToken,
   setName,
   name,
   setDescription,
@@ -14,6 +21,28 @@ const PetBody = ({
   type,
   description,
 }) => {
+  const handleDesc = (e) => {
+    setDescription(e.target.value);
+  };
+
+  //get data for pet
+  useEffect(() => {
+    fetch(`${BASEURL}/pet/${id}`, {
+      method: "GET",
+      headers: new Headers({
+        authorization: sessionToken,
+      }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        setName(json.pet.name);
+        setType(json.pet.type);
+        setDescription(json.pet.description);
+      })
+      .catch((err) => {});
+  }, [sessionToken]);
+
   //states to store name, description and type
   return (
     <div className="container">
@@ -38,7 +67,7 @@ const PetBody = ({
             label="Description"
             fullWidth
             value={description ? description : ""}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={handleDesc}
             variant="outlined"
           />
         </div>

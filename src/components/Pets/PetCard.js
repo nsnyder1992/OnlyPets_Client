@@ -13,6 +13,7 @@ import { CardContent } from "@material-ui/core";
 
 import "./styles/PetCard.css";
 import Subscribe from "./Subscribe";
+// import PetCardOptions from "./PetCardOptions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 const BASEURL = "http://localhost:3001";
 
 
-const PetCard = ({ post, pet, sessionToken }) => {
+const PetCard = ({ post, pet, deletePost, sessionToken }) => {
     //styles
     const classes = useStyles();
 
@@ -91,6 +92,7 @@ const PetCard = ({ post, pet, sessionToken }) => {
                     avatar={
                         <Avatar aria-label="Pet" className={classes.avatar}>{pet.name ? pet.name[0].toUpperCase() : null}</Avatar>
                     }
+                    // action={<PetCardOptions post={post} deletePost={deletePost} />}
                     title={<Typography>{pet.name}</Typography>}
                 />
                 <CardMedia className={classes.media} image={photoUrl} />
